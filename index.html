@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feria Partner | Gestión de Emprendimiento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .text-blue-rey { color: #3b82f6; }
+        .bg-blue-rey { background-color: #3b82f6; }
+        
+        .gradient-partner {
+            background: linear-gradient(90deg, #3b82f6, #2dd4bf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 1. HERO SECTION -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center px-6 text-center overflow-hidden">
+        <div class="absolute top-0 w-full h-80 bg-blue-600/5 blur-[120px] pointer-events-none"></div>
+        
+        <div class="relative z-10">
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-6 tracking-tighter text-white">
+                Feria <span class="gradient-partner">Partner</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl font-light mb-10 leading-relaxed mx-auto">
+                Asegura tu nota y controla tus ganancias en vivo. La herramienta definitiva para que tu proyecto de emprendimiento sea un éxito <span class="text-white">sin perder ni un solo peso.</span>
+            </p>
+
+            <!-- BOTÓN OBTENER AHORA -->
+            <div class="mb-20">
+                <a href="#precios" class="inline-block px-10 py-4 bg-blue-rey text-white font-bold rounded-full hover:bg-blue-600 transition-all transform hover:scale-105 shadow-lg shadow-blue-600/20 uppercase text-sm tracking-widest">
+                    Obtener ahora
+                </a>
+            </div>
+
+            <!-- Feature Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl mx-auto">
+                <div class="bg-[#111111] p-6 rounded-2xl border border-white/5">
+                    <p class="text-blue-rey font-semibold mb-1 text-xs uppercase tracking-widest">100% Offline</p>
+                    <p class="text-gray-500 text-sm">Funciona en el colegio sin señal.</p>
+                </div>
+                <div class="bg-[#111111] p-6 rounded-2xl border border-white/5">
+                    <p class="text-blue-rey font-semibold mb-1 text-xs uppercase tracking-widest">Control ROI</p>
+                    <p class="text-gray-500 text-sm">Ganancias automáticas.</p>
+                </div>
+                <div class="bg-[#111111] p-6 rounded-2xl border border-white/5 italic">
+                    <p class="text-blue-rey font-semibold mb-1 text-xs uppercase tracking-widest italic">Anti-Apagones</p>
+                    <p class="text-gray-500 text-sm">Guardado local instantáneo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. CONTROL TOTAL -->
+    <section class="py-24 px-6 max-w-4xl mx-auto">
+        <div class="glass-card rounded-[2.5rem] p-8 md:p-16 border-white/5">
+            <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center uppercase tracking-tight">Control total en la feria</h2>
+            <div class="space-y-8 text-gray-300">
+                <div class="flex items-start gap-4">
+                    <div class="w-1.5 h-1.5 rounded-full bg-blue-rey mt-2.5 shrink-0"></div>
+                    <p class="text-lg leading-relaxed text-gray-400">Olvídate de los enredos con el papel o las cuentas a mano frente al profesor.</p>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-1.5 h-1.5 rounded-full bg-blue-rey mt-2.5 shrink-0"></div>
+                    <p class="text-lg leading-relaxed text-gray-400">Calcula tus ganancias en vivo, muestra el dinero acumulado y te avisa exactamente cuánto <span class="text-white font-medium">stock falta por vender.</span></p>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-1.5 h-1.5 rounded-full bg-blue-rey mt-2.5 shrink-0"></div>
+                    <p class="text-lg italic text-blue-400 font-medium">Genera un reporte elegante y limpio listo para entregarle al profesor para asegurar tu nota.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. CÓMO ADQUIRIRLA (3 PASOS) -->
+    <section class="py-24 px-6 max-w-5xl mx-auto">
+        <h2 class="text-center text-sm font-bold tracking-[0.3em] uppercase text-gray-600 mb-12">Cómo adquirirla en 3 pasos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div class="text-center">
+                <span class="text-4xl font-bold text-white/5 block mb-4 italic">01</span>
+                <h3 class="font-bold mb-2 uppercase text-xs tracking-widest text-blue-rey">Selecciona tu versión</h3>
+                <p class="text-gray-500 text-sm">Elige entre Estándar o VIP Premium según tus metas.</p>
+            </div>
+            <div class="text-center">
+                <span class="text-4xl font-bold text-white/5 block mb-4 italic">02</span>
+                <h3 class="font-bold mb-2 uppercase text-xs tracking-widest text-blue-rey">Descarga inmediata</h3>
+                <p class="text-gray-500 text-sm">El archivo se descarga en tu celular y abre WhatsApp.</p>
+            </div>
+            <div class="text-center">
+                <span class="text-4xl font-bold text-white/5 block mb-4 italic">03</span>
+                <h3 class="font-bold mb-2 uppercase text-xs tracking-widest text-blue-rey">Activación de caja</h3>
+                <p class="text-gray-500 text-sm">Envías tu proyecto, coordinamos el pago y recibes tu clave.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. TABLA COMPARATIVA -->
+    <section class="py-24 px-6 max-w-4xl mx-auto">
+        <div class="glass-card rounded-3xl overflow-hidden border-white/5">
+            <div class="overflow-x-auto no-scrollbar">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-white/10 bg-white/5">
+                            <th class="p-6 text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Función</th>
+                            <th class="p-6 text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold text-center">Estándar</th>
+                            <th class="p-6 text-[10px] uppercase tracking-[0.2em] text-blue-rey font-bold text-center">VIP Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b border-white/5">
+                            <td class="p-6 text-gray-400">Gestión de Inversión y Ventas</td>
+                            <td class="p-6 text-center text-gray-600">Sí</td>
+                            <td class="p-6 text-center text-blue-rey">Sí</td>
+                        </tr>
+                        <tr class="border-b border-white/5">
+                            <td class="p-6 text-gray-400">Reporte de Cierre Simple</td>
+                            <td class="p-6 text-center text-gray-600">Sí</td>
+                            <td class="p-6 text-center text-blue-rey">Sí</td>
+                        </tr>
+                        <tr class="border-b border-white/5 bg-blue-500/5">
+                            <td class="p-6 font-semibold text-gray-300 italic">Reporte en PDF para Profesor</td>
+                            <td class="p-6 text-center text-gray-800 italic text-xs">No disponible</td>
+                            <td class="p-6 text-center font-bold text-blue-rey italic text-xs tracking-tighter">¡Exclusivo!</td>
+                        </tr>
+                        <tr class="border-b border-white/5">
+                            <td class="p-6 font-semibold text-gray-300 italic">Código QR en pantalla (Offline)</td>
+                            <td class="p-6 text-center text-gray-800 italic text-xs">No disponible</td>
+                            <td class="p-6 text-center font-bold text-blue-rey italic text-xs tracking-tighter">¡Exclusivo!</td>
+                        </tr>
+                        <tr class="border-b border-white/5 bg-blue-500/5">
+                            <td class="p-6 font-semibold text-gray-300 italic">Sistema Inteligente Anti-Errores</td>
+                            <td class="p-6 text-center text-gray-800 italic text-xs">No disponible</td>
+                            <td class="p-6 text-center font-bold text-blue-rey italic text-xs tracking-tighter">¡Exclusivo!</td>
+                        </tr>
+                        <tr>
+                            <td class="p-6 font-semibold text-gray-300 italic">Caja para Gastos Extras</td>
+                            <td class="p-6 text-center text-gray-800 italic text-xs">No disponible</td>
+                            <td class="p-6 text-center font-bold text-blue-rey italic text-xs tracking-tighter">¡Exclusivo!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. TARJETAS DE PRECIOS -->
+    <section id="precios" class="py-24 px-6 max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Estándar -->
+            <div class="glass-card p-10 rounded-[2.5rem] text-center flex flex-col border-white/5">
+                <h3 class="text-xl font-bold mb-2">Estándar</h3>
+                <p class="text-5xl font-extrabold mb-10">$10.000</p>
+                <button onclick="handleDownload('standard')" class="w-full bg-white text-black font-bold py-4 rounded-2xl hover:bg-gray-200 transition-all uppercase text-xs tracking-widest mt-auto">
+                    Descargar Estándar
+                </button>
+            </div>
+
+            <!-- VIP -->
+            <div class="glass-card p-10 rounded-[2.5rem] text-center flex flex-col border-blue-rey/40 relative overflow-hidden">
+                <div class="absolute top-4 right-6 bg-blue-rey text-[10px] px-3 py-1 font-bold rounded-full uppercase tracking-tighter">Recomendado</div>
+                <h3 class="text-xl font-bold mb-2 text-blue-rey">VIP Premium</h3>
+                <p class="text-5xl font-extrabold mb-10">$18.000</p>
+                <button onclick="handleDownload('vip')" class="w-full bg-blue-rey text-white font-bold py-4 rounded-2xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-600/20 uppercase text-xs tracking-widest mt-auto">
+                    Descargar VIP Premium
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. PREGUNTAS RÁPIDAS -->
+    <section class="py-24 px-6 max-w-2xl mx-auto">
+        <h2 class="text-center text-xs font-bold tracking-[0.4em] uppercase text-gray-600 mb-10 italic">FAQ • Preguntas Rápidas</h2>
+        <div class="space-y-4">
+            <details class="glass-card rounded-2xl group border-white/5 transition-all">
+                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">
+                    ¿Cómo funciona?
+                    <span class="text-blue-rey transition-transform group-open:rotate-180">↓</span>
+                </summary>
+                <p class="px-6 pb-6 text-sm text-gray-500">
+                    Se abre directo en el navegador de cualquier celular. No consume datos y no requiere instalación pesada.
+                </p>
+            </details>
+            <details class="glass-card rounded-2xl group border-white/5">
+                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">
+                    ¿Qué pasa si el celular se apaga?
+                    <span class="text-blue-rey transition-transform group-open:rotate-180">↓</span>
+                </summary>
+                <p class="px-6 pb-6 text-sm text-gray-500">
+                    Los datos están protegidos en la memoria local de tu navegador. Al prenderlo y abrir el archivo, todo sigue igual.
+                </p>
+            </details>
+            <details class="glass-card rounded-2xl group border-white/5">
+                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">
+                    ¿Cómo se realiza el pago?
+                    <span class="text-blue-rey transition-transform group-open:rotate-180">↓</span>
+                </summary>
+                <p class="px-6 pb-6 text-sm text-gray-500">
+                    Al descargar, se abre WhatsApp para coordinar el pago por Nequi o efectivo en la feria.
+                </p>
+            </details>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER -->
+    <footer class="py-16 border-t border-white/5 text-center text-gray-600 text-[10px] tracking-[0.3em] uppercase">
+        Feria Partner • Gestión de Emprendimiento Élite
+    </footer>
+
+    <!-- LÓGICA DE PROGRAMACIÓN -->
+    <script>
+        function handleDownload(version) {
+            const phoneNumber = "573218322388";
+            let fileName = version === 'standard' ? "Feria_Partner.html" : "Feria_Partner_VIP.html";
+            let message = version === 'standard' 
+                ? "¡Hola! Descargué la Versión Estándar. Mi proyecto es: " 
+                : "¡Hola! Descargué la Versión VIP. Mi proyecto es: . Quiero activarlo.";
+
+            // 1. Descarga automática
+            const a = document.createElement("a");
+            a.href = fileName;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            // 2. Redirección a WhatsApp con delay de 600ms
+            setTimeout(() => {
+                const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                window.open(waUrl, '_blank');
+            }, 600);
+        }
+    </script>
+</body>
+</html>

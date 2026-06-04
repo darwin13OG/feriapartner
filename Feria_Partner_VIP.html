@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="es" class="theme-dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>EmprendeFeria Pro - Premium</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-card: #111827;
+            --bg-input: #0f172a;
+            --border: #334155;
+            --accent: #06b6d4;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.35);
+        }
+
+        /* theme-dark uses :root defaults; removed duplicate block to reduce file size */
+
+        .theme-light {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-input: #f1f5f9;
+            --border: #cbd5e1;
+            --accent: #0f5f83;
+            --text: #0f172a;
+            --text-muted: #475569;
+            --success: #047857;
+            --danger: #991b1b;
+            --warning: #b45309;
+            --shadow: 0 10px 15px -3px rgba(15,23,42,0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: var(--bg-primary); color: var(--text); padding: 16px; max-width: 500px; margin: 0 auto; line-height: 1.4; }
+        .hidden { display: none; }
+        
+        h2 { margin: 20px 0 10px 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
+        .card { background-color: var(--bg-card); border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+        .config-row { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; margin-bottom: 8px; }
+        input, select { width: 100%; background-color: var(--bg-input); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; font-size: 1rem; }
+        .grid-ventas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .btn-prod { background: var(--border); border: 2px solid var(--accent); color: var(--text); padding: 15px 10px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .btn-prod span { font-size: 0.8rem; opacity: 0.85; margin-top: 4px; }
+        .btn-prod:active { transform: scale(0.95); background: var(--accent); color: var(--bg-primary); }
+        .btn-undo { background: rgba(245, 158, 11, 0.1); border: 1px dashed var(--warning); color: var(--warning); padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; font-weight: bold; cursor: pointer; }
+        .btn-download { background-color: var(--success); color: var(--bg-primary); border: none; padding: 16px; border-radius: 12px; width: 100%; font-weight: 800; cursor: pointer; margin-top: 10px; font-size: 1rem; }
+        .btn-danger { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 8px; border-radius: 8px; width: 100%; margin-top: 20px; font-size: 0.75rem; cursor: pointer; opacity: 0.8; }
+        .stat-val { font-size: 1.4rem; font-weight: bold; color: var(--accent); }
+        .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .badge { background: rgba(6, 182, 212, 0.1); color: var(--accent); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-top: 5px; }
+        .history-item { border-bottom: 1px solid #334155; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
+        .report-box { background: rgba(15, 23, 42, 0.5); border: 1px dashed var(--accent); border-radius: 12px; padding: 14px; margin-top: 10px; }
+        .report-line { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.9rem; }
+        .veredicto { text-align: center; font-weight: bold; font-size: 1rem; margin-top: 12px; padding: 10px; border-radius: 8px; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+
+    <!-- CONTENEDOR DE LA APP -->
+    <div id="main-app" class="hidden">
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-bottom:10px;">
+            <button id="theme-toggle" type="button" class="btn-undo">☀️ Modo claro</button>
+        </div>
+        <h2>⚙️ Configuración Inicial</h2>
+        <div class="card">
+            <div class="config-row">
+                <div>
+                    <label class="stat-label">Inversión ($)</label>
+                    <input type="number" id="cfg-inv" value="100000">
+                </div>
+                <div>
+                    <label class="stat-label">Stock (Uds)</label>
+                    <input type="number" id="cfg-stock" value="50" min="1">
+                </div>
+            </div>
+            <label class="stat-label">Cantidad de productos</label>
+            <select id="cfg-num-prod">
+                <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+            <div id="container-inputs" style="margin-top:10px"></div>
+            <div id="costo-tag" class="badge"></div>
+        </div>
+
+        <h2>🛒 Panel de Ventas</h2>
+        <div class="card">
+            <label class="stat-label">Unidades a vender</label>
+            <input type="number" id="v-cant" value="1" min="1" style="margin-bottom:15px; font-size:1.5rem; text-align:center; font-weight:bold; color:var(--accent);">
+            <div id="v-btns" class="grid-ventas"></div>
+        </div>
+
+        <h2>📊 Balance Proyecto</h2>
+        <div class="card" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
+            <div><div class="stat-label">Caja Total</div><div id="res-caja" class="stat-val">$0</div></div>
+            <div><div class="stat-label">Ganancia Real</div><div id="res-ganancia" class="stat-val" style="color:var(--success)">$0</div></div>
+            <div style="grid-column: 1/-1; border-top:1px solid #334155; padding-top:10px;">
+                <div id="res-status" style="font-weight:bold; font-size:0.85rem;"></div>
+                <div style="width:100%; background:#0f172a; height:10px; border-radius:5px; margin-top:8px">
+                    <div id="v-progress" style="width:0%; background:var(--success); height:100%; border-radius:5px; transition:0.5s"></div>
+                </div>
+            </div>
+        </div>
+
+        <h2>📝 Historial</h2>
+        <div class="card">
+            <button type="button" class="btn-undo" data-action="deshacer">↩️ Deshacer Última Venta</button>
+            <div id="v-historial" style="max-height: 120px; overflow-y: auto;"></div>
+        </div>
+
+        <h2>📋 Reporte de Cierre</h2>
+        <div class="card">
+            <div class="report-box">
+                <div class="report-line"><span>📦 Vendidas:</span> <strong id="rep-v">0</strong></div>
+                <div class="report-line"><span>🎒 Stock:</span> <strong id="rep-s">0</strong></div>
+                <div class="report-line"><span>⭐ Estrella:</span> <strong id="rep-e">-</strong></div>
+                <div class="report-line" style="border-top:1px dashed #475569; padding-top:6px; margin-top:6px;"><span>📈 ROI:</span> <strong id="rep-roi">0%</strong></div>
+                <div id="rep-vdc" class="veredicto"></div>
+            </div>
+            <div style="margin-top:12px;padding:8px;border:1px solid #334155;border-radius:8px;background:rgba(255,255,255,0.02);">
+                <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:flex-start;">
+                    <input id="gasto-nombre" placeholder="Nombre" style="flex:1 1 120px;min-width:80px;padding:6px;border-radius:6px;border:1px solid var(--border);background:var(--bg-input);color:var(--text);font-size:0.95rem;" />
+                    <input id="gasto-valor" type="number" placeholder="$" style="flex:0 0 90px;padding:6px;border-radius:6px;border:1px solid var(--border);background:var(--bg-input);color:var(--text);font-size:0.95rem;" />
+                    <button type="button" data-action="registrar-gasto" aria-label="Agregar gasto" style="background:#f97316;color:var(--bg-primary);width:38px;height:38px;padding:0;border-radius:8px;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;">+</button>
+                </div>
+            </div>
+            <button type="button" class="btn-download" data-action="preview-print" style="background:#f59e0b;">⬇️ DESCARGAR REPORTE FINAL</button>
+            <button type="button" class="btn-download" data-action="share" style="margin-top:10px; background:#0ea5e9;">📤 COMPARTIR ACTA</button>
+        </div>
+    </div>
+    <h2>💳 Pagos Digitales</h2>
+    <div class="card">
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center;">
+            <input id="pago-input" type="file" accept="image/*" style="width:100%;padding:8px;border-radius:6px;border:1px solid var(--border);background:var(--bg-input);color:var(--text);" />
+            <div id="pago-bar" style="width:100%;display:flex;align-items:center;gap:8px;padding:6px;border-radius:8px;border:1px solid transparent;cursor:pointer;">
+                <div id="pago-thumb" style="width:48px;height:48px;border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;background:var(--bg-input);border-radius:6px;overflow:hidden;">
+                    <span style="color:var(--text-muted);font-size:0.8rem;">QR</span>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start;">
+                    <div style="font-weight:bold;color:var(--text);">Medios digitales</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;">Toca para ver</div>
+                </div>
+                <div style="display:flex;gap:6px;align-items:center;">
+                    <button type="button" data-action="toggle-pago" aria-label="Mostrar" style="background:transparent;border:none;color:var(--text);font-size:1.1rem;cursor:pointer;">▾</button>
+                    <button type="button" data-action="eliminar-pago" aria-label="Eliminar" style="background:transparent;border:none;color:#ef4444;font-size:1.1rem;cursor:pointer;">✖</button>
+                </div>
+            </div>
+            <div id="pago-preview" style="width:220px;height:220px;border:1px dashed var(--border);display:none;align-items:center;justify-content:center;background:var(--bg-input);">
+                <span style="color:var(--text-muted);text-align:center;">No image</span>
+            </div>
+            <div style="font-size:0.8rem;color:#94a3b8;text-align:center;width:100%;">Se recomienda verificar el pago</div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:6px;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+            <button type="button" class="btn-danger" data-action="reiniciar">ELIMINAR DATOS Y REINICIAR</button>
+            <button type="button" class="btn-undo" data-action="logout">🔒 Cerrar sesión</button>
+        </div>
+    </div>
+
+    <script>
+        let db = {
+            inv: 100000, stock: 50, nProd: 3,
+            prods: [{n:"Producto 1", p:2000}, {n:"Producto 2", p:5000}, {n:"Producto 3", p:8000}],
+            ventas: [],
+            gastos: []
+        };
+
+        let nombreProyectoGlobal = "MI PROYECTO";
+        let lastPdfBlob = null;
+        let lastPdfName = '';
+        let lastPdfType = 'text/html';
+        const STORAGE_KEY = 'feria_pro_v13';
+        const LICENSE_KEY = 'feria_licencia_activa';
+        const PROJECT_NAME_KEY = 'feria_nombre_proyecto';
+
+        function toNumber(value, fallback = 0, min = -Infinity) {
+            const n = parseFloat(value);
+            return Number.isFinite(n) ? Math.max(n, min) : fallback;
+        }
+
+        function toInteger(value, fallback = 0, min = -Infinity) {
+            const n = parseInt(value, 10);
+            return Number.isFinite(n) ? Math.max(n, min) : fallback;
+        }
+
+        function normalizeText(value, fallback) {
+            const text = String(value || '').trim();
+            return text.length ? text : fallback;
+        }
+
+        function safeLocalStorage() {
+            try {
+                const testKey = '__feria_test__';
+                localStorage.setItem(testKey, '1');
+                localStorage.removeItem(testKey);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        const storageEnabled = safeLocalStorage();
+        const MEMORY_STORE = {};
+
+        function getStoredValue(key) {
+            if (storageEnabled) {
+                return localStorage.getItem(key);
+            }
+            return MEMORY_STORE[key] || null;
+        }
+
+        function setStoredValue(key, value) {
+            if (storageEnabled) {
+                localStorage.setItem(key, value);
+            } else {
+                MEMORY_STORE[key] = value;
+            }
+        }
+
+        const THEME_KEY = 'feria_tema';
+        const THEME_DARK = 'dark';
+        const THEME_LIGHT = 'light';
+
+        function applyTheme(theme) {
+            const className = theme === THEME_LIGHT ? 'theme-light' : 'theme-dark';
+            document.documentElement.className = className;
+            setStoredValue(THEME_KEY, theme);
+            const button = document.getElementById('theme-toggle');
+            if (button) button.innerHTML = theme === THEME_LIGHT ? '🌙 Modo oscuro' : '☀️ Modo claro';
+        }
+
+        function cargarTemaInicial() {
+            const stored = getStoredValue(THEME_KEY);
+            const theme = stored === THEME_LIGHT ? THEME_LIGHT : THEME_DARK;
+            applyTheme(theme);
+        }
+
+        function inicializarEventos() {
+            document.getElementById('cfg-inv').addEventListener('input', actualizar);
+            document.getElementById('cfg-stock').addEventListener('input', actualizar);
+            document.getElementById('cfg-num-prod').addEventListener('change', dibujarInputs);
+
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    const activeTheme = document.documentElement.classList.contains('theme-light') ? THEME_LIGHT : THEME_DARK;
+                    applyTheme(activeTheme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT);
+                });
+            }
+
+            document.querySelectorAll('[data-action="deshacer"]').forEach(el => el.addEventListener('click', deshacer));
+            document.querySelectorAll('[data-action="download"]').forEach(el => el.addEventListener('click', generarPDFPro));
+            document.querySelectorAll('[data-action="preview-print"]').forEach(el => el.addEventListener('click', previsualizarImprimir));
+            document.querySelectorAll('[data-action="share"]').forEach(el => el.addEventListener('click', compartirReporte));
+            document.querySelectorAll('[data-action="registrar-gasto"]').forEach(el => el.addEventListener('click', registrarGasto));
+            const pagoInput = document.getElementById('pago-input');
+            if (pagoInput) pagoInput.addEventListener('change', handlePagoUpload);
+            document.querySelectorAll('[data-action="toggle-pago"]').forEach(el => el.addEventListener('click', togglePagoBar));
+            document.querySelectorAll('[data-action="eliminar-pago"]').forEach(el => el.addEventListener('click', eliminarPago));
+                document.querySelectorAll('[data-action="reiniciar"]').forEach(el => el.addEventListener('click', reiniciar));
+                document.querySelectorAll('[data-action="logout"]').forEach(el => el.addEventListener('click', cerrarSesion));
+        }
+
+        // ========================================================
+        // CANDADO DE SEGURIDAD LOCAL (Licenciamiento)
+        // ========================================================
+        (function() {
+            if (getStoredValue(LICENSE_KEY) === 'true') {
+                nombreProyectoGlobal = getStoredValue(PROJECT_NAME_KEY) || "MI PROYECTO";
+                document.getElementById('main-app').classList.remove('hidden');
+                arrancarApp();
+                cargarTemaInicial();
+                inicializarEventos();
+                return;
+            }
+
+            window.addEventListener('DOMContentLoaded', () => {
+                const capa = document.createElement('div');
+                capa.id = 'capa-bloqueo';
+                capa.style = 'position:fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; color:#f8fafc; z-index:999999; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; font-family:sans-serif; box-sizing:border-box;';
+                
+                capa.innerHTML = `
+                    <div style="max-width:400px; width:100%; background:#1e293b; padding:24px; border-radius:16px; border:1px solid #334155; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.5);">
+                        <h2 style="color:#06b6d4; margin-bottom:10px; font-size:1.4rem;">🔑 ACTIVACIÓN PREMIUM</h2>
+                        <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:20px;">Registra el nombre de tu proyecto para activar la licencia.</p>
+                        <input type="text" id="lic-nombre" placeholder="Nombre de tu Negocio" style="width:100%; padding:12px; background:#0f172a; border:1px solid #334155; color:#f8fafc; border-radius:8px; margin-bottom:15px; font-size:1rem; text-align:center;">
+                        <button id="btn-generar-cod" type="button" style="width:100%; padding:12px; background:#06b6d4; color:#0f172a; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Generar Código</button>
+                        <div id="zona-registro" style="display:none; border-top:1px dashed #334155; padding-top:15px; margin-top:15px;">
+                            <p style="font-size:0.85rem; color:#94a3b8;">Código de Registro (ID):</p>
+                            <div id="txt-cod-registro" style="font-size:1.6rem; font-weight:bold; color:#f59e0b; margin:10px 0; letter-spacing:2px;">000</div>
+                            <input type="number" id="lic-clave" placeholder="Introduce la Clave" style="width:100%; padding:12px; background:#0f172a; border:1px solid #334155; color:#f8fafc; border-radius:8px; margin-bottom:15px; font-size:1rem; text-align:center;">
+                            <button id="btn-activar" type="button" style="width:100%; padding:12px; background:#10b981; color:#0f172a; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Activar Sistema</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(capa);
+
+                let codigoID = 0;
+                let nombreTemp = "";
+
+                document.getElementById('btn-generar-cod').onclick = () => {
+                    nombreTemp = document.getElementById('lic-nombre').value.trim().toUpperCase();
+                    if(nombreTemp.length < 3) return alert("Nombre muy corto.");
+                    let suma = 0;
+                    for(let i=0; i<nombreTemp.length; i++) suma += nombreTemp.charCodeAt(i);
+                    codigoID = (suma % 900) + 100;
+                    document.getElementById('txt-cod-registro').innerText = codigoID;
+                    document.getElementById('lic-nombre').disabled = true;
+                    document.getElementById('btn-generar-cod').style.display = 'none';
+                    document.getElementById('zona-registro').style.display = 'block';
+                };
+
+                document.getElementById('btn-activar').onclick = () => {
+                    const claveIn = toInteger(document.getElementById('lic-clave').value, NaN);
+                    if (claveIn === (codigoID * 3) + 7) {
+                        alert("¡Licencia activada con éxito!");
+                        setStoredValue(LICENSE_KEY, 'true');
+                        setStoredValue(PROJECT_NAME_KEY, nombreTemp);
+                        location.reload();
+                    } else alert("Clave incorrecta.");
+                };
+            });
+        })();
+
+        // ========================================================
+        // LÓGICA DE NEGOCIO Y APP
+        // ========================================================
+        function arrancarApp() {
+            const savedData = getStoredValue(STORAGE_KEY);
+            if (savedData) {
+                db = JSON.parse(savedData);
+            }
+            document.getElementById('cfg-inv').value = db.inv;
+            document.getElementById('cfg-stock').value = db.stock;
+            document.getElementById('cfg-num-prod').value = db.nProd;
+
+            dibujarInputs();
+        }
+
+        function dibujarInputs() {
+            db.nProd = toInteger(document.getElementById('cfg-num-prod').value, 3, 1);
+            const cont = document.getElementById('container-inputs');
+            cont.textContent = '';
+            for (let i = 0; i < db.nProd; i++) {
+                db.prods[i] = db.prods[i] || { n: `Producto ${i + 1}`, p: 1000 };
+                const row = document.createElement('div');
+                row.className = 'config-row';
+
+                const nameInput = document.createElement('input');
+                nameInput.type = 'text';
+                nameInput.value = db.prods[i].n;
+                nameInput.addEventListener('input', () => editP(i, 'n', nameInput.value));
+
+                const priceInput = document.createElement('input');
+                priceInput.type = 'number';
+                priceInput.min = '0';
+                priceInput.value = db.prods[i].p;
+                priceInput.addEventListener('input', () => editP(i, 'p', priceInput.value));
+
+                row.appendChild(nameInput);
+                row.appendChild(priceInput);
+                cont.appendChild(row);
+            }
+            actualizar();
+        }
+
+        function editP(i, c, v) {
+            if (c === 'p') {
+                db.prods[i][c] = toNumber(v, 0, 0);
+            } else {
+                db.prods[i][c] = normalizeText(v, `Producto ${i + 1}`);
+            }
+            actualizar();
+        }
+
+        function actualizar() {
+            db.inv = toNumber(document.getElementById('cfg-inv').value, 0, 0);
+            db.stock = toInteger(document.getElementById('cfg-stock').value, 1, 1);
+            document.getElementById('cfg-inv').value = db.inv;
+            document.getElementById('cfg-stock').value = db.stock;
+            setStoredValue(STORAGE_KEY, JSON.stringify(db));
+            dibujarUI();
+        }
+
+        function vender(i) {
+            const c = toInteger(document.getElementById('v-cant').value, 1, 1);
+            const p = db.prods[i];
+            db.ventas.unshift({
+                n: p.n,
+                p: p.p,
+                c: c,
+                t: p.p * c,
+                h: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+            document.getElementById('v-cant').value = 1;
+            actualizar();
+        }
+
+        function registrarGasto() {
+            const nombreEl = document.getElementById('gasto-nombre');
+            const valorEl = document.getElementById('gasto-valor');
+            if (!nombreEl || !valorEl) return alert('Inputs de gasto no encontrados.');
+            const nombre = normalizeText(nombreEl.value || 'Gasto', 'Gasto');
+            const valor = toNumber(valorEl.value, 0, 0);
+            if (valor <= 0) return alert('Introduce un valor válido para el gasto.');
+            db.gastos = db.gastos || [];
+            db.gastos.push({ n: nombre, v: valor, h: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
+            db.inv = (db.inv || 0) + valor;
+            document.getElementById('cfg-inv').value = db.inv;
+            nombreEl.value = '';
+            valorEl.value = '';
+            setStoredValue(STORAGE_KEY, JSON.stringify(db));
+            actualizar();
+        }
+
+        function handlePagoUpload(e) {
+            const f = (e && e.target && e.target.files && e.target.files[0]) || null;
+            if (!f) return;
+            const reader = new FileReader();
+            reader.onload = function() {
+                db.pagoDigital = db.pagoDigital || {};
+                db.pagoDigital.dataUrl = reader.result;
+                db.pagoDigital.name = f.name || 'QR';
+                db.pagoDigital.time = new Date().toLocaleString();
+                setStoredValue(STORAGE_KEY, JSON.stringify(db));
+                dibujarUI();
+            };
+            reader.readAsDataURL(f);
+        }
+
+        function togglePagoBar() {
+            db.pagoOpen = !db.pagoOpen;
+            setStoredValue(STORAGE_KEY, JSON.stringify(db));
+            dibujarUI();
+        }
+
+        function eliminarPago() {
+            if (!db.pagoDigital) return;
+            if (!confirm('Eliminar imagen de pago?')) return;
+            delete db.pagoDigital;
+            db.pagoOpen = false;
+            setStoredValue(STORAGE_KEY, JSON.stringify(db));
+            dibujarUI();
+        }
+
+        function deshacer() { if(db.ventas.length > 0 && confirm("¿Anular última venta?")){ db.ventas.shift(); actualizar(); } }
+
+        function dibujarUI() {
+            let caja = 0, uds = 0, cont = {};
+            db.ventas.forEach(v => {
+                caja += v.t;
+                uds += v.c;
+                cont[v.n] = (cont[v.n] || 0) + v.c;
+            });
+            const ganancia = caja - db.inv;
+
+            document.getElementById('costo-tag').textContent = `Costo base: $${Math.round(db.inv / db.stock).toLocaleString()}`;
+            document.getElementById('res-caja').textContent = `$${caja.toLocaleString()}`;
+            document.getElementById('res-ganancia').textContent = `$${(ganancia > 0 ? ganancia : 0).toLocaleString()}`;
+
+            const porc = Math.min((caja / (db.inv || 1)) * 100, 100);
+            document.getElementById('v-progress').style.width = `${porc}%`;
+            document.getElementById('res-status').textContent = (db.inv - caja) > 0
+                ? `Faltan $${Math.round(db.inv - caja).toLocaleString()}`
+                : `✅ ¡Meta lograda!`;
+
+            const btnArea = document.getElementById('v-btns');
+            btnArea.textContent = '';
+            db.prods.slice(0, db.nProd).forEach((p, i) => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'btn-prod';
+                b.innerHTML = `${p.n} <span>$${p.p.toLocaleString()}</span>`;
+                b.addEventListener('click', () => vender(i));
+                btnArea.appendChild(b);
+            });
+
+            const hist = document.getElementById('v-historial');
+            hist.textContent = '';
+            if (!db.ventas.length) {
+                const msg = document.createElement('p');
+                msg.textContent = 'Sin ventas';
+                msg.style.cssText = 'text-align:center;opacity:0.5;padding:10px';
+                hist.appendChild(msg);
+            } else {
+                db.ventas.forEach(v => {
+                    const row = document.createElement('div');
+                    row.className = 'history-item';
+                    const left = document.createElement('div');
+                    left.innerHTML = `<b>${v.c}x ${v.n}</b><br><small>${v.h}</small>`;
+                    const right = document.createElement('b');
+                    right.textContent = `$${v.t.toLocaleString()}`;
+                    row.appendChild(left);
+                    row.appendChild(right);
+                    hist.appendChild(row);
+                });
+            }
+
+            let est = '-', max = 0;
+            Object.keys(cont).forEach(key => {
+                if (cont[key] > max) {
+                    max = cont[key];
+                    est = key;
+                }
+            });
+            document.getElementById('rep-v').textContent = uds;
+            document.getElementById('rep-s').textContent = Math.max(0, db.stock - uds);
+            document.getElementById('rep-e').textContent = max > 0 ? est : '-';
+            document.getElementById('rep-roi').textContent = `${((caja / (db.inv || 1)) * 100).toFixed(1)}%`;
+            document.getElementById('rep-vdc').textContent = caja >= db.inv ? 'PROYECTO RENTABLE' : 'POR RECUPERAR';
+
+            const pagoPreview = document.getElementById('pago-preview');
+            const pagoThumb = document.getElementById('pago-thumb');
+            if (pagoThumb) {
+                if (db.pagoDigital && db.pagoDigital.dataUrl) {
+                    pagoThumb.innerHTML = `<img src="${db.pagoDigital.dataUrl}" style="width:100%;height:100%;object-fit:cover;" alt="thumb"/>`;
+                } else {
+                    pagoThumb.innerHTML = '<span style="color:var(--text-muted);font-size:0.8rem;">QR</span>';
+                }
+            }
+            if (pagoPreview) {
+                if (db.pagoDigital && db.pagoDigital.dataUrl && db.pagoOpen) {
+                    pagoPreview.style.display = 'flex';
+                    pagoPreview.innerHTML = `<img src="${db.pagoDigital.dataUrl}" style="max-width:100%;max-height:220px;object-fit:contain;border-radius:6px;" alt="QR" />`;
+                } else {
+                    pagoPreview.style.display = 'none';
+                }
+            }
+        }
+
+        function generarPDFPro() {
+            if(!db.ventas.length) return alert("Sin datos de ventas para exportar.");
+            let caja = 0, uds = 0, cont = {};
+            db.ventas.forEach(v => { caja += v.t; uds += v.c; cont[v.n] = (cont[v.n]||0)+v.c; });
+
+            const ahora = new Date();
+            const fecha = ahora.toLocaleDateString();
+            const hora = ahora.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+            const roi = ((caja/(db.inv||1))*100).toFixed(1);
+            const estado = caja >= db.inv ? "PROYECTO RENTABLE ✅" : "EN RECUPERACION ⏳";
+            const costeBase = Math.round(db.inv/db.stock);
+            const balance = caja - db.inv;
+            const sobrante = Math.max(0, db.stock - uds);
+            const estrella = document.getElementById('rep-e').innerText;
+            const sumGastos = (db.gastos || []).reduce((s, g) => s + (g.v || 0), 0);
+
+            const productosHTML = db.prods.slice(0,db.nProd).map(p => {
+                const uVendidas = cont[p.n] || 0;
+                const gananciaProd = uVendidas * p.p;
+                return `<tr><td>${p.n}</td><td>${uVendidas} uds</td><td>$${gananciaProd.toLocaleString()}</td></tr>`;
+            }).join('');
+
+            const reportHtml = `
+<div style="font-family:'Segoe UI',sans-serif;color:#0f172a;background:#ffffff;padding:16px;width:720px;">
+    <div style="max-width:720px; margin:0 auto;">
+        <h1 style="font-size:1.7rem;color:#06b6d4;text-align:center;margin-bottom:12px;">📋 ACTA DE CIERRE OFICIAL</h1>
+        <div style="color:#475569;font-size:.9rem;text-align:center;margin-bottom:18px;">
+            <p><strong>Proyecto:</strong> ${nombreProyectoGlobal}</p>
+            <p><strong>Fecha:</strong> ${fecha} | <strong>Hora:</strong> ${hora}</p>
+        </div>
+
+        <div style="border-top:3px solid #06b6d4;margin:14px 0;"></div>
+
+        <div style="margin-bottom:18px;">
+            <div style="background:#f1f5f9;padding:10px 12px;border-left:4px solid #06b6d4;font-weight:bold;font-size:1rem;color:#0f172a;">I. RESUMEN FINANCIERO</div>
+            <div style="margin-top:10px;line-height:1.45;">
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>1. Inversión Total</span><strong>$${db.inv.toLocaleString()}</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>2. Gastos Extras</span><strong>$${sumGastos.toLocaleString()}</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>3. Costo Base (Unit.)</span><strong>$${costeBase.toLocaleString()}</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>4. Ventas en Caja</span><strong>$${caja.toLocaleString()}</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>5. Balance Neto</span><strong style="color:${balance >= 0 ? '#10b981' : '#ef4444'}">$${balance.toLocaleString()}</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;"><span>6. Rendimiento (ROI)</span><strong>${roi}%</strong></div>
+            </div>
+        </div>
+
+        <div style="margin-bottom:18px;">
+            <div style="background:#f1f5f9;padding:10px 12px;border-left:4px solid #06b6d4;font-weight:bold;font-size:1rem;color:#0f172a;">II. GESTIÓN DE INVENTARIO</div>
+            <div style="margin-top:10px;line-height:1.45;">
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>1. Stock Inicial</span><strong>${db.stock} Uds</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>2. Unidades Vendidas</span><strong>${uds} Uds</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>3. Sobrante Actual</span><strong>${sobrante} Uds</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;"><span>4. Producto Estrella</span><strong>${estrella}</strong></div>
+            </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <div style="background:#f1f5f9;padding:10px 12px;border-left:4px solid #06b6d4;font-weight:bold;font-size:1rem;color:#0f172a;">III. DESGLOSE DE PRODUCTOS</div>
+            <table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:.92rem;">
+                <thead>
+                    <tr>
+                        <th style="padding:8px;text-align:left;border-bottom:1px solid #e2e8f0;background:#f1f5f9;color:#0f172a;">Producto</th>
+                        <th style="padding:8px;text-align:left;border-bottom:1px solid #e2e8f0;background:#f1f5f9;color:#0f172a;">Vendidas</th>
+                        <th style="padding:8px;text-align:left;border-bottom:1px solid #e2e8f0;background:#f1f5f9;color:#0f172a;">Recaudado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${productosHTML}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="background:${caja >= db.inv ? '#ecfdf5' : '#fef3c7'};border-left:4px solid ${caja >= db.inv ? '#10b981' : '#f59e0b'};padding:12px;border-radius:8px;font-weight:bold;color:${caja >= db.inv ? '#047857' : '#92400e'};margin-bottom:0;">
+            ESTADO FINAL: ${estado}
+        </div>
+    </div>
+</div>
+            `;
+
+            const hidden = ensureReportContainer();
+            hidden.innerHTML = reportHtml;
+            const fileName = `Cierre_Feria_${normalizeText(nombreProyectoGlobal, 'Proyecto').replace(/\s+/g, '_')}.html`;
+            const fullReport = `<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Acta de Cierre Oficial</title></head><body>${reportHtml}</body></html>`;
+            const blob = new Blob([fullReport], { type: 'text/html;charset=utf-8' });
+            lastPdfBlob = blob;
+            lastPdfName = fileName;
+            lastPdfType = 'text/html';
+            downloadBlob(blob, fileName);
+        }
+
+        function previsualizarImprimir() {
+            if(!db.ventas.length) return alert("Sin datos de ventas para exportar.");
+            let caja = 0, uds = 0, cont = {};
+            db.ventas.forEach(v => { caja += v.t; uds += v.c; cont[v.n] = (cont[v.n]||0)+v.c; });
+
+            const ahora = new Date();
+            const fecha = ahora.toLocaleDateString();
+            const hora = ahora.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+            const roi = ((caja/(db.inv||1))*100).toFixed(1);
+            const estado = caja >= db.inv ? "PROYECTO RENTABLE ✅" : "EN RECUPERACION ⏳";
+            const costeBase = Math.round(db.inv/db.stock);
+            const balance = caja - db.inv;
+            const sobrante = Math.max(0, db.stock - uds);
+            const estrella = document.getElementById('rep-e').innerText;
+            const sumGastos = (db.gastos || []).reduce((s, g) => s + (g.v || 0), 0);
+
+            const productosHTML = db.prods.slice(0,db.nProd).map(p => {
+                const uVendidas = cont[p.n] || 0;
+                const gananciaProd = uVendidas * p.p;
+                return `<tr><td>${p.n}</td><td>${uVendidas} uds</td><td>$${gananciaProd.toLocaleString()}</td></tr>`;
+            }).join('');
+
+            const reportHtml = `
+<div style="font-family:'Segoe UI',sans-serif;color:#0f172a;background:#ffffff;padding:16px;width:720px;">
+    <div style="max-width:720px; margin:0 auto;">
+        <h1 style="font-size:1.7rem;color:#06b6d4;text-align:center;margin-bottom:12px;">📋 ACTA DE CIERRE OFICIAL</h1>
+        <div style="color:#475569;font-size:.9rem;text-align:center;margin-bottom:18px;">
+            <p><strong>Proyecto:</strong> ${nombreProyectoGlobal}</p>
+            <p><strong>Fecha:</strong> ${fecha} | <strong>Hora:</strong> ${hora}</p>
+        </div>
+
+        <div style="border-top:3px solid #06b6d4;margin:14px 0;"></div>
+
+        <div style="margin-bottom:18px;">
+            <div style="background:#f1f5f9;padding:10px 12px;border-left:4px solid #06b6d4;font-weight:bold;font-size:1rem;color:#0f172a;">I. RESUMEN FINANCIERO</div>
+            <div style="margin-top:10px;line-height:1.45;">
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>1. Inversión Total</span><strong>$${db.inv.toLocaleString()}</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>2. Gastos Extras</span><strong>$${sumGastos.toLocaleString()}</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>3. Costo Base (Unit.)</span><strong>$${costeBase.toLocaleString()}</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>4. Ventas en Caja</span><strong>$${caja.toLocaleString()}</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>5. Balance Neto</span><strong style="color:${balance >= 0 ? '#10b981' : '#ef4444'}">$${balance.toLocaleString()}</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;"><span>6. Rendimiento (ROI)</span><strong>${roi}%</strong></div>
+            </div>
+        </div>
+
+        <div style="margin-bottom:18px;">
+            <div style="background:#f1f5f9;padding:10px 12px;border-left:4px solid #06b6d4;font-weight:bold;font-size:1rem;color:#0f172a;">II. GESTIÓN DE INVENTARIO</div>
+            <div style="margin-top:10px;line-height:1.45;">
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>1. Stock Inicial</span><strong>${db.stock} Uds</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>2. Unidades Vendidas</span><strong>${uds} Uds</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #e2e8f0;"><span>3. Sobrante Actual</span><strong>${sobrante} Uds</strong></div>
+                <div style="display:flex;justify-content:space-between;padding:6px 0;"><span>4. Producto Estrella</span><strong>${estrella}</strong></div>
+            </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <div style="background:#f1f5f9;padding:10px 12px;border-left:4px solid #06b6d4;font-weight:bold;font-size:1rem;color:#0f172a;">III. DESGLOSE DE PRODUCTOS</div>
+            <table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:.92rem;">
+                <thead>
+                    <tr>
+                        <th style="padding:8px;text-align:left;border-bottom:1px solid #e2e8f0;background:#f1f5f9;color:#0f172a;">Producto</th>
+                        <th style="padding:8px;text-align:left;border-bottom:1px solid #e2e8f0;background:#f1f5f9;color:#0f172a;">Vendidas</th>
+                        <th style="padding:8px;text-align:left;border-bottom:1px solid #e2e8f0;background:#f1f5f9;color:#0f172a;">Recaudado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${productosHTML}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="background:${caja >= db.inv ? '#ecfdf5' : '#fef3c7'};border-left:4px solid ${caja >= db.inv ? '#10b981' : '#f59e0b'};padding:12px;border-radius:8px;font-weight:bold;color:${caja >= db.inv ? '#047857' : '#92400e'};margin-bottom:0;">
+            ESTADO FINAL: ${estado}
+        </div>
+    </div>
+</div>
+            `;
+
+            const fullReport = `<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Acta de Cierre Oficial</title></head><body>${reportHtml}</body></html>`;
+
+            const w = window.open('', '_blank');
+            if (!w) return alert('Habilita ventanas emergentes para previsualizar el reporte.');
+            w.document.open();
+            w.document.write(fullReport);
+            w.document.close();
+            w.focus();
+            setTimeout(() => { try { w.print(); } catch (e) {} }, 500);
+        }
+
+        function ensureReportContainer() {
+            let container = document.getElementById('pdf-report-hidden');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'pdf-report-hidden';
+                container.style.cssText = 'position:absolute; left:-9999px; top:-9999px; width:800px; visibility:hidden;';
+                document.body.appendChild(container);
+            }
+            return container;
+        }
+
+        function downloadBlob(blob, fileName) {
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+
+        function compartirReporte() {
+            if (!lastPdfBlob) {
+                if (confirm('Aún no se ha generado el PDF. ¿Deseas generar el reporte ahora?')) {
+                    generarPDFPro();
+                }
+                return;
+            }
+
+            const file = new File([lastPdfBlob], lastPdfName, { type: lastPdfType || 'application/octet-stream' });
+
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({ files: [file], title: `Acta de cierre ${nombreProyectoGlobal}`, text: `Acta de cierre para ${nombreProyectoGlobal}` }).catch(err => {
+                    if (err && err.name !== 'AbortError') alert('Error al compartir: ' + err.message);
+                });
+                return;
+            }
+
+            if (navigator.share) {
+                navigator.share({ title: `Acta de cierre ${nombreProyectoGlobal}`, text: `Acta de cierre para ${nombreProyectoGlobal}. El archivo se descargó automáticamente.` }).catch(err => {
+                    if (err && err.name !== 'AbortError') alert('Error al compartir: ' + err.message);
+                });
+                return;
+            }
+
+            const whatsappText = encodeURIComponent(`He generado el acta de cierre del proyecto ${nombreProyectoGlobal}. El archivo PDF ya está descargado en tu dispositivo. Por favor, adjúntalo en WhatsApp.`);
+            if (confirm('Tu navegador no puede compartir archivos directamente. ¿Abrir WhatsApp Web? Cancelar abrirá el correo.')) {
+                window.open(`https://wa.me/?text=${whatsappText}`, '_blank');
+            } else {
+                const mailto = `mailto:?subject=${encodeURIComponent('Acta de cierre ' + nombreProyectoGlobal)}&body=${encodeURIComponent('He generado el acta de cierre. El PDF ya está descargado en tu dispositivo. Adjunta el archivo al correo.')}`;
+                window.location.href = mailto;
+            }
+        }
+
+        function reiniciar() { if(confirm("¿Reiniciar feria?")) { if (storageEnabled) localStorage.removeItem(STORAGE_KEY); else delete MEMORY_STORE[STORAGE_KEY]; location.reload(); } }
+
+        function cerrarSesion() {
+            if (!confirm("¿Cerrar sesión y volver a la pantalla de activación?")) return;
+            try {
+                if (storageEnabled) {
+                    localStorage.removeItem(LICENSE_KEY);
+                    localStorage.removeItem(PROJECT_NAME_KEY);
+                } else {
+                    delete MEMORY_STORE[LICENSE_KEY];
+                    delete MEMORY_STORE[PROJECT_NAME_KEY];
+                }
+            } catch (e) { }
+            location.reload();
+        }
+    </script>
+</body>
+</html>
