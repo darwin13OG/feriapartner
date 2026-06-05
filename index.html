@@ -46,9 +46,9 @@
             </p>
 
             <!-- BOTÓN OBTENER AHORA -->
-            <div class="mb-20">
-                <a href="#precios" class="inline-block px-10 py-4 bg-blue-rey text-white font-bold rounded-full hover:bg-blue-600 transition-all transform hover:scale-105 shadow-lg shadow-blue-600/20 uppercase text-sm tracking-widest">
-                    Obtener ahora
+           <button onclick="irAPrecios()" class="inline-block px-10 py-4 bg-blue-rey text-white font-bold rounded-full hover:bg-blue-600 transition-all transform hover:scale-105 shadow-lg shadow-blue-600/20 uppercase text-sm tracking-widest">
+    Obtener ahora
+</button>
                 </a>
             </div>
 
@@ -163,7 +163,7 @@
     </section>
 
     <!-- 5. TARJETAS DE PRECIOS -->
-<div class="space-y-4">
+<div id="seccion-precios" class="space-y-4 pt-12">
   <!-- Tarjeta Estándar -->
   <div class="border border-gray-800 p-6 rounded-2xl bg-zinc-900/50">
     <h3 class="text-xl font-bold mb-2">Versión Estándar</h3>
@@ -223,70 +223,52 @@
 
     <!-- LÓGICA DE PROGRAMACIÓN -->
     <script>
-        function handleDownload(version) {
-            const phoneNumber = "573218322388";
-            let fileName = version === 'standard' ? "Feria_Partner.html" : "Feria_Partner_VIP.html";
-            let message = version === 'standard' 
-                ? "¡Hola! Descargué la Versión Estándar. Mi proyecto es: " 
-                : "¡Hola! Descargué la Versión VIP. Mi proyecto es: . Quiero activarlo.";
+      function abrirInstrucciones(version, url) {
+        document.getElementById('modal-titulo').innerText = 'Pasos para versión ' + version;
+        document.getElementById('btn-abrir-app').href = url;
+        document.getElementById('modal-instrucciones').classList.remove('hidden');
+      }
 
-            // 1. Descarga automática
-            const a = document.createElement("a");
-            a.href = fileName;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+      function cerrarInstrucciones() {
+        document.getElementById('modal-instrucciones').classList.add('hidden');
+      }
 
-            // 2. Redirección a WhatsApp con delay de 600ms
-            setTimeout(() => {
-                const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-                window.open(waUrl, '_blank');
-            }, 600);
-        }
+      // Función para que el botón de arriba del todo baje suavemente a los precios
+      function irAPrecios() {
+        document.getElementById('seccion-precios').scrollIntoView({ behavior: 'smooth' });
+      }
     </script>
-    <!-- CUADRO FLOTANTE DE INSTRUCCIONES (OCULTO POR DEFECTO) -->
-<div id="modal-instrucciones" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-  <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl max-w-md w-full shadow-2xl relative text-center">
-    
-    <!-- Botón para cerrar el cuadro -->
-    <button onclick="cerrarInstrucciones()" class="absolute top-4 right-4 text-gray-500 hover:text-white font-bold text-lg">&times;</button>
-    
-    <h3 id="modal-titulo" class="text-xl font-bold text-white mb-2">Activar Feria Partner</h3>
-    <p class="text-xs text-blue-400 font-semibold mb-4">⚠️ Sigue los pasos en orden para activar tu herramienta</p>
-    
-    <!-- Tus instrucciones exactas -->
-    <div class="text-left bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-xs text-gray-300 space-y-3 mb-6">
-      <p><strong>1. Instalar la Aplicación:</strong> Dale al botón azul de abajo para abrir la app. Una vez dentro, toca los 3 puntos de Chrome (arriba a la derecha) y dale a <strong>"Instalar aplicación"</strong>.</p>
-      <p><strong>2. Generar tu ID:</strong> Abre la app ya instalada en tu celular, escribe el nombre de tu proyecto y la aplicación te dará un ID único en la pantalla.</p>
-      <p><strong>3. Pedir Licencia:</strong> Copia ese ID, regresa aquí y dale al botón verde de WhatsApp para enviármelo junto al nombre de tu negocio para darte tu clave.</p>
+
+    <!-- CUADRO FLOTANTE DE INSTRUCCIONES -->
+    <div id="modal-instrucciones" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+      <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl max-w-md w-full shadow-2xl relative text-center">
+        
+        <!-- Botón para cerrar el cuadro -->
+        <button onclick="cerrarInstrucciones()" class="absolute top-4 right-4 text-gray-500 hover:text-white font-bold text-lg">&times;</button>
+        
+        <h3 id="modal-titulo" class="text-xl font-bold text-white mb-2">Activar Feria Partner</h3>
+        <p class="text-xs text-blue-400 font-semibold mb-4">⚠️ Sigue los pasos en orden para activar tu herramienta</p>
+        
+        <!-- Instrucciones exactas para Darwin -->
+        <div class="text-left bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-xs text-gray-300 space-y-3 mb-6">
+          <p><strong>1. Entrar a la Aplicación:</strong> Dale al botón azul de abajo para abrir la app. Una vez dentro, toca los 3 puntos de Chrome (arriba a la derecha) y dale a <strong>"Instalar aplicación"</strong>.</p>
+          <p><strong>2. Registrar tu Proyecto:</strong> Abre la app ya instalada en tu celular, escribe el nombre de tu proyecto y la aplicación te dará un <strong>ID único</strong> automáticamente.</p>
+          <p><strong>3. Pedir Licencia:</strong> Copia ese ID, regresa aquí y dale al botón verde de WhatsApp para mandarme el nombre de tu negocio y el ID para darte tu clave de acceso.</p>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="space-y-3">
+          <!-- Botón 1: Abre la app elegida -->
+          <a id="btn-abrir-app" href="#" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all text-sm shadow-lg shadow-blue-900/30">
+            📲 1. Entrar y Registrar Proyecto
+          </a>
+          
+          <!-- Botón 2: WhatsApp con tu número oficial -->
+          <a href="https://wa.me/573206746396?text=%C2%A1Hola!%20Ya%20tengo%20el%20ID%20de%20mi%20aplicaci%C3%B3n%20para%20la%20licencia.%20Mi%20proyecto%20se%20llama:%20" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3 px-4 rounded-xl transition-all text-sm shadow-lg shadow-green-950/30">
+            💬 2. Mandar ID por WhatsApp
+          </a>
+        </div>
+      </div>
     </div>
-
-    <!-- Botones de Acción -->
-    <div class="space-y-3">
-      <!-- Botón 1: Abre la app para que la instalen -->
-      <a id="btn-abrir-app" href="#" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all text-sm shadow-lg shadow-blue-900/30">
-        📲 1. Abrir e Instalar Aplicación
-      </a>
-      
-      <!-- Botón 2: El botón verde oficial de WhatsApp -->
-      <a href="https://wa.me/573206746396?text=%C2%A1Hola!%20Ya%20tengo%20el%20ID%20de%20mi%20aplicaci%C3%B33n%20para%20la%20licencia.%20Mi%20proyecto%20se%20llama:%20" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3 px-4 rounded-xl transition-all text-sm shadow-lg shadow-green-950/30">
-        💬 2. Pedir Licencia por WhatsApp
-      </a>
-    </div>
-  </div>
-</div>
-
-<script>
-  function abrirInstrucciones(version, url) {
-    document.getElementById('modal-titulo').innerText = 'Pasos para ' + version;
-    document.getElementById('btn-abrir-app').href = url;
-    document.getElementById('modal-instrucciones').classList.remove('hidden');
-  }
-
-  function cerrarInstrucciones() {
-    document.getElementById('modal-instrucciones').classList.add('hidden');
-  }
-</script>
 </body>
 </html>
