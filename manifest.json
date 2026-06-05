@@ -1,7 +1,7 @@
 {
-  "name": "Feria Partner",
-  "short_name": "FeriaPartner",
-  "start_url": "index.html",
+  "name": "Feria Partner VIP",
+  "short_name": "FP VIP",
+  "start_url": "Feria_Partner_VIP.html",
   "display": "standalone",
   "background_color": "#050505",
   "theme_color": "#3b82f6",
