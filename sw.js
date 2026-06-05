@@ -1,7 +1,9 @@
-const CACHE_NAME = 'feria-partner-v1';
+const CACHE_NAME = 'feria-partner-v2'; // Cambiamos a v2 para que el cel borre la memoria vieja
 const ASSETS = [
   './',
   './index.html',
+  './Feria_Partner.html',
+  './Feria_Partner_VIP.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
