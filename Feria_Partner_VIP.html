@@ -325,7 +325,7 @@
 
                 document.getElementById('btn-activar').onclick = () => {
                     const claveIn = toInteger(document.getElementById('lic-clave').value, NaN);
-                    if (claveIn === (codigoID * 3) + 7) {
+                    if (claveIn === (codigoID * 5) + 7) {
                         alert("¡Licencia activada con éxito!");
                         setStoredValue(LICENSE_KEY, 'true');
                         setStoredValue(PROJECT_NAME_KEY, nombreTemp);
