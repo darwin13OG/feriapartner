@@ -170,10 +170,9 @@
       <p class="text-3xl font-extrabold mb-6 text-white">$10.000<span class="text-xs text-gray-500 font-normal"> / pago único</span></p>
       <p class="text-gray-400 text-sm mb-6 leading-relaxed">Lo esencial para controlar tu dinero y asegurar que tus cuentas cuadren frente al profesor.</p>
     </div>
-    <button onclick="abrirInstrucciones('Estándar', 'Feria_Partner.html')" class="w-full text-center bg-white text-black font-bold py-4 px-6 rounded-xl hover:bg-gray-200 transition-all uppercase text-xs tracking-widest">
-      Obtener Estándar
-    </button>
-  </div>
+ <a href="#" id="link-pago-estandar" class="block w-full text-center bg-white text-black font-bold py-4 px-6 rounded-xl hover:bg-gray-200 transition-all">
+    Obtener Estándar
+</a>
 
   <div class="glass-card p-8 rounded-[2rem] border-blue-500/20 flex flex-col justify-between relative overflow-hidden bg-blue-500/[0.02]">
     <div class="absolute top-0 right-0 bg-blue-rey text-white text-[9px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-bl-xl shadow-lg">
@@ -184,11 +183,9 @@
       <p class="text-3xl font-extrabold mb-6 text-white">$18.000<span class="text-xs text-gray-500 font-normal"> / pago único</span></p>
       <p class="text-gray-400 text-sm mb-6 leading-relaxed">Control absoluto con reportes PDF automáticos para el profesor, código QR offline y sistema inteligente anti-errores.</p>
     </div>
-    <button onclick="abrirInstrucciones('VIP Premium', 'Feria_Partner_VIP.html')" class="w-full text-center bg-blue-rey text-white font-bold py-4 px-6 rounded-xl hover:bg-blue-600 transition-all transform hover:scale-[1.02] shadow-lg shadow-blue-600/20 uppercase text-xs tracking-widest">
-      Obtener VIP Premium
-    </button>
-  </div>
-</section>
+ <a href="#" id="link-pago-premium" class="block w-full text-center bg-blue-rey text-white font-bold py-4 px-6 rounded-xl hover:bg-blue-700 transition-all">
+    Obtener Premium
+</a>
 <!-- 6. GUÍA DE FUNCIONAMIENTO Y SECCIONES -->
 <section id="guia-app" class="py-16 px-6 max-w-5xl mx-auto border-t border-zinc-900">
   <div class="text-center mb-12">
@@ -430,7 +427,7 @@
         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.93 0c3.166.001 6.141 1.233 8.379 3.475 2.238 2.24 3.467 5.214 3.465 8.379-.004 6.581-5.342 11.93-11.873 11.93h-.006c-2.014-.001-3.996-.532-5.747-1.539L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.743 1.451 5.377 0 9.754-4.331 9.756-9.65 0-2.577-1.004-5.001-2.83-6.824S14.5 1.254 11.925 1.254c-5.38 0-9.758 4.331-9.76 9.651 0 1.62.463 3.204 1.34 4.595l-.997 3.64 3.73-.974s.002-.001.002-.001zm11.332-5.41c-.287-.143-1.697-.838-1.959-.933-.262-.095-.452-.143-.642.143-.19.285-.736.933-.903 1.122-.166.19-.332.214-.619.071-.287-.143-1.21-.446-2.305-1.424-.853-.761-1.428-1.7-1.595-1.986-.167-.286-.018-.44.125-.581.129-.127.287-.333.43-.5.143-.167.19-.286.287-.476.095-.19.047-.357-.024-.5-.071-.143-.642-1.548-.88-2.119-.23-.556-.465-.482-.642-.491-.166-.008-.356-.01-.546-.01-.19 0-.5.071-.761.357-.262.286-1.001.977-1.001 2.38 0 1.403 1.022 2.761 1.165 2.951.143.19 2.012 3.073 4.874 4.31.681.294 1.213.47 1.627.601.684.217 1.307.186 1.8.113.55-.082 1.697-.693 1.935-1.361.238-.667.238-1.238.167-1.36-.072-.123-.262-.19-.549-.333z"/>
     </svg>
 </a>
-            <!-- MODAL DE GENERACIÓN DE LICENCIA (OCULTO POR DEFECTO) -->
+   <!-- MODAL DE GENERACIÓN DE LICENCIA -->
 <div id="modal-licencia" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
     <div class="bg-[#0b0b0b] border border-white/10 rounded-2xl p-6 max-w-md w-full shadow-2xl transform transition-all scale-95">
         
@@ -455,7 +452,7 @@
             </button>
         </div>
 
-        <!-- Resultado (Oculto hasta que procese) -->
+        <!-- Resultado -->
         <div class="space-y-4 hidden" id="paso-resultado">
             <div>
                 <label class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Tu Clave de Acceso</label>
@@ -469,7 +466,7 @@
                 </div>
             </div>
 
-            <!-- Advertencia en Rojo sugerida por Darwin -->
+            <!-- Advertencia -->
             <div class="bg-red-950/30 border border-red-500/20 rounded-xl p-3 text-center">
                 <p class="text-red-400 text-xs font-medium">
                     ⚠️ ¡IMPORTANTE! Copia este código ya y tómale captura. Si lo pierdes, tendrás que escribir a soporte en WhatsApp para recuperarlo.
@@ -486,8 +483,27 @@
 </div>
 
 <script>
-// LÓGICA DEL MODAL AUTOMÁTICO
-let versionComprada = 'premium'; // Esto cambiará dinámicamente según el plan elegido
+// LÓGICA DE CONTROL AUTOMÁTICO
+let versionComprada = 'premium'; 
+
+// AQUÍ PEGAREMOS LOS LINKS DE MERCADO PAGO EN EL SIGUIENTE PASO
+const LINK_ESTANDAR_PRUEBA = "#"; 
+const LINK_PREMIUM_PRUEBA = "#";
+
+window.onload = function() {
+    // 1. Asignamos los enlaces a los botones de las tarjetas
+    document.getElementById('link-pago-estandar').href = LINK_ESTANDAR_PRUEBA;
+    document.getElementById('link-pago-premium').href = LINK_PREMIUM_PRUEBA;
+
+    // 2. Revisamos si el cliente viene redirigido de un pago exitoso
+    const urlParams = new URLSearchParams(window.location.search);
+    const estadoPago = urlParams.get('pago'); 
+    const planComprado = urlParams.get('plan'); 
+
+    if (estadoPago === 'exitoso') {
+        abrirModalLicencia(planComprado || 'premium');
+    }
+}
 
 function abrirModalLicencia(version) {
     versionComprada = version;
@@ -499,6 +515,8 @@ function abrirModalLicencia(version) {
 
 function cerrarModalLicencia() {
     document.getElementById('modal-licencia').classList.add('hidden');
+    // Limpia la URL para que no se quede el modal abierto al recargar la página
+    window.history.replaceState({}, document.title, window.location.pathname);
 }
 
 function generarLicenciaAutomatica() {
@@ -508,14 +526,12 @@ function generarLicenciaAutomatica() {
         return;
     }
 
-    // Convertimos el nombre a un ID numérico sumando el código de las letras
     let idNumerico = 0;
     for (let i = 0; i < nombre.length; i++) {
         idNumerico += nombre.charCodeAt(i);
     }
-    idNumerico = (idNumerico % 900) + 100; // Nos da un ID limpio de 3 dígitos
+    idNumerico = (idNumerico % 900) + 100; 
 
-    // Aplicamos tus dos fórmulas matemáticas exactas
     let claveFinal = 0;
     if (versionComprada === 'estandar') {
         claveFinal = idNumerico * 3 + 7;
@@ -523,7 +539,6 @@ function generarLicenciaAutomatica() {
         claveFinal = idNumerico * 5 + 7;
     }
 
-    // Mostramos el resultado en el cuadrito
     document.getElementById('clave-generada').value = claveFinal;
     document.getElementById('paso-formulario').classList.add('hidden');
     document.getElementById('paso-resultado').classList.remove('hidden');
@@ -532,18 +547,16 @@ function generarLicenciaAutomatica() {
 function copiarClaveModal() {
     const inputClave = document.getElementById('clave-generada');
     inputClave.select();
-    inputClave.setSelectionRange(0, 99999); // Para celulares
+    inputClave.setSelectionRange(0, 99999); 
     navigator.clipboard.writeText(inputClave.value);
 
-    // Cambio del icono a un chulito de éxito
     const icono = document.getElementById('icono-copiar');
     icono.innerText = '✅';
     
-    // Lo regresa a la normalidad en 2 segundos
     setTimeout(() => {
         icono.innerText = '📋';
     }, 2000);
 }
-</script>
+</script>     
 </body>
 </html>
