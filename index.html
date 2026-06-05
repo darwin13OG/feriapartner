@@ -163,10 +163,25 @@
     </section>
 
     <!-- 5. TARJETAS DE PRECIOS -->
-   <a href="Feria_Partner.html" class="block w-full text-center bg-white text-black font-bold py-3 px-6 rounded-xl hover:bg-gray-200 transition-all">
-  1. INSTALAR VERSIÓN ESTÁNDAR
-  <a href="Feria_Partner_VIP.html" class="block w-full text-center bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-900/50">
-    1. INSTALAR VERSIÓN VIP PREMIUM
+<div class="space-y-4">
+  <!-- Tarjeta Estándar -->
+  <div class="border border-gray-800 p-6 rounded-2xl bg-zinc-900/50">
+    <h3 class="text-xl font-bold mb-2">Versión Estándar</h3>
+    <p class="text-gray-400 mb-4">Gestión esencial para tu puesto de feria.</p>
+    <button onclick="abrirInstrucciones('Estándar', 'Feria_Partner.html')" class="block w-full text-center bg-white text-black font-bold py-3 px-6 rounded-xl hover:bg-gray-200 transition-all">
+      Obtener Versión Estándar
+    </button>
+  </div>
+
+  <!-- Tarjeta VIP Premium -->
+  <div class="border border-blue-900 p-6 rounded-2xl bg-zinc-900/50">
+    <h3 class="text-xl font-bold text-blue-400 mb-2">Versión VIP Premium</h3>
+    <p class="text-gray-400 mb-4">Control total, reportes PDF y soporte prioritario.</p>
+    <button onclick="abrirInstrucciones('VIP Premium', 'Feria_Partner_VIP.html')" class="block w-full text-center bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-900/50">
+      Obtener Versión VIP Premium
+    </button>
+  </div>
+</div>
     <!-- 6. PREGUNTAS RÁPIDAS -->
     <section class="py-24 px-6 max-w-2xl mx-auto">
         <h2 class="text-center text-xs font-bold tracking-[0.4em] uppercase text-gray-600 mb-10 italic">FAQ • Preguntas Rápidas</h2>
