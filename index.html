@@ -247,35 +247,47 @@
     </script>
 
     <!-- CUADRO FLOTANTE DE INSTRUCCIONES -->
-    <div id="modal-instrucciones" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-      <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl max-w-md w-full shadow-2xl relative text-center">
-        
-        <!-- Botón para cerrar el cuadro -->
-        <button onclick="cerrarInstrucciones()" class="absolute top-4 right-4 text-gray-500 hover:text-white font-bold text-lg">&times;</button>
-        
-        <h3 id="modal-titulo" class="text-xl font-bold text-white mb-2">Activar Feria Partner</h3>
-        <p class="text-xs text-blue-400 font-semibold mb-4">⚠️ Sigue los pasos en orden para activar tu herramienta</p>
-        
-        <!-- Instrucciones exactas para Darwin -->
-        <div class="text-left bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-xs text-gray-300 space-y-3 mb-6">
-          <p><strong>1. Entrar a la Aplicación:</strong> Dale al botón azul de abajo para abrir la app. Una vez dentro, toca los 3 puntos de Chrome (arriba a la derecha) y dale a <strong>"Instalar aplicación"</strong>.</p>
-          <p><strong>2. Registrar tu Proyecto:</strong> Abre la app ya instalada en tu celular, escribe el nombre de tu proyecto y la aplicación te dará un <strong>ID único</strong> automáticamente.</p>
-          <p><strong>3. Pedir Licencia:</strong> Copia ese ID, regresa aquí y dale al botón verde de WhatsApp para mandarme el nombre de tu negocio y el ID para darte tu clave de acceso.</p>
-        </div>
-
-        <!-- Botones de Acción -->
-        <div class="space-y-3">
-          <!-- Botón 1: Abre la app elegida -->
-          <a id="btn-abrir-app" href="#" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all text-sm shadow-lg shadow-blue-900/30">
-            📲 1. Entrar y Registrar Proyecto
-          </a>
-          
-          <!-- Botón 2: WhatsApp con tu número oficial -->
-          <a href="https://wa.me/573206746396?text=%C2%A1Hola!%20Ya%20tengo%20el%20ID%20de%20mi%20aplicaci%C3%B3n%20para%20la%20licencia.%20Mi%20proyecto%20se%20llama:%20" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3 px-4 rounded-xl transition-all text-sm shadow-lg shadow-green-950/30">
-            💬 2. Mandar ID por WhatsApp
-          </a>
-        </div>
-      </div>
+<div id="modal-instrucciones" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
+  <div class="bg-[#111111] border border-zinc-800 p-6 rounded-2xl max-w-md w-full shadow-2xl relative text-center">
+    
+    <button onclick="cerrarInstrucciones()" class="absolute top-4 right-4 text-gray-500 hover:text-white font-bold text-lg">&times;</button>
+    
+    <h3 id="modal-titulo" class="text-xl font-bold text-white mb-1">Activar Feria Partner</h3>
+    <p class="text-xs text-blue-400 font-semibold mb-4">⚠️ Sigue los pasos en orden para instalar la app real</p>
+    
+    <div class="text-left bg-black p-4 rounded-xl border border-zinc-900 text-xs text-gray-400 space-y-3 mb-6">
+      <p><span class="text-blue-500 font-bold">PASO 1:</span> Dale al botón azul de abajo para abrir la app. Cuando cargue, toca los <strong>3 puntos de Chrome arriba a la derecha</strong> y selecciona <strong>"Instalar aplicación"</strong> o "Añadir a pantalla de inicio". <span class="text-white">(Así se guardará como app real offline)</span>.</p>
+      <p><span class="text-blue-500 font-bold">PASO 2:</span> Cierra el navegador, abre la app desde el icono que se te creó en el celular, escribe el nombre de tu proyecto y copia el <strong>ID único</strong> que te va a dar la pantalla.</p>
+      <p><span class="text-blue-500 font-bold">PASO 3:</span> Regresa aquí o ve a WhatsApp con el botón verde y mándame ese <strong>ID único junto al nombre de tu negocio</strong> para activarte la licencia.</p>
     </div>
+
+    <div class="space-y-3">
+      <a id="btn-abrir-app" href="#" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all text-sm shadow-lg shadow-blue-900/30">
+        📲 1. Abrir e Instalar como App
+      </a>
+      
+      <a href="https://wa.me/573206746396?text=%C2%A1Hola!%20Ya%20instal%C3%A9%20la%20app%20y%20tengo%20mi%20ID%20de%20licencia.%20Mi%20proyecto%20se%20llama:%20" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3 px-4 rounded-xl transition-all text-sm shadow-lg shadow-green-950/30">
+        💬 2. Mandar ID por WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function abrirInstrucciones(version, url) {
+    document.getElementById('modal-titulo').innerText = 'Pasos para ' + version;
+    document.getElementById('btn-abrir-app').href = url; // Configura el enlace para abrir el archivo correcto
+    document.getElementById('modal-instrucciones').classList.remove('hidden');
+  }
+
+  function cerrarInstrucciones() {
+    document.getElementById('modal-instrucciones').classList.add('hidden');
+  }
+
+  // Función para que el botón de arriba baje suavemente a las tarjetas
+  function irAPrecios() {
+    document.getElementById('seccion-precios').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
 </body>
 </html>
