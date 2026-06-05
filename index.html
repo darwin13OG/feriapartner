@@ -332,6 +332,25 @@
             </details>
         </div>
     </section>
+    <!-- Pregunta 4 -->
+<div class="bg-[#111111] p-5 rounded-xl border border-white/5 mb-4">
+    <h4 class="text-white font-semibold mb-2 flex items-center gap-2">
+        <span>💳</span> ¿Cómo se realiza el pago y cuánto tarda en activarse?
+    </h4>
+    <p class="text-gray-400 text-sm">
+        El pago se realiza de forma 100% automática y segura en la web a través de Nequi, Daviplata o PSE. Una vez que la transacción es aprobada, el sistema procesa tus datos de inmediato y te muestra tu clave de acceso directamente en la pantalla. No tienes que esperar aprobaciones manuales ni enviar comprobantes.
+    </p>
+</div>
+
+<!-- Pregunta 5 -->
+<div class="bg-[#111111] p-5 rounded-xl border border-white/5 mb-4">
+    <h4 class="text-white font-semibold mb-2 flex items-center gap-2">
+        <span>🔑</span> ¿Qué pasa si pierdo o cierro la pantalla con mi código de acceso?
+    </h4>
+    <p class="text-gray-400 text-sm">
+        Al finalizar el pago, el sistema te dará la opción de copiar tu clave. Es sumamente importante que le tomes captura o la guardes en un lugar seguro de inmediato. Si por accidente cierras la página sin guardarla, deberás usar el botón flotante de soporte para contactar a Darwin vía WhatsApp, adjuntando tu comprobante para verificar y recuperar tu licencia.
+    </p>
+</div>
 
     <!-- 7. FOOTER -->
     <footer class="py-16 border-t border-white/5 text-center text-gray-600 text-[10px] tracking-[0.3em] uppercase">
@@ -363,7 +382,7 @@
     <button onclick="cerrarInstrucciones()" class="absolute top-4 right-4 text-gray-500 hover:text-white font-bold text-lg">&times;</button>
     
     <h3 id="modal-titulo" class="text-xl font-bold text-white mb-1">Activar Feria Partner</h3>
-    <p class="text-xs text-blue-400 font-semibold mb-4">⚠️ Sigue los pasos en orden para instalar la app real</p>
+    <p class="text-xs text-blue-400 font-semibold mb-4">⚠️ Sigue los pasos en orden para instalar la app</p>
     
     <div class="text-left bg-black p-4 rounded-xl border border-zinc-900 text-xs text-gray-400 space-y-3 mb-6">
       <p><span class="text-blue-500 font-bold">PASO 1:</span> Dale al botón azul de abajo para abrir la app. Cuando cargue, toca los <strong>3 puntos de Chrome arriba a la derecha</strong> y selecciona <strong>"Instalar aplicación"</strong> o "Añadir a pantalla de inicio". <span class="text-white">(Así se guardará como app real offline)</span>.</p>
@@ -399,5 +418,15 @@
     document.getElementById('seccion-precios').scrollIntoView({ behavior: 'smooth' });
   }
 </script>
+    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+<a href="https://wa.me/573218322388?text=Hola%20Darwin,%20tengo%20una%20duda%20con%20Feria%20Partner..." 
+   target="_blank" 
+   class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:bg-[#20ba5a] transition-all transform hover:scale-110 flex items-center justify-center animate-bounce"
+   style="animation-duration: 3s;"
+   title="Soporte WhatsApp">
+    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.93 0c3.166.001 6.141 1.233 8.379 3.475 2.238 2.24 3.467 5.214 3.465 8.379-.004 6.581-5.342 11.93-11.873 11.93h-.006c-2.014-.001-3.996-.532-5.747-1.539L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.743 1.451 5.377 0 9.754-4.331 9.756-9.65 0-2.577-1.004-5.001-2.83-6.824S14.5 1.254 11.925 1.254c-5.38 0-9.758 4.331-9.76 9.651 0 1.62.463 3.204 1.34 4.595l-.997 3.64 3.73-.974s.002-.001.002-.001zm11.332-5.41c-.287-.143-1.697-.838-1.959-.933-.262-.095-.452-.143-.642.143-.19.285-.736.933-.903 1.122-.166.19-.332.214-.619.071-.287-.143-1.21-.446-2.305-1.424-.853-.761-1.428-1.7-1.595-1.986-.167-.286-.018-.44.125-.581.129-.127.287-.333.43-.5.143-.167.19-.286.287-.476.095-.19.047-.357-.024-.5-.071-.143-.642-1.548-.88-2.119-.23-.556-.465-.482-.642-.491-.166-.008-.356-.01-.546-.01-.19 0-.5.071-.761.357-.262.286-1.001.977-1.001 2.38 0 1.403 1.022 2.761 1.165 2.951.143.19 2.012 3.073 4.874 4.31.681.294 1.213.47 1.627.601.684.217 1.307.186 1.8.113.55-.082 1.697-.693 1.935-1.361.238-.667.238-1.238.167-1.36-.072-.123-.262-.19-.549-.333z"/>
+    </svg>
+</a>
 </body>
 </html>
