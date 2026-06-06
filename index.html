@@ -437,11 +437,11 @@
             locale: 'es-CO'
         });
 
-        // Función de Scroll Suave para el botón "Obtener ahora"
+  // Función de Scroll para el botón "Obtener ahora"
         function irAPrecios() {
             const seccion = document.getElementById('seccion-precios');
             if(seccion) {
-                seccion.scrollIntoView({ behavior: 'smooth' });
+                seccion.scrollIntoView(); // Le quitamos el 'smooth' interno para que no choque con Tailwind
             }
         }
 
@@ -453,13 +453,13 @@
             const paymentStatus = urlParams.get('status') || urlParams.get('collection_status');
             const paymentId = urlParams.get('payment_id') || urlParams.get('collection_id');
             
-            // Compatibilidad por si pruebas local con ?pago=exitoso&plan=estandar
+            // Compatibilidad por si pruebas local con ?pago=exitoso&plan=estandar o ?pago=exitoso&plan=premium
             const estadoPagoLocal = urlParams.get('pago');
             const planLocal = urlParams.get('plan');
 
             if ((paymentStatus === 'approved' && paymentId) || estadoPagoLocal === 'exitoso') {
                 
-                // Leemos cuál fue el último botón presionado en localStorage
+                // Leemos cuál fue el último botón presionado en localStorage o por URL local
                 let planComprado = localStorage.getItem('feria_plan_pendiente') || planLocal;
 
                 if (planComprado === 'estandar') {
@@ -467,18 +467,14 @@
                 } else {
                     abrirModalLicencia('premium');
                 }
-                localStorage.removeItem('feria_plan_pendiente');
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-});
 
-                // Limpieza de rastros para seguridad
+                // Limpieza de rastros en la URL por estética y seguridad
                 localStorage.removeItem('feria_plan_pendiente');
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
         });
 
-        // Oyentes de clicks para registrar intención de compra
+        // Oyentes de clicks para registrar intención de compra (Guarda el plan antes de ir a Mercado Pago)
         document.addEventListener('DOMContentLoaded', () => {
             const btnEstandar = document.getElementById('link-pago-estandar');
             const btnPremium = document.getElementById('link-pago-premium');
@@ -577,6 +573,6 @@
                 btnCerrar.innerText = 'Entendido, cerrar ventana';
             }
         }
-    </script> 
+    </script>
 </body>
 </html>
