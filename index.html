@@ -467,6 +467,10 @@
                 } else {
                     abrirModalLicencia('premium');
                 }
+                localStorage.removeItem('feria_plan_pendiente');
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+});
 
                 // Limpieza de rastros para seguridad
                 localStorage.removeItem('feria_plan_pendiente');
