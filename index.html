@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
-<script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feria Partner | Gestión de Emprendimiento</title>
@@ -163,7 +163,7 @@
         </div>
     </section>
 
-  <!-- 5. TARJETAS DE PRECIOS -->
+    <!-- 5. TARJETAS DE PRECIOS -->
     <section id="seccion-precios" class="py-12 px-6 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
         
         <div class="glass-card p-8 rounded-[2rem] border-white/5 flex flex-col justify-between relative overflow-hidden">
@@ -332,15 +332,6 @@
                     <span class="text-blue-rey transition-transform group-open:rotate-180">↓</span>
                 </summary>
                 <p class="px-6 pb-6 text-sm text-gray-500">
-                    Al descargar, se abre WhatsApp para coordinar el pago por Nequi o efectivo en el colegio.
-                </p>
-            </details>
-            <details class="glass-card rounded-2xl group border-white/5 mt-4">
-                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">
-                    ¿Cómo funciona el pago automático online y cuánto tarda?
-                    <span class="text-blue-rey transition-transform group-open:rotate-180">↓</span>
-                </summary>
-                <p class="px-6 pb-6 text-sm text-gray-500">
                     El pago se realiza de forma 100% segura en la web a través de Nequi, Daviplata o PSE. Una vez aprobado, el sistema procesa tus datos de inmediato y te muestra tu clave de acceso en la pantalla sin esperas manuales.
                 </p>
             </details>
@@ -361,7 +352,7 @@
         Feria Partner • Gestión de Emprendimiento 
     </footer>
 
-<!-- MODAL DE GENERACIÓN DE LICENCIA -->
+    <!-- MODAL DE GENERACIÓN DE LICENCIA -->
     <div id="modal-licencia" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
         <div class="bg-[#0b0b0b] border border-white/10 rounded-2xl p-6 max-w-md w-full shadow-2xl text-center">
             
@@ -375,7 +366,7 @@
             <div class="space-y-4" id="paso-formulario">
                 <div class="text-left">
                     <label class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Nombre de tu Proyecto / Stand</label>
-                    <input type="text" id="nombre-proyecto-modal" placeholder="Ej. DARWIN GADGETS" 
+                    <input type="text" id="nombre-proyecto-modal" placeholder="Ej. MI EMPRENDIMIENTO" 
                            class="w-full bg-[#111] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-blue-500 transition-colors uppercase">
                 </div>
                 <button onclick="generarLicenciaAutomatica()" 
@@ -384,10 +375,10 @@
                 </button>
             </div>
 
-            <!-- Paso 2: Mostrar Resultados de Clave e Instalador REORGANIZADO -->
+            <!-- Paso 2: Mostrar Resultados de Clave e Instalador -->
             <div class="space-y-5 hidden" id="paso-resultado">
                 
-                <!-- PASO 1 ACTUALIZADO: COPIAR CLAVE -->
+                <!-- COPIAR CLAVE -->
                 <div class="text-left bg-zinc-900/50 p-4 rounded-xl border border-white/5">
                     <label class="block text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">PASO 1: Copia tu Clave de Acceso</label>
                     <p class="text-[11px] text-gray-400 mb-2">La necesitarás obligatoriamente para iniciar sesión en la app.</p>
@@ -400,7 +391,7 @@
                     </div>
                 </div>
 
-                <!-- PASO 2 ACTUALIZADO: DESCARGAR/ABRIR APP -->
+                <!-- DESCARGAR/ABRIR APP -->
                 <div class="text-left bg-zinc-900/50 p-4 rounded-xl border border-white/5">
                     <label class="block text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">PASO 2: Abre e Instala la Aplicación</label>
                     <p class="text-[11px] text-gray-400 mb-3">Dale clic abajo. Cuando abra, dale a los 3 puntos de tu navegador y selecciona <b>"Instalar"</b> o <b>"Agregar a pantalla de inicio"</b>.</p>
@@ -416,7 +407,7 @@
                     </p>
                 </div>
 
-                <!-- BOTÓN DE CIERRE ENGAÑOSO (Bloqueado hasta que abran la app) -->
+                <!-- BOTÓN DE CIERRE -->
                 <button id="btn-cerrar-modal" onclick="cerrarModalLicencia()" disabled
                         class="w-full bg-zinc-900 text-zinc-600 font-medium py-3 rounded-xl text-xs transition-all border border-white/5 cursor-not-allowed opacity-50">
                     Primero completa los pasos de arriba
@@ -426,7 +417,7 @@
         </div>
     </div>
 
- <!-- BOTÓN FLOTANTE DE WHATSAPP CORREGIDO -->
+    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
     <a href="https://wa.me/573218322388?text=Hola%20Darwin,%20tengo%20una%20duda%20con%20Feria%20Partner..." 
        target="_blank" 
        class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white w-14 h-14 rounded-full shadow-2xl hover:bg-[#20ba5a] transition-all transform hover:scale-110 flex items-center justify-center animate-bounce"
@@ -437,9 +428,14 @@
         </svg>
     </a>
 
-    <!-- LÓGICA DE PROGRAMACIÓN CONTROLADA -->
+    <!-- LÓGICA DE PROGRAMACIÓN INTEGRADA Y LIMPIA -->
     <script>
         let versionComprada = 'premium'; // Por defecto
+
+        // Inicializamos Mercado Pago con tu SDK oficial
+        const mp = new MercadoPago('APP_USR-94cdc122-e2fc-44c1-a30b-4a8ad283753f', {
+            locale: 'es-CO'
+        });
 
         // Función de Scroll Suave para el botón "Obtener ahora"
         function irAPrecios() {
@@ -449,16 +445,51 @@
             }
         }
 
-        window.onload = function() {
-            // Escuchar los parámetros URL de Mercado Pago (Simulados o Reales)
+        // CAPTURA AUTOMÁTICA POST-PAGO
+        window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const estadoPago = urlParams.get('pago');
-            const planComprado = urlParams.get('plan');
+            
+            // Mercado Pago devuelve estos parámetros al procesar Checkout Pro de forma real
+            const paymentStatus = urlParams.get('status') || urlParams.get('collection_status');
+            const paymentId = urlParams.get('payment_id') || urlParams.get('collection_id');
+            
+            // Compatibilidad por si pruebas local con ?pago=exitoso&plan=estandar
+            const estadoPagoLocal = urlParams.get('pago');
+            const planLocal = urlParams.get('plan');
 
-            if (estadoPago === 'exitoso') {
-                abrirModalLicencia(planComprado || 'premium');
+            if ((paymentStatus === 'approved' && paymentId) || estadoPagoLocal === 'exitoso') {
+                
+                // Leemos cuál fue el último botón presionado en localStorage
+                let planComprado = localStorage.getItem('feria_plan_pendiente') || planLocal;
+
+                if (planComprado === 'estandar') {
+                    abrirModalLicencia('estandar');
+                } else {
+                    abrirModalLicencia('premium');
+                }
+
+                // Limpieza de rastros para seguridad
+                localStorage.removeItem('feria_plan_pendiente');
+                window.history.replaceState({}, document.title, window.location.pathname);
             }
-        };
+        });
+
+        // Oyentes de clicks para registrar intención de compra
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnEstandar = document.getElementById('link-pago-estandar');
+            const btnPremium = document.getElementById('link-pago-premium');
+
+            if(btnEstandar) {
+                btnEstandar.addEventListener('click', () => {
+                    localStorage.setItem('feria_plan_pendiente', 'estandar');
+                });
+            }
+            if(btnPremium) {
+                btnPremium.addEventListener('click', () => {
+                    localStorage.setItem('feria_plan_pendiente', 'premium');
+                });
+            }
+        });
 
         function abrirModalLicencia(version) {
             versionComprada = version;
@@ -476,7 +507,6 @@
             if(modal) {
                 modal.classList.add('hidden');
             }
-            // Limpia los parámetros de la URL para que no se quede bloqueado en "pago=exitoso" al recargar
             window.history.replaceState({}, document.title, window.location.pathname);
         }
 
@@ -489,14 +519,14 @@
 
             const nombreTemp = nombreInput.toUpperCase();
 
-            // CÁLCULO EXACTO DE TU APLICACIÓN (Suma de caracteres ASCII)
+            // CÁLCULO EXACTO (ASCII)
             let idNumerico = 0;
             for (let i = 0; i < nombreTemp.length; i++) {
                 idNumerico += nombreTemp.charCodeAt(i);
             }
             let codigoID = (idNumerico % 900) + 100;
 
-            // APLICACIÓN DE TUS FÓRMULAS MATEMÁTICAS REALES SECRETA
+            // FÓRMULAS MATEMÁTICAS
             let claveFinal = 0;
             if (versionComprada === 'estandar') {
                 claveFinal = (codigoID * 3) + 7;
@@ -504,141 +534,7 @@
                 claveFinal = (codigoID * 5) + 7;
             }
 
-            // Configurar enlace de descarga dinámico según la versión adquirida
-            const btnDescargar = document.getElementById('btn-descargar-app');
-            if (versionComprada === 'estandar') {
-                btnDescargar.href = 'Feria_Partner.html'; 
-                btnDescargar.innerText = '📥 1. Descargar Versión Estándar';
-            } else {
-                btnDescargar.href = 'Feria_Partner_VIP.html'; 
-                btnDescargar.innerText = '📥 1. Descargar Versión Premium VIP';
-            }
-
-            // Inyectar resultados finales en los inputs correspondientes del modal
-            document.getElementById('clave-generada').value = claveFinal;
-            document.getElementById('paso-formulario').classList.add('hidden');
-            document.getElementById('paso-resultado').classList.remove('hidden');
-        }
-
-        function copiarClaveModal() {
-            const inputClave = document.getElementById('clave-generada');
-            inputClave.select();
-            inputClave.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(inputClave.value);
-
-            const icono = document.getElementById('icono-copiar');
-            if (icono) {
-                icono.innerText = '✅';
-                setTimeout(() => {
-                    icono.innerText = '📋';
-                }, 2000);
-            }
-        }
-        function activarBotonCierre() {
-            const btnCerrar = document.getElementById('btn-cerrar-modal');
-            if (btnCerrar) {
-                btnCerrar.disabled = false;
-                btnCerrar.classList.remove('cursor-not-allowed', 'opacity-50', 'text-zinc-600', 'bg-zinc-900');
-                btnCerrar.classList.add('bg-red-600', 'hover:bg-red-700', 'text-white', 'font-bold');
-                btnCerrar.innerText = 'Entendido, cerrar ventana';
-            }
-        }
-        
-// ==========================================
-// INTEGRACIÓN INTELIGENTE DE MERCADO PAGO
-// ==========================================
-<script>
-        let versionComprada = 'premium'; // Por defecto
-
-        // Inicializamos Mercado Pago con tu SDK oficial
-        const mp = new MercadoPago('APP_USR-94cdc122-e2fc-44c1-a30b-4a8ad283753f', {
-            locale: 'es-CO'
-        });
-
-        function irAPrecios() {
-            const seccion = document.getElementById('seccion-precios');
-            if(seccion) {
-                seccion.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        // CAPTURA AUTOMÁTICA POST-PAGO
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            
-            // Mercado Pago devuelve estos tres parámetros exactos al procesar Checkout Pro
-            const paymentStatus = urlParams.get('status') || urlParams.get('collection_status');
-            const paymentId = urlParams.get('payment_id') || urlParams.get('collection_id');
-            const preferenceId = urlParams.get('preference_id');
-
-            // Si el estado está aprobado por la pasarela, disparamos el flujo
-            if (paymentStatus === 'approved' && paymentId) {
-                
-                // Leemos cuál fue el último botón que el usuario presionó antes de irse
-                const planComprado = localStorage.getItem('feria_plan_pendiente');
-
-                if (planComprado === 'estandar') {
-                    abrirModalLicencia('estandar');
-                } else {
-                    // Por seguridad, si no hay registro o es premium, entregamos Premium
-                    abrirModalLicencia('premium');
-                }
-
-                // LIMPIEZA DE URL: Borramos los rastros para evitar que el usuario recargue y genere otra clave gratis
-                localStorage.removeItem('feria_plan_pendiente');
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
-        });
-
-        // Oyentes para dejar una marca en el navegador sobre qué plan se intentó pagar
-        document.getElementById('link-pago-estandar').addEventListener('click', () => {
-            localStorage.setItem('feria_plan_pendiente', 'estandar');
-        });
-
-        document.getElementById('link-pago-premium').addEventListener('click', () => {
-            localStorage.setItem('feria_plan_pendiente', 'premium');
-        });
-
-        function abrirModalLicencia(version) {
-            versionComprada = version;
-            const modal = document.getElementById('modal-licencia');
-            if (modal) {
-                modal.classList.remove('hidden');
-                document.getElementById('paso-formulario').classList.remove('hidden');
-                document.getElementById('paso-resultado').classList.add('hidden');
-                document.getElementById('nombre-proyecto-modal').value = '';
-            }
-        }
-
-        function cerrarModalLicencia() {
-            const modal = document.getElementById('modal-licencia');
-            if(modal) {
-                modal.classList.add('hidden');
-            }
-        }
-
-        function generarLicenciaAutomatica() {
-            const nombreInput = document.getElementById('nombre-proyecto-modal').value.trim();
-            if (!nombreInput) {
-                alert("Por favor, escribe el nombre de tu proyecto.");
-                return;
-            }
-
-            const nombreTemp = nombreInput.toUpperCase();
-
-            let idNumerico = 0;
-            for (let i = 0; i < nombreTemp.length; i++) {
-                idNumerico += nombreTemp.charCodeAt(i);
-            }
-            let codigoID = (idNumerico % 900) + 100;
-
-            let claveFinal = 0;
-            if (versionComprada === 'estandar') {
-                claveFinal = (codigoID * 3) + 7;
-            } else {
-                claveFinal = (codigoID * 5) + 7;
-            }
-
+            // Enlace de descarga dinámico
             const btnDescargar = document.getElementById('btn-descargar-app');
             if (versionComprada === 'estandar') {
                 btnDescargar.href = 'Feria_Partner.html'; 
