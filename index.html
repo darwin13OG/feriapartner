@@ -165,15 +165,30 @@
 <!-- 5. TARJETAS DE PRECIOS -->
 <section id="seccion-precios" class="py-12 px-6 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
     
-  <!-- Botón Estándar -->
-<a href="#" id="link-pago-estandar" class="w-full text-center bg-white text-black font-bold py-4 px-6 rounded-xl hover:bg-gray-200 transition-all">
-    Obtener Estándar
-</a>
+    <div class="glass-card p-8 rounded-[2rem] border-white/5 flex flex-col justify-between relative overflow-hidden">
+        <div>
+            <h3 class="text-xl font-bold mb-2 uppercase tracking-wider">Versión Estándar</h3>
+            <p class="text-3xl font-extrabold mb-6 text-white">$10.000<span class="text-xs text-gray-500 font-normal"> / pago único</span></p>
+            <p class="text-gray-400 text-sm mb-6 leading-relaxed">Lo esencial para controlar tu dinero y asegurar que tus cuentas cuadren frente al profesor.</p>
+        </div>
+        <a href="javascript:void(0);" id="link-pago-estandar" class="w-full text-center bg-white text-black font-bold py-4 px-6 rounded-xl hover:bg-gray-200 transition-all">
+            Obtener Estándar
+        </a>
+    </div>
 
-<!-- Botón Premium -->
-<a href="#" id="link-pago-premium" class="w-full text-center bg-blue-rey text-white font-bold py-4 px-6 rounded-xl hover:bg-blue-700 transition-all">
-    Obtener VIP Premium
-</a>
+    <div class="glass-card p-8 rounded-[2rem] border-blue-500/20 flex flex-col justify-between relative overflow-hidden bg-blue-500/[0.02]">
+        <div class="absolute top-0 right-0 bg-blue-rey text-white text-[9px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-bl-xl shadow-lg">
+            Recomendado
+        </div>
+        <div>
+            <h3 class="text-xl font-bold mb-2 uppercase tracking-wider text-blue-rey">Premium</h3>
+            <p class="text-3xl font-extrabold mb-6 text-white">$18.000<span class="text-xs text-gray-500 font-normal"> / pago único</span></p>
+            <p class="text-gray-400 text-sm mb-6 leading-relaxed">Control absoluto con reportes PDF automáticos para el profesor, código QR offline y sistema inteligente anti-errores.</p>
+        </div>
+        <a href="javascript:void(0);" id="link-pago-premium" class="w-full text-center bg-blue-rey text-white font-bold py-4 px-6 rounded-xl hover:bg-blue-700 transition-all">
+            Obtener Premium
+        </a>
+    </div>
 
 </section>
 <!-- 6. GUÍA DE FUNCIONAMIENTO Y SECCIONES -->
@@ -419,52 +434,54 @@
 </a>
    <!-- MODAL DE GENERACIÓN DE LICENCIA -->
 <div id="modal-licencia" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-    <div class="bg-[#0b0b0b] border border-white/10 rounded-2xl p-6 max-w-md w-full shadow-2xl transform transition-all scale-95">
+    <div class="bg-[#0b0b0b] border border-white/10 rounded-2xl p-6 max-w-md w-full shadow-2xl text-center">
         
-        <!-- Encabezado -->
         <div class="text-center mb-6">
             <div class="text-4xl mb-2">🎉</div>
-            <h3 class="text-xl font-bold text-white">¡Pago Confirmado Exitosamente!</h3>
-            <p class="text-gray-400 text-xs mt-1">Vamos a generar tu clave de acceso exclusiva.</p>
+            <h3 class="text-xl font-bold text-white">¡Pago Confirmado!</h3>
+            <p class="text-gray-400 text-xs mt-1">Sigue los pasos en orden para activar tu aplicación.</p>
         </div>
 
-        <!-- Formulario -->
         <div class="space-y-4" id="paso-formulario">
-            <div>
+            <div class="text-left">
                 <label class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Nombre de tu Proyecto / Stand</label>
-                <input type="text" id="nombre-proyecto-modal" placeholder="Ej. Los Genios de Sexto" 
+                <input type="text" id="nombre-proyecto-modal" placeholder="Ej. Darwin Gadgets" 
                        class="w-full bg-[#111] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-blue-500 transition-colors">
             </div>
-            
             <button onclick="generarLicenciaAutomatica()" 
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition-all shadow-lg shadow-blue-600/20">
-                Generar Mi Clave
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition-all">
+                Generar Mi Licencia
             </button>
         </div>
 
-        <!-- Resultado -->
-        <div class="space-y-4 hidden" id="paso-resultado">
-            <div>
-                <label class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Tu Clave de Acceso</label>
+        <div class="space-y-5 hidden" id="paso-resultado">
+            
+            <div class="text-left">
+                <label class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Paso 1: Descarga la Aplicación</label>
+                <a href="#" id="btn-descargar-app" download class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition-all shadow-lg shadow-blue-600/20">
+                    📥 1. Abrir e Instalar como App
+                </a>
+            </div>
+
+            <div class="text-left">
+                <label class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Paso 2: Tu Clave de Acceso Única</label>
                 <div class="flex gap-2">
                     <input type="text" id="clave-generada" readonly 
                            class="w-full bg-[#161616] border border-green-500/30 rounded-xl px-4 py-3 text-green-400 font-mono text-center text-lg font-bold focus:outline-none">
-                    <button onclick="copiarClaveModal()" id="btn-copiar-modal"
-                            class="bg-[#161616] border border-white/10 hover:border-white/20 px-4 rounded-xl text-white transition-all flex items-center justify-center">
+                    <button onclick="copiarClaveModal()" class="bg-[#161616] border border-white/10 hover:border-white/20 px-4 rounded-xl text-white transition-all flex items-center justify-center">
                         <span id="icono-copiar">📋</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Advertencia -->
             <div class="bg-red-950/30 border border-red-500/20 rounded-xl p-3 text-center">
-                <p class="text-red-400 text-xs font-medium">
-                    ⚠️ ¡IMPORTANTE! Copia este código ya y tómale captura. Si lo pierdes, tendrás que escribir a soporte en WhatsApp para recuperarlo.
+                <p class="text-red-400 text-[11px] font-medium">
+                    ⚠️ ¡IMPORTANTE! Copia tu clave ahora. Al cerrar esta ventana no podrás volver a verla.
                 </p>
             </div>
 
             <button onclick="cerrarModalLicencia()" 
-                    class="w-full bg-[#111] hover:bg-[#161616] text-gray-300 font-medium py-2.5 rounded-xl text-xs transition-colors border border-white/5">
+                    class="w-full bg-[#111] hover:bg-[#161616] text-gray-300 font-medium py-2 rounded-xl text-xs transition-colors border border-white/5">
                 Cerrar y salir
             </button>
         </div>
@@ -481,18 +498,25 @@ const LINK_ESTANDAR_PRUEBA = "#";
 const LINK_PREMIUM_PRUEBA = "#";
 
 window.onload = function() {
-    // 1. Asignamos la simulación directa a los botones para que no recarguen la página
-    document.getElementById('link-pago-estandar').onclick = function(e) {
-        e.preventDefault(); // Evita que la página salte hacia arriba
-        abrirModalLicencia('estandar');
-    };
+    // 1. Vinculamos los botones para abrir el modal sin saltos en la pantalla
+    const btnEstandar = document.getElementById('link-pago-estandar');
+    const btnPremium = document.getElementById('link-pago-premium');
 
-    document.getElementById('link-pago-premium').onclick = function(e) {
-        e.preventDefault(); // Evita que la página salte hacia arriba
-        abrirModalLicencia('premium');
-    };
+    if (btnEstandar) {
+        btnEstandar.onclick = function(e) {
+            e.preventDefault();
+            abrirModalLicencia('estandar');
+        };
+    }
 
-    // 2. Revisamos si el cliente viene redirigido de un pago exitoso real (Mercado Pago)
+    if (btnPremium) {
+        btnPremium.onclick = function(e) {
+            e.preventDefault();
+            abrirModalLicencia('premium');
+        };
+    }
+
+    // 2. Lógica para capturar redirección de Mercado Pago real
     const urlParams = new URLSearchParams(window.location.search);
     const estadoPago = urlParams.get('pago');
     const planComprado = urlParams.get('plan');
@@ -502,17 +526,21 @@ window.onload = function() {
     }
 }
 
+let versionComprada = 'premium';
+
 function abrirModalLicencia(version) {
     versionComprada = version;
-    document.getElementById('modal-licencia').classList.remove('hidden');
-    document.getElementById('paso-formulario').classList.remove('hidden');
-    document.getElementById('paso-resultado').classList.add('hidden');
-    document.getElementById('nombre-proyecto-modal').value = '';
+    const modal = document.getElementById('modal-licencia');
+    if (modal) {
+        modal.classList.remove('hidden');
+        document.getElementById('paso-formulario').classList.remove('hidden');
+        document.getElementById('paso-resultado').classList.add('hidden');
+        document.getElementById('nombre-proyecto-modal').value = '';
+    }
 }
 
 function cerrarModalLicencia() {
     document.getElementById('modal-licencia').classList.add('hidden');
-    // Limpia la URL para que no se quede el modal abierto al recargar la página
     window.history.replaceState({}, document.title, window.location.pathname);
 }
 
@@ -523,12 +551,13 @@ function generarLicenciaAutomatica() {
         return;
     }
 
+    // LÓGICA AUTOMÁTICA DE ID REPRODUCTA DE TU APP (Suma de caracteres ASCII)
     let idNumerico = 0;
     for (let i = 0; i < nombre.length; i++) {
         idNumerico += nombre.charCodeAt(i);
     }
-    idNumerico = (idNumerico % 900) + 100; 
 
+    // APLICACIÓN DE TUS FÓRMULAS MATEMÁTICAS REALES
     let claveFinal = 0;
     if (versionComprada === 'estandar') {
         claveFinal = idNumerico * 3 + 7;
@@ -536,6 +565,15 @@ function generarLicenciaAutomatica() {
         claveFinal = idNumerico * 5 + 7;
     }
 
+    // CONFIGURAR EL BOTÓN DE DESCARGA SEGÚN LO QUE COMPRÓ
+    const btnDescargar = document.getElementById('btn-descargar-app');
+    if (versionComprada === 'estandar') {
+        btnDescargar.href = 'Feria_Partner.html';
+    } else {
+        btnDescargar.href = 'Feria_Partner_VIP.html';
+    }
+
+    // Mostramos los resultados finales en la interfaz
     document.getElementById('clave-generada').value = claveFinal;
     document.getElementById('paso-formulario').classList.add('hidden');
     document.getElementById('paso-resultado').classList.remove('hidden');
@@ -544,15 +582,16 @@ function generarLicenciaAutomatica() {
 function copiarClaveModal() {
     const inputClave = document.getElementById('clave-generada');
     inputClave.select();
-    inputClave.setSelectionRange(0, 99999); 
+    inputClave.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(inputClave.value);
 
     const icono = document.getElementById('icono-copiar');
-    icono.innerText = '✅';
-    
-    setTimeout(() => {
-        icono.innerText = '📋';
-    }, 2000);
+    if (icono) {
+        icono.innerText = '✅';
+        setTimeout(() => {
+            icono.innerText = '📋';
+        }, 2000);
+    }
 }
 </script>     
 </body>
