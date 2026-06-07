@@ -195,29 +195,28 @@
 
     </section>
 
-  <!-- 5.5 SECCIÓN: PAGO EN EFECTIVO CON DESPLIEGUE SUAVE -->
+<!-- 5.5 SECCIÓN UNIFICADA: PAGO EN EFECTIVO CON DESPLIEGUE SUAVE -->
     <div class="max-w-4xl mx-auto px-6 mb-16">
-        <!-- Contenedor con borde Azul Rey Neón Suave -->
-        <div class="border border-blue-500/30 rounded-2xl overflow-hidden bg-zinc-950/40 backdrop-blur-sm shadow-[0_0_15px_rgba(59,130,246,0.1)]">
+        <!-- Contenedor con Borde Azul Neón Suave y Elegante -->
+        <div class="border border-blue-500/20 rounded-2xl overflow-hidden bg-zinc-950/40 backdrop-blur-sm shadow-[0_0_20px_rgba(59,130,246,0.05)] transition-all duration-300 hover:border-blue-500/30">
             
-            <!-- Botón de apertura (Encabezado) -->
-            <button onclick="toggleEfectivo()" class="w-full flex justify-between items-center p-6 text-left select-none bg-white/5 hover:bg-white/[0.08] transition-colors focus:outline-none">
+            <!-- Encabezado / Botón de Apertura -->
+            <button onclick="toggleEfectivo()" class="w-full flex justify-between items-center p-6 text-left select-none bg-white/[0.02] hover:bg-white/[0.05] transition-colors focus:outline-none">
                 <span class="font-semibold text-zinc-200 flex items-center gap-3 text-base sm:text-lg">
                     💵 ¿Prefieres pagar en efectivo? ¡Instala la App aquí!
                 </span>
-                <!-- Flecha con transición de rotación -->
                 <span id="flecha-efectivo" class="text-blue-rey transition-transform duration-300 text-lg">↓</span>
             </button>
             
-            <!-- Contenedor de la Animación (Empieza cerrado con altura 0) -->
+            <!-- Contenedor de la Animación de Despliegue Suave -->
             <div id="contenido-efectivo" class="transition-all duration-500 ease-in-out max-h-0 overflow-hidden">
-                <div class="p-6 border-t border-white/5 bg-black/20 space-y-6">
+                <div class="p-6 border-t border-white/5 bg-black/10 space-y-6">
                     <p class="text-sm text-gray-400 leading-relaxed">
                         Si no manejas cuentas virtuales, no te preocupes. Puedes instalar la aplicación directamente en tu celular ahora mismo y coordinar el pago de tu clave de acceso en efectivo conmigo.
                     </p>
 
                     <!-- Pasos de Instalación -->
-                    <div class="bg-zinc-900/50 border border-white/5 rounded-xl p-5 space-y-4 text-left">
+                    <div class="bg-zinc-900/40 border border-white/5 rounded-xl p-5 space-y-4 text-left">
                         <p class="text-xs font-bold text-blue-rey uppercase tracking-wider">¿Cómo instalarla en tu celular?</p>
                         <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2.5">
                             <li>Elige abajo la versión que deseas y abre el enlace oficial en tu navegador <b>Google Chrome</b> o <b>Safari</b>.</li>
@@ -226,12 +225,14 @@
                         </ol>
                     </div>
 
-                    <!-- Botones de Descarga/Instalación Directa -->
+                    <!-- Botones de Descarga con la misma Experiencia de la Web -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                        <a href="https://darwin13og.github.io/feriapartner/Feria_Partner.html" target="_blank" class="block w-full text-center bg-[#161616] border border-white/10 hover:border-white/20 text-white font-bold py-3 px-4 rounded-xl transition-all text-xs uppercase tracking-wider">
+                        <!-- Estándar: Estilo Sobrio de tu Tarjeta de la Web -->
+                        <a href="https://darwin13og.github.io/feriapartner/Feria_Partner.html" target="_blank" class="block w-full text-center bg-white text-black font-bold py-4 px-6 rounded-xl hover:bg-gray-200 transition-all text-xs uppercase tracking-wider">
                             📲 Abrir Versión Estándar
                         </a>
-                        <a href="https://darwin13og.github.io/feriapartner/Feria_Partner_VIP.html" target="_blank" class="block w-full text-center bg-blue-rey hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-lg shadow-blue-600/10 text-xs uppercase tracking-wider">
+                        <!-- Premium: Recupera el Degradado Neón Oficial de la Web -->
+                        <a href="https://darwin13og.github.io/feriapartner/Feria_Partner_VIP.html" target="_blank" class="block w-full text-center bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-blue-600/10 text-xs uppercase tracking-wider">
                             👑 Abrir Versión Premium
                         </a>
                     </div>
@@ -239,7 +240,7 @@
                     <!-- Instrucción Final de WhatsApp -->
                     <div class="border-t border-white/5 pt-4 text-center">
                         <p class="text-xs text-gray-500 mb-2">
-                            ⚠️ Al abrir la aplicación te solicitará obligatóriamente una Clave de Acceso.
+                            ⚠️ Al abrir la aplicación te solicitará obligatoriamente una Clave de Acceso.
                         </p>
                         <p class="text-sm text-gray-300 font-medium">
                             Escríbeme de inmediato al WhatsApp comentándome el nombre de tu stand y te genero tu código de activación manual tras recibir el pago.
@@ -249,134 +250,6 @@
             </div>
         </div>
     </div>
-
-   <!-- 5.5 SECCIÓN: PAGO EN EFECTIVO CON DESPLIEGUE SUAVE -->
-    <div class="max-w-4xl mx-auto px-6 mb-16">
-        <!-- Contenedor con borde Azul Rey Neón Suave -->
-        <div class="border border-blue-500/30 rounded-2xl overflow-hidden bg-zinc-950/40 backdrop-blur-sm shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-            
-            <!-- Botón de apertura (Encabezado) -->
-            <button onclick="toggleEfectivo()" class="w-full flex justify-between items-center p-6 text-left select-none bg-white/5 hover:bg-white/[0.08] transition-colors focus:outline-none">
-                <span class="font-semibold text-zinc-200 flex items-center gap-3 text-base sm:text-lg">
-                    💵 ¿Prefieres pagar en efectivo? ¡Instala la App aquí!
-                </span>
-                <!-- Flecha con transición de rotación -->
-                <span id="flecha-efectivo" class="text-blue-rey transition-transform duration-300 text-lg">↓</span>
-            </button>
-            
-            <!-- Contenedor de la Animación (Empieza cerrado con altura 0) -->
-            <div id="contenido-efectivo" class="transition-all duration-500 ease-in-out max-h-0 overflow-hidden">
-                <div class="p-6 border-t border-white/5 bg-black/20 space-y-6">
-                    <p class="text-sm text-gray-400 leading-relaxed">
-                        Si no manejas cuentas virtuales, no te preocupes. Puedes instalar la aplicación directamente en tu celular ahora mismo y coordinar el pago de tu clave de acceso en efectivo conmigo.
-                    </p>
-
-                    <!-- Pasos de Instalación -->
-                    <div class="bg-zinc-900/50 border border-white/5 rounded-xl p-5 space-y-4 text-left">
-                        <p class="text-xs font-bold text-blue-rey uppercase tracking-wider">¿Cómo instalarla en tu celular?</p>
-                        <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2.5">
-                            <li>Elige abajo la versión que deseas y abre el enlace oficial en tu navegador <b>Google Chrome</b> o <b>Safari</b>.</li>
-                            <li>Presiona los <b>3 puntos</b> arriba a la derecha (o el botón compartir en iPhone).</li>
-                            <li>Selecciona la opción <b>"Añadir a la pantalla de inicio"</b> o <b>"Instalar aplicación"</b>.</li>
-                        </ol>
-                    </div>
-
-                    <!-- Botones de Descarga/Instalación Directa -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                        <a href="https://darwin13og.github.io/feriapartner/Feria_Partner.html" target="_blank" class="block w-full text-center bg-[#161616] border border-white/10 hover:border-white/20 text-white font-bold py-3 px-4 rounded-xl transition-all text-xs uppercase tracking-wider">
-                            🚀 Abrir Versión Estándar
-                        </a>
-                        <a href="https://darwin13og.github.io/feriapartner/Feria_Partner_VIP.html" target="_blank" class="block w-full text-center bg-blue-rey hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-lg shadow-blue-600/10 text-xs uppercase tracking-wider">
-                            🚀 Abrir Versión Premium VIP
-                        </a>
-                    </div>
-
-                    <!-- Instrucción Final de WhatsApp -->
-                    <div class="border-t border-white/5 pt-4 text-center">
-                        <p class="text-xs text-gray-500 mb-2">
-                            ⚠️ Al abrir la aplicación te solicitará obligatóriamente una Clave de Acceso.
-                        </p>
-                        <p class="text-sm text-gray-300 font-medium">
-                            Escríbeme de inmediato al WhatsApp comentándome el nombre de tu stand y te genero tu código de activación manual tras recibir el pago.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<!-- 5.5 SECCIÓN: PAGO EN EFECTIVO CON DESPLIEGUE SUAVE -->
-    <div class="max-w-4xl mx-auto px-6 mb-16">
-        <!-- Contenedor con borde Azul Rey Neón Suave -->
-        <div class="border border-blue-500/30 rounded-2xl overflow-hidden bg-zinc-950/40 backdrop-blur-sm shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-            
-            <!-- Botón de apertura (Encabezado) -->
-            <button onclick="toggleEfectivo()" class="w-full flex justify-between items-center p-6 text-left select-none bg-white/5 hover:bg-white/[0.08] transition-colors focus:outline-none">
-                <span class="font-semibold text-zinc-200 flex items-center gap-3 text-base sm:text-lg">
-                    💵 ¿Prefieres pagar en efectivo? ¡Instala la App aquí!
-                </span>
-                <!-- Flecha con transición de rotación -->
-                <span id="flecha-efectivo" class="text-blue-rey transition-transform duration-300 text-lg">↓</span>
-            </button>
-            
-            <!-- Contenedor de la Animación (Empieza cerrado con altura 0) -->
-            <div id="contenido-efectivo" class="transition-all duration-500 ease-in-out max-h-0 overflow-hidden">
-                <div class="p-6 border-t border-white/5 bg-black/20 space-y-6">
-                    <p class="text-sm text-gray-400 leading-relaxed">
-                        Si no manejas cuentas virtuales, no te preocupes. Puedes instalar la aplicación directamente en tu celular ahora mismo y coordinar el pago de tu clave de acceso en efectivo conmigo.
-                    </p>
-
-                    <!-- Pasos de Instalación -->
-                    <div class="bg-zinc-900/50 border border-white/5 rounded-xl p-5 space-y-4 text-left">
-                        <p class="text-xs font-bold text-blue-rey uppercase tracking-wider">¿Cómo instalarla en tu celular?</p>
-                        <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2.5">
-                            <li>Elige abajo la versión que deseas y abre el enlace oficial en tu navegador <b>Google Chrome</b> o <b>Safari</b>.</li>
-                            <li>Presiona los <b>3 puntos</b> arriba a la derecha (o el botón compartir en iPhone).</li>
-                            <li>Selecciona la opción <b>"Añadir a la pantalla de inicio"</b> o <b>"Instalar aplicación"</b>.</li>
-                        </ol>
-                    </div>
-
-                    <!-- Botones de Descarga/Instalación Directa -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                        <a href="https://darwin13og.github.io/feriapartner/Feria_Partner.html" target="_blank" class="block w-full text-center bg-[#161616] border border-white/10 hover:border-white/20 text-white font-bold py-3 px-4 rounded-xl transition-all text-xs uppercase tracking-wider">
-                            🚀 Abrir Versión Estándar
-                        </a>
-                        <a href="https://darwin13og.github.io/feriapartner/Feria_Partner_VIP.html" target="_blank" class="block w-full text-center bg-blue-rey hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-lg shadow-blue-600/10 text-xs uppercase tracking-wider">
-                            🚀 Abrir Versión Premium VIP
-                        </a>
-                    </div>
-
-                    <!-- Instrucción Final de WhatsApp -->
-                    <div class="border-t border-white/5 pt-4 text-center">
-                        <p class="text-xs text-gray-500 mb-2">
-                            ⚠️ Al abrir la aplicación te solicitará obligatóriamente una Clave de Acceso.
-                        </p>
-                        <p class="text-sm text-gray-300 font-medium">
-                            Escríbeme de inmediato al WhatsApp comentándome el nombre de tu proyecto y te genero tu código de activación manual tras recibir el pago.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Script aislado para controlar la animación de apertura suave -->
-    <script>
-        function toggleEfectivo() {
-            const contenido = document.getElementById('contenido-efectivo');
-            const flecha = document.getElementById('flecha-efectivo');
-            
-            if (contenido.style.maxHeight && contenido.style.maxHeight !== '0px') {
-                // Si está abierto, lo cerramos
-                contenido.style.maxHeight = '0px';
-                flecha.style.transform = 'rotate(0deg)';
-            } else {
-                // Si está cerrado, calculamos la altura real del texto interno y la aplicamos para que baje suave
-                contenido.style.maxHeight = contenido.scrollHeight + "px";
-                flecha.style.transform = 'rotate(180deg)';
-            }
-        }
-    </script>
     
     <!-- 6. GUÍA DE FUNCIONAMIENTO -->
     <section id="guia-app" class="py-16 px-6 max-w-5xl mx-auto border-t border-zinc-900">
