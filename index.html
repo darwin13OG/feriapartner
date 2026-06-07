@@ -250,6 +250,24 @@
             </div>
         </div>
     </div>
+
+    <!-- Script aislado para controlar la animación de apertura suave -->
+    <script>
+        function toggleEfectivo() {
+            const contenido = document.getElementById('contenido-efectivo');
+            const flecha = document.getElementById('flecha-efectivo');
+            
+            if (contenido.style.maxHeight && contenido.style.maxHeight !== '0px') {
+                // Si está abierto, lo cerramos
+                contenido.style.maxHeight = '0px';
+                flecha.style.transform = 'rotate(0deg)';
+            } else {
+                // Si está cerrado, calculamos la altura real del texto interno y la aplicamos para que baje suave
+                contenido.style.maxHeight = contenido.scrollHeight + "px";
+                flecha.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
     
     <!-- 6. GUÍA DE FUNCIONAMIENTO -->
     <section id="guia-app" class="py-16 px-6 max-w-5xl mx-auto border-t border-zinc-900">
