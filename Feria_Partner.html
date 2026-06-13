@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="es" class="theme-dark">
 <head>
-    <link rel="manifest" href="./manifest_standard.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>EmprendeFeria Pro - Premium</title>
+    <title>Feria Partner - Estándar Pro</title>
     <style>
         :root {
             --bg-primary: #0f172a;
@@ -19,8 +18,6 @@
             --warning: #f59e0b;
             --shadow: 0 10px 15px -3px rgba(0,0,0,0.35);
         }
-
-        /* theme-dark uses :root defaults; removed duplicate block to reduce file size */
 
         .theme-light {
             --bg-primary: #f8fafc;
@@ -37,7 +34,7 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: var(--bg-primary); color: var(--text); padding: 16px; max-width: 500px; margin: 0 auto; line-height: 1.4; }
+        body { background-color: var(--bg-primary); color: var(--text); padding: 16px; max-width: 500px; margin: 0 auto; line-height: 1.4; padding-bottom: 80px; }
         .hidden { display: none; }
         
         h2 { margin: 20px 0 10px 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
@@ -58,18 +55,32 @@
         .report-box { background: rgba(15, 23, 42, 0.5); border: 1px dashed var(--accent); border-radius: 12px; padding: 14px; margin-top: 10px; }
         .report-line { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.9rem; }
         .veredicto { text-align: center; font-weight: bold; font-size: 1rem; margin-top: 12px; padding: 10px; border-radius: 8px; text-transform: uppercase; }
+        
+        /* ESTILO MARCA DE AGUA */
+        .license-footer {
+            text-align: center; font-size: 0.65rem; color: var(--text-muted);
+            margin-top: 30px; padding: 15px; border-top: 1px solid var(--border);
+            line-height: 1.6;
+        }
+        .license-name { color: var(--accent); font-weight: bold; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <!-- CONTENEDOR DE LA APP -->
     <div id="main-app" class="hidden">
         <div style="display:flex; justify-content:flex-end; gap:10px; margin-bottom:10px;">
             <button id="theme-toggle" type="button" class="btn-undo">☀️ Modo claro</button>
             <button id="btn-logout" type="button" class="btn-undo" data-action="logout">🔒 Cerrar sesión</button>
         </div>
-        <h2>⚙️ Configuración Inicial</h2>
+
+        <h2>⚙️ Configuración del Proyecto</h2>
         <div class="card">
+            <label class="stat-label">Nombre del Stand / Feria</label>
+            <input type="text" id="cfg-nombre-stand" placeholder="Ej: Hamburguesas Pro" style="margin-bottom:10px;">
+            
+            <label class="stat-label">Integrantes del Equipo (Separados por coma)</label>
+            <input type="text" id="cfg-integrantes" placeholder="Juan, Maria, Pedro" style="margin-bottom:15px; font-size:0.9rem;">
+
             <div class="config-row">
                 <div>
                     <label class="stat-label">Inversión ($)</label>
@@ -95,7 +106,7 @@
             <div id="v-btns" class="grid-ventas"></div>
         </div>
 
-        <h2>📊 Balance Proyecto</h2>
+        <h2>📊 Balance General</h2>
         <div class="card" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
             <div><div class="stat-label">Caja Total</div><div id="res-caja" class="stat-val">$0</div></div>
             <div><div class="stat-label">Ganancia Real</div><div id="res-ganancia" class="stat-val" style="color:var(--success)">$0</div></div>
@@ -122,235 +133,128 @@
                 <div class="report-line" style="border-top:1px dashed #475569; padding-top:6px; margin-top:6px;"><span>📈 ROI:</span> <strong id="rep-roi">0%</strong></div>
                 <div id="rep-vdc" class="veredicto"></div>
             </div>
-            <button type="button" class="btn-download" data-action="download">📄 GENERAR ACTA DE CIERRE OFICIAL</button>
+            <button type="button" class="btn-download" data-action="download">📄 GENERAR ACTA DE CIERRE (.TXT)</button>
             <button type="button" class="btn-danger" data-action="reiniciar">ELIMINAR DATOS Y REINICIAR</button>
+        </div>
+
+        <!-- MARCA DE AGUA PERMANENTE -->
+        <div class="license-footer">
+            LICENCIA ORIGINAL: <span class="license-name" id="display-lic"></span><br>
+            ID DE AUTENTICIDAD: <span id="display-serial"></span><br>
+            <span style="font-size:0.5rem; opacity:0.5;">Feria Partner v1.5 Standard Edition © 2026</span>
         </div>
     </div>
 
     <script>
         let db = {
             inv: 100000, stock: 50, nProd: 3,
+            nombreStand: "MI STAND",
+            integrantes: "",
             prods: [{n:"Producto 1", p:2000}, {n:"Producto 2", p:5000}, {n:"Producto 3", p:8000}],
             ventas: []
         };
 
-        let nombreProyectoGlobal = "MI PROYECTO";
-        const STORAGE_KEY = 'feria_pro_v13';
+        let nombreLicenciaOriginal = "USUARIO";
+        const STORAGE_KEY = 'feria_pro_std_v1.5';
         const LICENSE_KEY = 'feria_licencia_activa';
         const PROJECT_NAME_KEY = 'feria_nombre_proyecto';
 
-        function toNumber(value, fallback = 0, min = -Infinity) {
-            const n = parseFloat(value);
-            return Number.isFinite(n) ? Math.max(n, min) : fallback;
-        }
+        function getStoredValue(k) { return localStorage.getItem(k); }
+        function setStoredValue(k, v) { localStorage.setItem(k, v); }
 
-        function toInteger(value, fallback = 0, min = -Infinity) {
-            const n = parseInt(value, 10);
-            return Number.isFinite(n) ? Math.max(n, min) : fallback;
-        }
-
-        function normalizeText(value, fallback) {
-            const text = String(value || '').trim();
-            return text.length ? text : fallback;
-        }
-
-        function safeLocalStorage() {
-            try {
-                const testKey = '__feria_test__';
-                localStorage.setItem(testKey, '1');
-                localStorage.removeItem(testKey);
-                return true;
-            } catch {
-                return false;
-            }
-        }
-
-        const storageEnabled = safeLocalStorage();
-        const MEMORY_STORE = {};
-
-        function getStoredValue(key) {
-            if (storageEnabled) {
-                return localStorage.getItem(key);
-            }
-            return MEMORY_STORE[key] || null;
-        }
-
-        function setStoredValue(key, value) {
-            if (storageEnabled) {
-                localStorage.setItem(key, value);
-            } else {
-                MEMORY_STORE[key] = value;
-            }
-        }
-
-        const THEME_KEY = 'feria_tema';
-        const THEME_DARK = 'dark';
-        const THEME_LIGHT = 'light';
-
-        function applyTheme(theme) {
-            const className = theme === THEME_LIGHT ? 'theme-light' : 'theme-dark';
-            document.documentElement.className = className;
-            setStoredValue(THEME_KEY, theme);
-            const button = document.getElementById('theme-toggle');
-            if (button) button.innerHTML = theme === THEME_LIGHT ? '🌙 Modo oscuro' : '☀️ Modo claro';
-        }
-
-        function cargarTemaInicial() {
-            const stored = getStoredValue(THEME_KEY);
-            const theme = stored === THEME_LIGHT ? THEME_LIGHT : THEME_DARK;
-            applyTheme(theme);
-        }
-
-        function inicializarEventos() {
-            document.getElementById('cfg-inv').addEventListener('input', actualizar);
-            document.getElementById('cfg-stock').addEventListener('input', actualizar);
-            document.getElementById('cfg-num-prod').addEventListener('change', dibujarInputs);
-
-            const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    const activeTheme = document.documentElement.classList.contains('theme-light') ? THEME_LIGHT : THEME_DARK;
-                    applyTheme(activeTheme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT);
-                });
-            }
-
-            document.querySelectorAll('[data-action="deshacer"]').forEach(el => el.addEventListener('click', deshacer));
-            document.querySelectorAll('[data-action="download"]').forEach(el => el.addEventListener('click', generarPDFPro));
-                document.querySelectorAll('[data-action="reiniciar"]').forEach(el => el.addEventListener('click', reiniciar));
-                document.querySelectorAll('[data-action="logout"]').forEach(el => el.addEventListener('click', cerrarSesion));
-        }
-
-        // ========================================================
-        // CANDADO DE SEGURIDAD LOCAL (Licenciamiento)
-        // ========================================================
         (function() {
             if (getStoredValue(LICENSE_KEY) === 'true') {
-                nombreProyectoGlobal = getStoredValue(PROJECT_NAME_KEY) || "MI PROYECTO";
+                nombreLicenciaOriginal = getStoredValue(PROJECT_NAME_KEY) || "USUARIO";
                 document.getElementById('main-app').classList.remove('hidden');
                 arrancarApp();
-                cargarTemaInicial();
                 inicializarEventos();
                 return;
             }
 
             window.addEventListener('DOMContentLoaded', () => {
                 const capa = document.createElement('div');
-                capa.id = 'capa-bloqueo';
-                capa.style = 'position:fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; color:#f8fafc; z-index:999999; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; font-family:sans-serif; box-sizing:border-box;';
-                
+                capa.style = 'position:fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; color:#f8fafc; z-index:999999; display:flex; align-items:center; justify-content:center; padding:20px; font-family:sans-serif;';
                 capa.innerHTML = `
-                    <div style="max-width:400px; width:100%; background:#1e293b; padding:24px; border-radius:16px; border:1px solid #334155; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.5);">
-                        <h2 style="color:#06b6d4; margin-bottom:10px; font-size:1.4rem;">🔑 ACTIVACIÓN PREMIUM</h2>
-                        <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:20px;">Registra el nombre de tu proyecto para activar la licencia.</p>
-                        <input type="text" id="lic-nombre" placeholder="Nombre de tu Negocio" style="width:100%; padding:12px; background:#0f172a; border:1px solid #334155; color:#f8fafc; border-radius:8px; margin-bottom:15px; font-size:1rem; text-align:center;">
-                        <button id="btn-generar-cod" type="button" style="width:100%; padding:12px; background:#06b6d4; color:#0f172a; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Generar Código</button>
-                        <div id="zona-registro" style="display:none; border-top:1px dashed #334155; padding-top:15px; margin-top:15px;">
-                            <p style="font-size:0.85rem; color:#94a3b8;">Código de Registro (ID):</p>
-                            <div id="txt-cod-registro" style="font-size:1.6rem; font-weight:bold; color:#f59e0b; margin:10px 0; letter-spacing:2px;">000</div>
-                            <input type="number" id="lic-clave" placeholder="Introduce la Clave" style="width:100%; padding:12px; background:#0f172a; border:1px solid #334155; color:#f8fafc; border-radius:8px; margin-bottom:15px; font-size:1rem; text-align:center;">
-                            <button id="btn-activar" type="button" style="width:100%; padding:12px; background:#10b981; color:#0f172a; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Activar Sistema</button>
+                    <div style="max-width:400px; width:100%; background:#111827; padding:24px; border-radius:16px; border:1px solid #334155; text-align:center;">
+                        <h2 style="color:#06b6d4; margin-bottom:15px;">🔑 ACTIVAR FERIA PARTNER</h2>
+                        <input type="text" id="lic-nombre" placeholder="Nombre Comprador" style="width:100%; padding:12px; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:8px; margin-bottom:15px; text-align:center; text-transform:uppercase;">
+                        <button id="btn-gen" style="width:100%; padding:12px; background:#06b6d4; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Generar ID</button>
+                        <div id="zona-clave" style="display:none; margin-top:20px; border-top:1px solid #334155; padding-top:20px;">
+                            <p style="font-size:0.8rem; color:#94a3b8;">ID Registro:</p>
+                            <div id="txt-id" style="font-size:1.5rem; font-weight:bold; color:#f59e0b; margin-bottom:15px;">000</div>
+                            <input type="number" id="lic-clave" placeholder="Introduce la Clave" style="width:100%; padding:12px; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:8px; margin-bottom:15px; text-align:center;">
+                            <button id="btn-act" style="width:100%; padding:12px; background:#10b981; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Activar Sistema</button>
                         </div>
                     </div>
                 `;
                 document.body.appendChild(capa);
 
-                let codigoID = 0;
-                let nombreTemp = "";
-
-                document.getElementById('btn-generar-cod').onclick = () => {
-                    nombreTemp = document.getElementById('lic-nombre').value.trim().toUpperCase();
-                    if(nombreTemp.length < 3) return alert("Nombre muy corto.");
-                    let suma = 0;
-                    for(let i=0; i<nombreTemp.length; i++) suma += nombreTemp.charCodeAt(i);
-                    codigoID = (suma % 900) + 100;
-                    document.getElementById('txt-cod-registro').innerText = codigoID;
+                document.getElementById('btn-gen').onclick = () => {
+                    let n = document.getElementById('lic-nombre').value.trim().toUpperCase();
+                    if(n.length < 3) return alert("Nombre muy corto");
+                    let suma = 0; for(let i=0; i<n.length; i++) suma += n.charCodeAt(i);
+                    let id = (suma % 900) + 100;
+                    document.getElementById('txt-id').innerText = id;
                     document.getElementById('lic-nombre').disabled = true;
-                    document.getElementById('btn-generar-cod').style.display = 'none';
-                    document.getElementById('zona-registro').style.display = 'block';
-                };
-
-                document.getElementById('btn-activar').onclick = () => {
-                    const claveIn = toInteger(document.getElementById('lic-clave').value, NaN);
-                    if (claveIn === (codigoID * 3) + 7) {
-                        alert("¡Licencia activada con éxito!");
-                        setStoredValue(LICENSE_KEY, 'true');
-                        setStoredValue(PROJECT_NAME_KEY, nombreTemp);
-                        location.reload();
-                    } else alert("Clave incorrecta.");
+                    document.getElementById('btn-gen').style.display = 'none';
+                    document.getElementById('zona-clave').style.display = 'block';
+                    
+                    document.getElementById('btn-act').onclick = () => {
+                        let clave = parseInt(document.getElementById('lic-clave').value);
+                        if(clave === (id * 3) + 7) {
+                            setStoredValue(LICENSE_KEY, 'true');
+                            setStoredValue(PROJECT_NAME_KEY, n);
+                            location.reload();
+                        } else alert("Clave inválida");
+                    };
                 };
             });
         })();
 
-        // ========================================================
-        // LÓGICA DE NEGOCIO Y APP
-        // ========================================================
         function arrancarApp() {
-            const savedData = getStoredValue(STORAGE_KEY);
-            if (savedData) {
-                db = JSON.parse(savedData);
-            }
+            const saved = getStoredValue(STORAGE_KEY);
+            if (saved) db = JSON.parse(saved);
+            
+            document.getElementById('cfg-nombre-stand').value = db.nombreStand || "MI STAND";
+            document.getElementById('cfg-integrantes').value = db.integrantes || "";
             document.getElementById('cfg-inv').value = db.inv;
             document.getElementById('cfg-stock').value = db.stock;
             document.getElementById('cfg-num-prod').value = db.nProd;
-
             dibujarInputs();
         }
 
         function dibujarInputs() {
-            db.nProd = toInteger(document.getElementById('cfg-num-prod').value, 3, 1);
+            db.nProd = parseInt(document.getElementById('cfg-num-prod').value);
             const cont = document.getElementById('container-inputs');
-            cont.textContent = '';
+            cont.innerHTML = '';
             for (let i = 0; i < db.nProd; i++) {
                 db.prods[i] = db.prods[i] || { n: `Producto ${i + 1}`, p: 1000 };
-                const row = document.createElement('div');
-                row.className = 'config-row';
-
-                const nameInput = document.createElement('input');
-                nameInput.type = 'text';
-                nameInput.value = db.prods[i].n;
-                nameInput.addEventListener('input', () => editP(i, 'n', nameInput.value));
-
-                const priceInput = document.createElement('input');
-                priceInput.type = 'number';
-                priceInput.min = '0';
-                priceInput.value = db.prods[i].p;
-                priceInput.addEventListener('input', () => editP(i, 'p', priceInput.value));
-
-                row.appendChild(nameInput);
-                row.appendChild(priceInput);
-                cont.appendChild(row);
+                const div = document.createElement('div');
+                div.className = 'config-row';
+                div.innerHTML = `<input type="text" value="${db.prods[i].n}" oninput="editP(${i},'n',this.value)">
+                                 <input type="number" value="${db.prods[i].p}" oninput="editP(${i},'p',this.value)">`;
+                cont.appendChild(div);
             }
             actualizar();
         }
 
-        function editP(i, c, v) {
-            if (c === 'p') {
-                db.prods[i][c] = toNumber(v, 0, 0);
-            } else {
-                db.prods[i][c] = normalizeText(v, `Producto ${i + 1}`);
-            }
+        function editP(i, k, v) {
+            db.prods[i][k] = k === 'p' ? parseFloat(v) || 0 : v;
             actualizar();
         }
 
         function actualizar() {
-            db.inv = toNumber(document.getElementById('cfg-inv').value, 0, 0);
-            db.stock = toInteger(document.getElementById('cfg-stock').value, 1, 1);
-            document.getElementById('cfg-inv').value = db.inv;
-            document.getElementById('cfg-stock').value = db.stock;
+            db.nombreStand = document.getElementById('cfg-nombre-stand').value.toUpperCase() || "MI STAND";
+            db.integrantes = document.getElementById('cfg-integrantes').value || "";
+            db.inv = parseFloat(document.getElementById('cfg-inv').value) || 0;
+            db.stock = parseInt(document.getElementById('cfg-stock').value) || 1;
             setStoredValue(STORAGE_KEY, JSON.stringify(db));
             dibujarUI();
         }
 
         function vender(i) {
-            const c = toInteger(document.getElementById('v-cant').value, 1, 1);
-            const p = db.prods[i];
-            db.ventas.unshift({
-                n: p.n,
-                p: p.p,
-                c: c,
-                t: p.p * c,
-                h: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-            });
+            const cant = parseInt(document.getElementById('v-cant').value) || 1;
+            db.ventas.unshift({ n: db.prods[i].n, p: db.prods[i].p, c: cant, t: db.prods[i].p * cant, h: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) });
             document.getElementById('v-cant').value = 1;
             actualizar();
         }
@@ -359,133 +263,95 @@
 
         function dibujarUI() {
             let caja = 0, uds = 0, cont = {};
-            db.ventas.forEach(v => {
-                caja += v.t;
-                uds += v.c;
-                cont[v.n] = (cont[v.n] || 0) + v.c;
-            });
+            db.ventas.forEach(v => { caja += v.t; uds += v.c; cont[v.n] = (cont[v.n] || 0) + v.c; });
             const ganancia = caja - db.inv;
 
-            document.getElementById('costo-tag').textContent = `Costo base: $${Math.round(db.inv / db.stock).toLocaleString()}`;
-            document.getElementById('res-caja').textContent = `$${caja.toLocaleString()}`;
-            document.getElementById('res-ganancia').textContent = `$${(ganancia > 0 ? ganancia : 0).toLocaleString()}`;
-
-            const porc = Math.min((caja / (db.inv || 1)) * 100, 100);
-            document.getElementById('v-progress').style.width = `${porc}%`;
-            document.getElementById('res-status').textContent = (db.inv - caja) > 0
-                ? `Faltan $${Math.round(db.inv - caja).toLocaleString()}`
-                : `✅ ¡Meta lograda!`;
+            document.getElementById('res-caja').innerText = `$${caja.toLocaleString()}`;
+            document.getElementById('res-ganancia').innerText = `$${(ganancia > 0 ? ganancia : 0).toLocaleString()}`;
+            document.getElementById('v-progress').style.width = `${Math.min((caja/(db.inv||1))*100, 100)}%`;
+            document.getElementById('res-status').innerText = (db.inv - caja) > 0 ? `Faltan $${Math.round(db.inv - caja).toLocaleString()}` : `✅ Meta Lograda`;
 
             const btnArea = document.getElementById('v-btns');
-            btnArea.textContent = '';
+            btnArea.innerHTML = '';
             db.prods.slice(0, db.nProd).forEach((p, i) => {
                 const b = document.createElement('button');
-                b.type = 'button';
                 b.className = 'btn-prod';
                 b.innerHTML = `${p.n} <span>$${p.p.toLocaleString()}</span>`;
-                b.addEventListener('click', () => vender(i));
+                b.onclick = () => vender(i);
                 btnArea.appendChild(b);
             });
 
             const hist = document.getElementById('v-historial');
-            hist.textContent = '';
-            if (!db.ventas.length) {
-                const msg = document.createElement('p');
-                msg.textContent = 'Sin ventas';
-                msg.style.cssText = 'text-align:center;opacity:0.5;padding:10px';
-                hist.appendChild(msg);
-            } else {
-                db.ventas.forEach(v => {
-                    const row = document.createElement('div');
-                    row.className = 'history-item';
-                    const left = document.createElement('div');
-                    left.innerHTML = `<b>${v.c}x ${v.n}</b><br><small>${v.h}</small>`;
-                    const right = document.createElement('b');
-                    right.textContent = `$${v.t.toLocaleString()}`;
-                    row.appendChild(left);
-                    row.appendChild(right);
-                    hist.appendChild(row);
-                });
-            }
+            hist.innerHTML = db.ventas.length ? '' : '<p style="text-align:center; opacity:0.5; padding:10px;">Sin ventas</p>';
+            db.ventas.slice(0,10).forEach(v => {
+                hist.innerHTML += `<div class="history-item"><div><b>${v.c}x ${v.n}</b><br><small>${v.h}</small></div><b>$${v.t.toLocaleString()}</b></div>`;
+            });
 
             let est = '-', max = 0;
-            Object.keys(cont).forEach(key => {
-                if (cont[key] > max) {
-                    max = cont[key];
-                    est = key;
-                }
-            });
-            document.getElementById('rep-v').textContent = uds;
-            document.getElementById('rep-s').textContent = Math.max(0, db.stock - uds);
-            document.getElementById('rep-e').textContent = max > 0 ? est : '-';
-            document.getElementById('rep-roi').textContent = `${((caja / (db.inv || 1)) * 100).toFixed(1)}%`;
-            document.getElementById('rep-vdc').textContent = caja >= db.inv ? 'PROYECTO RENTABLE' : 'POR RECUPERAR';
+            Object.keys(cont).forEach(k => { if(cont[k] > max){ max = cont[k]; est = k; } });
+            document.getElementById('rep-v').innerText = uds;
+            document.getElementById('rep-s').innerText = Math.max(0, db.stock - uds);
+            document.getElementById('rep-e').innerText = max > 0 ? est : '-';
+            document.getElementById('rep-roi').innerText = `${((caja / (db.inv || 1)) * 100).toFixed(1)}%`;
+            document.getElementById('rep-vdc').innerText = caja >= db.inv ? 'PROYECTO RENTABLE' : 'POR RECUPERAR';
+
+            // ACTUALIZAR MARCA DE AGUA
+            document.getElementById('display-lic').innerText = nombreLicenciaOriginal;
+            let serial = 0; for(let i=0; i<nombreLicenciaOriginal.length; i++) serial += nombreLicenciaOriginal.charCodeAt(i);
+            document.getElementById('display-serial').innerText = `FP-2026-${serial}`;
         }
 
         function generarPDFPro() {
-            if(!db.ventas.length) return alert("Sin datos de ventas para exportar.");
-            let caja = 0, uds = 0, cont = {};
-            db.ventas.forEach(v => { caja += v.t; uds += v.c; cont[v.n] = (cont[v.n]||0)+v.c; });
-
-            let t = "";
-            t += "=========================================\n";
-            t += "         ACTA DE CIERRE OFICIAL          \n";
-            t += "=========================================\n";
-            t += `Proyecto: ${nombreProyectoGlobal}\n`;
-            t += `Fecha Emisión: ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}\n`;
-            t += "-----------------------------------------\n\n";
+            let caja = 0; db.ventas.forEach(v => caja += v.t);
+            let serial = 0; for(let i=0; i<nombreLicenciaOriginal.length; i++) serial += nombreLicenciaOriginal.charCodeAt(i);
             
-            t += "I. RESUMEN FINANCIERO\n";
-            t += `Inversión Inicial : $${db.inv.toLocaleString()}\n`;
-            t += `Costo Base Unit.  : $${Math.round(db.inv/db.stock).toLocaleString()}\n`;
-            t += `Ventas en Caja    : $${caja.toLocaleString()}\n`;
-            t += `Balance Neto      : $${(caja-db.inv).toLocaleString()}\n`;
-            t += `Rendimiento (ROI) : ${((caja/(db.inv||1))*100).toFixed(1)}%\n`;
-            t += "-----------------------------------------\n\n";
+            let t = `=========================================\n`;
+            t += `      ACTA DE CIERRE - FERIA PARTNER     \n`;
+            t += `=========================================\n\n`;
+            t += `STAND: ${db.nombreStand}\n`;
+            t += `EQUIPO: ${db.integrantes || 'Sin integrantes'}\n`;
+            t += `FECHA: ${new Date().toLocaleString()}\n`;
+            t += `-----------------------------------------\n`;
+            t += `TITULAR LICENCIA: ${nombreLicenciaOriginal}\n`;
+            t += `ID AUTENTICIDAD: FP-2026-${serial}\n`;
+            t += `-----------------------------------------\n\n`;
+            t += `I. RESUMEN FINANCIERO\n`;
+            t += `Inversion Inicial: $${db.inv.toLocaleString()}\n`;
+            t += `Ventas Totales   : $${caja.toLocaleString()}\n`;
+            t += `Balance Neto     : $${(caja - db.inv).toLocaleString()}\n`;
+            t += `ROI (Rendimiento): ${((caja / (db.inv || 1)) * 100).toFixed(1)}%\n\n`;
+            t += `-----------------------------------------\n`;
+            t += `ESTADO: ${caja >= db.inv ? "APROBADO - RENTABLE" : "PENDIENTE - RECUPERANDO"}\n`;
+            t += `-----------------------------------------\n\n`;
+            t += `Validado por Feria Partner v1.5.\n`;
+            t += `Este reporte es propiedad de ${nombreLicenciaOriginal}.`;
 
-            t += "II. GESTIÓN DE INVENTARIO\n";
-            t += `Stock Inicial     : ${db.stock} Uds\n`;
-            t += `Unidades Vendidas : ${uds} Uds\n`;
-            t += `Sobrante Actual   : ${Math.max(0, db.stock - uds)} Uds\n`;
-            t += `Producto Estrella : ${document.getElementById('rep-e').innerText}\n`;
-            t += "-----------------------------------------\n\n";
-
-            t += "III. DESGLOSE DE PRODUCTOS\n";
-            db.prods.slice(0,db.nProd).forEach(p => {
-                let uVendidas = cont[p.n] || 0;
-                let gananciaProd = uVendidas * p.p;
-                t += `${p.n.padEnd(18)} : ${uVendidas} uds -> Recaudado: $${gananciaProd.toLocaleString()}\n`;
-            });
-            t += "-----------------------------------------\n\n";
-
-            t += `ESTADO FINAL: ${caja >= db.inv ? "PROYECTO RENTABLE" : "EN RECUPERACION"}\n\n\n`;
-            t += "_________________         _________________\n";
-            t += " Firma Estudiante           Firma Evaluador\n";
-
-            const blob = new Blob([new Uint8Array([0xEF , 0xBB, 0xBF]) , t], { type: 'text/plain;charset=utf-8' });
+            const blob = new Blob([t], { type: 'text/plain' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            const fileName = `Cierre_Feria_${normalizeText(nombreProyectoGlobal, 'Proyecto')}`.replace(/\s+/g, '_');
-            link.download = `${fileName}.txt`;
-            document.body.appendChild(link);
+            link.download = `Reporte_${db.nombreStand.replace(/\s+/g, '_')}.txt`;
             link.click();
-            document.body.removeChild(link);
         }
 
-        function reiniciar() { if(confirm("¿Reiniciar feria?")) { if (storageEnabled) localStorage.removeItem(STORAGE_KEY); else delete MEMORY_STORE[STORAGE_KEY]; location.reload(); } }
+        function inicializarEventos() {
+            document.getElementById('cfg-nombre-stand').oninput = actualizar;
+            document.getElementById('cfg-integrantes').oninput = actualizar;
+            document.getElementById('cfg-inv').oninput = actualizar;
+            document.getElementById('cfg-stock').oninput = actualizar;
+            document.getElementById('cfg-num-prod').onchange = dibujarInputs;
+            
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.onclick = () => {
+                const t = document.documentElement.className === 'theme-dark' ? 'light' : 'dark';
+                document.documentElement.className = 'theme-' + t;
+                setStoredValue('feria_tema', t);
+                themeToggle.innerText = t === 'light' ? '🌙 Modo oscuro' : '☀️ Modo claro';
+            };
 
-        function cerrarSesion() {
-            if (!confirm("¿Cerrar sesión y volver a la pantalla de activación?")) return;
-            try {
-                if (storageEnabled) {
-                    localStorage.removeItem(LICENSE_KEY);
-                    localStorage.removeItem(PROJECT_NAME_KEY);
-                } else {
-                    delete MEMORY_STORE[LICENSE_KEY];
-                    delete MEMORY_STORE[PROJECT_NAME_KEY];
-                }
-            } catch (e) { }
-            location.reload();
+            document.querySelectorAll('[data-action="deshacer"]').forEach(b => b.onclick = deshacer);
+            document.querySelectorAll('[data-action="download"]').forEach(b => b.onclick = generarPDFPro);
+            document.querySelectorAll('[data-action="reiniciar"]').forEach(b => b.onclick = () => { if(confirm("¿Borrar todos los datos?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); } });
+            document.querySelectorAll('[data-action="logout"]').forEach(b => b.onclick = () => { if(confirm("¿Cerrar sesión?")) { localStorage.removeItem(LICENSE_KEY); location.reload(); } });
         }
     </script>
 </body>
