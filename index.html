@@ -2,36 +2,35 @@
 <html lang="es" class="scroll-smooth">
 <head>
     <meta name="description" content="La herramienta definitiva para gestionar tu stand de feria de emprendimiento.">
-<meta property="og:image" content="link-a-una-captura-de-tu-app.jpg">
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feria Partner | Gestión de Emprendimiento</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #050505;
-            color: #ffffff;
-            letter-spacing: -0.01em;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #ffffff; letter-spacing: -0.01em; }
+        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .text-blue-rey { color: #3b82f6; }
         .bg-blue-rey { background-color: #3b82f6; }
-        
-        .gradient-partner {
-            background: linear-gradient(90deg, #3b82f6, #2dd4bf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
+        .gradient-partner { background: linear-gradient(90deg, #3b82f6, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Estilos originales del botón WhatsApp */
+        @keyframes glow-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        .lighting-effect { animation: glow-pulse 2s infinite; }
+        @media (max-width: 768px) {
+            .auto-reveal { animation: reveal-logic 6s ease-in-out forwards; }
+        }
+        @keyframes reveal-logic {
+            0%, 15% { max-width: 0; margin-left: 0; opacity: 0; }
+            25%, 75% { max-width: 150px; margin-left: 10px; opacity: 1; }
+            85%, 100% { max-width: 0; margin-left: 0; opacity: 0; }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -39,7 +38,6 @@
     <!-- 1. HERO SECTION -->
     <section class="relative min-h-screen flex flex-col items-center justify-center px-6 text-center overflow-hidden">
         <div class="absolute top-0 w-full h-80 bg-blue-600/5 blur-[120px] pointer-events-none"></div>
-        
         <div class="relative z-10">
             <h1 class="text-6xl md:text-8xl font-extrabold mb-6 tracking-tighter text-white">
                 Feria <span class="gradient-partner">Partner</span>
@@ -47,16 +45,12 @@
             <p class="text-gray-400 text-lg md:text-xl max-w-2xl font-light mb-10 leading-relaxed mx-auto">
                 Mejora tu nota y controla tus ganancias en vivo. La herramienta definitiva para que tu proyecto de emprendimiento sea un éxito <span class="text-white">sin perder ni un solo peso.</span>
             </p>
-
-            <!-- BOTÓN OBTENER AHORA -->
             <div class="mb-14 mt-4 text-center">
-                <button onclick="irAPrecios()" class="inline-block px-10 py-4 bg-blue-rey text-white font-bold rounded-full hover:bg-blue-600 transition-all transform hover:scale-105 shadow-lg shadow-blue-600/20 uppercase text-sm tracking-widest">
+                <button onclick="irAPrecios()" class="inline-block px-10 py-4 bg-blue-rey text-white font-bold rounded-full hover:bg-blue-600 transition-all transform hover:scale-105 shadow-lg shadow-blue-600/20 uppercase text-sm tracking-widest text-white">
                     Obtener ahora
                 </button>
             </div>
-
-            <!-- Feature Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl mx-auto mt-16 pb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl mx-auto mt-16 pb-6 text-left">
                 <div class="bg-[#111111] p-6 rounded-2xl border border-white/5">
                     <p class="text-blue-rey font-semibold mb-1 text-xs uppercase tracking-widest">100% Offline</p>
                     <p class="text-gray-500 text-sm">Funciona en el colegio sin señal.</p>
@@ -65,8 +59,8 @@
                     <p class="text-blue-rey font-semibold mb-1 text-xs uppercase tracking-widest">Control ROI</p>
                     <p class="text-gray-500 text-sm">Ganancias automáticas.</p>
                 </div>
-                <div class="bg-[#111111] p-6 rounded-2xl border border-white/5 italic">
-                    <p class="text-blue-rey font-semibold mb-1 text-xs uppercase tracking-widest italic">Anti-Apagones</p>
+                <div class="bg-[#111111] p-6 rounded-2xl border border-white/5">
+                    <p class="text-blue-rey font-semibold mb-1 text-xs uppercase tracking-widest">Anti-Apagones</p>
                     <p class="text-gray-500 text-sm">Guardado local instantáneo.</p>
                 </div>
             </div>
@@ -94,29 +88,17 @@
         </div>
     </section>
 
-    <!-- 3. CÓMO ADQUIRIRLA (3 PASOS) -->
+    <!-- 3. CÓMO ADQUIRIRLA -->
     <section class="py-24 px-6 max-w-5xl mx-auto">
         <h2 class="text-center text-sm font-bold tracking-[0.3em] uppercase text-gray-600 mb-12">Cómo adquirirla en 3 pasos</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div class="text-center">
-                <span class="text-4xl font-bold text-white/5 block mb-4 italic">01</span>
-                <h3 class="font-bold mb-2 uppercase text-xs tracking-widest text-blue-rey">Selecciona tu versión</h3>
-                <p class="text-gray-500 text-sm">Elige entre Estándar o Premium según tus metas.</p>
-            </div>
-            <div class="text-center">
-                <span class="text-4xl font-bold text-white/5 block mb-4 italic">02</span>
-                <h3 class="font-bold mb-2 uppercase text-xs tracking-widest text-blue-rey">Compra en Línea</h3>
-                <p class="text-gray-500 text-sm">Pagas de forma segura con Nequi, Daviplata o PSE.</p>
-            </div>
-            <div class="text-center">
-                <span class="text-4xl font-bold text-white/5 block mb-4 italic">03</span>
-                <h3 class="font-bold mb-2 uppercase text-xs tracking-widest text-blue-rey">Activación de caja</h3>
-                <p class="text-gray-500 text-sm">Registras tu stand y la web te entrega tu clave al instante.</p>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            <div><span class="text-4xl font-bold text-white/5 block mb-4 italic">01</span><h3 class="font-bold mb-2 uppercase text-xs tracking-widest text-blue-rey">Selecciona tu versión</h3><p class="text-gray-500 text-sm">Elige entre FP Standard o FP Premium según tus metas.</p></div>
+            <div><span class="text-4xl font-bold text-white/5 block mb-4 italic">02</span><h3 class="font-bold mb-2 uppercase text-xs tracking-widest text-blue-rey">Compra en Línea</h3><p class="text-gray-500 text-sm">Pagas de forma segura con Nequi, Daviplata o PSE.</p></div>
+            <div><span class="text-4xl font-bold text-white/5 block mb-4 italic">03</span><h3 class="font-bold mb-2 uppercase text-xs tracking-widest text-blue-rey">Activación de caja</h3><p class="text-gray-500 text-sm">Registras tu stand y la web te entrega tu clave al instante.</p></div>
         </div>
     </section>
 
-    <!-- 4. TABLA COMPARATIVA -->
+    <!-- 4. TABLA COMPARATIVA ACTUALIZADA -->
     <section class="py-24 px-6 max-w-4xl mx-auto">
         <div class="glass-card rounded-3xl overflow-hidden border-white/5">
             <div class="overflow-x-auto no-scrollbar">
@@ -124,41 +106,17 @@
                     <thead>
                         <tr class="border-b border-white/10 bg-white/5">
                             <th class="p-6 text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Función</th>
-                            <th class="p-6 text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold text-center">Estándar</th>
-                            <th class="p-6 text-[10px] uppercase tracking-[0.2em] text-blue-rey font-bold text-center">Premium</th>
+                            <th class="p-6 text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold text-center">FP STANDARD</th>
+                            <th class="p-6 text-[10px] uppercase tracking-[0.2em] text-blue-rey font-bold text-center">FP PREMIUM</th>
                         </tr>
                     </thead>
                     <tbody class="text-sm">
-                        <tr class="border-b border-white/5">
-                            <td class="p-6 text-gray-400">Gestión de Inversión y Ventas</td>
-                            <td class="p-6 text-center text-gray-600">Sí</td>
-                            <td class="p-6 text-center text-blue-rey">Sí</td>
-                        </tr>
-                        <tr class="border-b border-white/5">
-                            <td class="p-6 text-gray-400">Reporte de Cierre Simple</td>
-                            <td class="p-6 text-center text-gray-600">Sí</td>
-                            <td class="p-6 text-center text-blue-rey">Sí</td>
-                        </tr>
-                        <tr class="border-b border-white/5 bg-blue-500/5">
-                            <td class="p-6 font-semibold text-gray-300 italic">Reporte en PDF para Profesor</td>
-                            <td class="p-6 text-center text-gray-800 italic text-xs">No disponible</td>
-                            <td class="p-6 text-center font-bold text-blue-rey italic text-xs tracking-tighter">¡Exclusivo!</td>
-                        </tr>
-                        <tr class="border-b border-white/5">
-                            <td class="p-6 font-semibold text-gray-300 italic">Código QR en pantalla (Offline)</td>
-                            <td class="p-6 text-center text-gray-800 italic text-xs">No disponible</td>
-                            <td class="p-6 text-center font-bold text-blue-rey italic text-xs tracking-tighter">¡Exclusivo!</td>
-                        </tr>
-                        <tr class="border-b border-white/5 bg-blue-500/5">
-                            <td class="p-6 font-semibold text-gray-300 italic">Protección Anti-Errores</td>
-                            <td class="p-6 text-center text-gray-800 italic text-xs">No disponible</td>
-                            <td class="p-6 text-center font-bold text-blue-rey italic text-xs tracking-tighter">¡Exclusivo!</td>
-                        </tr>
-                        <tr>
-                            <td class="p-6 font-semibold text-gray-300 italic">Caja para Gastos Extras</td>
-                            <td class="p-6 text-center text-gray-800 italic text-xs">No disponible</td>
-                            <td class="p-6 text-center font-bold text-blue-rey italic text-xs tracking-tighter">¡Exclusivo!</td>
-                        </tr>
+                        <tr class="border-b border-white/5"><td class="p-6 text-gray-400">Control de Inversión y Ventas</td><td class="p-6 text-center">Sí</td><td class="p-6 text-center text-blue-rey">Sí</td></tr>
+                        <tr class="border-b border-white/5"><td class="p-6 text-gray-400">Reporte Simple (.TXT)</td><td class="p-6 text-center">Sí</td><td class="p-6 text-center text-blue-rey">Sí</td></tr>
+                        <tr class="border-b border-white/5 bg-blue-500/5"><td class="p-6 font-semibold text-gray-300 italic">Acta de Cierre Oficial (PDF)</td><td class="p-6 text-center text-gray-800 italic text-xs">No</td><td class="p-6 text-center font-bold text-blue-rey italic">¡Exclusivo!</td></tr>
+                        <tr class="border-b border-white/5"><td class="p-6 font-semibold text-gray-300 italic">Calculadora de Vuelto</td><td class="p-6 text-center text-gray-800 italic text-xs">No</td><td class="p-6 text-center font-bold text-blue-rey italic">¡Exclusivo!</td></tr>
+                        <tr class="border-b border-white/5 bg-blue-500/5"><td class="p-6 font-semibold text-gray-300 italic">Integrantes de Equipo</td><td class="p-6 text-center text-gray-800 italic text-xs">No</td><td class="p-6 text-center font-bold text-blue-rey italic">¡Exclusivo!</td></tr>
+                        <tr><td class="p-6 font-semibold text-gray-300 italic">Caja para Gastos Extras</td><td class="p-6 text-center text-gray-800 italic text-xs">No</td><td class="p-6 text-center font-bold text-blue-rey italic">¡Exclusivo!</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -167,523 +125,179 @@
 
     <!-- 5. TARJETAS DE PRECIOS -->
     <section id="seccion-precios" class="py-12 px-6 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        
         <div class="glass-card p-8 rounded-[2rem] border-white/5 flex flex-col justify-between relative overflow-hidden">
-            <div>
-                <h3 class="text-xl font-bold mb-2 uppercase tracking-wider">Versión Estándar</h3>
-                <p class="text-3xl font-extrabold mb-6 text-white">$10.000<span class="text-xs text-gray-500 font-normal"> / pago único</span></p>
-                <p class="text-gray-400 text-sm mb-6 leading-relaxed">Lo esencial para controlar tu dinero y asegurar que tus cuentas cuadren frente al profesor.</p>
-            </div>
-            <!-- ENLACE REAL ASOCIADO A MERCADO PAGO ESTÁNDAR -->
-            <a href="https://checkout.nequi.wompi.co/l/MWuJTh" id="link-pago-estandar" class="w-full text-center bg-white text-black font-bold py-4 px-6 rounded-xl hover:bg-gray-200 transition-all block">
-                Obtener Estándar
-            </a>
+            <div><h3 class="text-xl font-bold mb-2 uppercase tracking-wider">FP STANDARD</h3><p class="text-3xl font-extrabold mb-6 text-white">$10.000<span class="text-xs text-gray-500 font-normal"> / pago único</span></p><p class="text-gray-400 text-sm mb-6 leading-relaxed">Lo esencial para controlar tu dinero y asegurar que tus cuentas cuadren.</p></div>
+            <a href="https://checkout.nequi.wompi.co/l/MWuJTh" id="link-pago-estandar" class="w-full text-center bg-white text-black font-bold py-4 px-6 rounded-xl hover:bg-gray-200 transition-all block">Obtener Estándar</a>
         </div>
-
         <div class="glass-card p-8 rounded-[2rem] border-blue-500/20 flex flex-col justify-between relative overflow-hidden bg-blue-500/[0.02]">
-            <div class="absolute top-0 right-0 bg-blue-rey text-white text-[9px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-bl-xl shadow-lg">
-                Recomendado
-            </div>
-            <div>
-                <h3 class="text-xl font-bold mb-2 uppercase tracking-wider text-blue-rey">Versión Premium</h3>
-                <p class="text-3xl font-extrabold mb-6 text-white">$18.000<span class="text-xs text-gray-500 font-normal"> / pago único</span></p>
-                <p class="text-gray-400 text-sm mb-6 leading-relaxed">Control absoluto con reportes PDF automáticos para el profesor, código QR offline y sistema inteligente anti-errores.</p>
-            </div>
-            <!-- ENLACE REAL ASOCIADO A MERCADO PAGO PREMIUM -->
-            <a href="https://checkout.nequi.wompi.co/l/VWQty0" id="link-pago-premium" class="w-full text-center bg-blue-rey text-white font-bold py-4 px-6 rounded-xl hover:bg-blue-700 transition-all block">
-                Obtener Premium
-            </a>
+            <div class="absolute top-0 right-0 bg-blue-rey text-white text-[9px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-bl-xl shadow-lg">Recomendado</div>
+            <div><h3 class="text-xl font-bold mb-2 uppercase tracking-wider text-blue-rey">FP PREMIUM</h3><p class="text-3xl font-extrabold mb-6 text-white">$18.000<span class="text-xs text-gray-500 font-normal"> / pago único</span></p><p class="text-gray-400 text-sm mb-6 leading-relaxed">Control absoluto con reporte PDF, calculadora inteligente e integrantes.</p></div>
+            <a href="https://checkout.nequi.wompi.co/l/VWQty0" id="link-pago-premium" class="w-full text-center bg-blue-rey text-white font-bold py-4 px-6 rounded-xl hover:bg-blue-700 transition-all block text-white">Obtener Premium</a>
         </div>
-
     </section>
 
-<!-- 5.5 SECCIÓN UNIFICADA: PAGO EN EFECTIVO CON DESPLIEGUE SUAVE -->
+    <!-- 5.5 SECCIÓN EFECTIVO (RECUPERADA) -->
     <div class="max-w-4xl mx-auto px-6 mb-16">
-        <!-- Contenedor con Borde Azul Neón Suave y Elegante -->
-        <div class="border border-blue-500/20 rounded-2xl overflow-hidden bg-zinc-950/40 backdrop-blur-sm shadow-[0_0_20px_rgba(59,130,246,0.05)] transition-all duration-300 hover:border-blue-500/30">
-            
-            <!-- Encabezado / Botón de Apertura -->
-            <button onclick="toggleEfectivo()" class="w-full flex justify-between items-center p-6 text-left select-none bg-white/[0.02] hover:bg-white/[0.05] transition-colors focus:outline-none">
-                <span class="font-semibold text-zinc-200 flex items-center gap-3 text-base sm:text-lg">
-                    💵 ¿Prefieres pagar en efectivo? ¡Instala la App aquí!
-                </span>
-                <span id="flecha-efectivo" class="text-blue-rey transition-transform duration-300 text-lg">↓</span>
+        <div class="border border-blue-500/20 rounded-2xl overflow-hidden bg-zinc-950/40 backdrop-blur-sm">
+            <button onclick="toggleEfectivo()" class="w-full flex justify-between items-center p-6 text-left focus:outline-none hover:bg-white/[0.02]">
+                <span class="font-semibold text-zinc-200 flex items-center gap-3 text-base sm:text-lg">💵 ¿Prefieres pagar en efectivo? ¡Instala la App aquí!</span>
+                <span id="flecha-efectivo" class="text-blue-rey transition-transform duration-300">↓</span>
             </button>
-            
-            <!-- Contenedor de la Animación de Despliegue Suave -->
             <div id="contenido-efectivo" class="transition-all duration-500 ease-in-out max-h-0 overflow-hidden">
                 <div class="p-6 border-t border-white/5 bg-black/10 space-y-6">
-                    <p class="text-sm text-gray-400 leading-relaxed">
-                        Si no manejas cuentas virtuales, no te preocupes. Puedes instalar la aplicación directamente en tu celular ahora mismo y coordinar el pago de tu clave de acceso en efectivo conmigo.
-                    </p>
-
-                    <!-- Pasos de Instalación -->
-                    <div class="bg-zinc-900/40 border border-white/5 rounded-xl p-5 space-y-4 text-left">
-                        <p class="text-xs font-bold text-blue-rey uppercase tracking-wider">¿Cómo instalarla en tu celular?</p>
+                    <p class="text-sm text-gray-400">Si no manejas cuentas virtuales, puedes instalar la aplicación directamente en tu celular ahora mismo y coordinar el pago de tu clave de acceso en efectivo conmigo.</p>
+                    <div class="bg-zinc-900/40 border border-white/5 rounded-xl p-5 space-y-4">
+                        <p class="text-xs font-bold text-blue-rey uppercase">¿Cómo instalarla en tu celular?</p>
                         <ol class="list-decimal list-inside text-xs text-gray-400 space-y-2.5">
-                            <li>Elige abajo la versión que deseas y abre el enlace oficial en tu navegador <b>Google Chrome</b> o <b>Safari</b>.</li>
-                            <li>Presiona los <b>3 puntos</b> arriba a la derecha (o el botón compartir en iPhone).</li>
-                            <li>Selecciona la opción <b>"Añadir a la pantalla de inicio"</b> o <b>"Instalar aplicación"</b>.</li>
+                            <li>Elige la versión abajo en Chrome o Safari.</li>
+                            <li>Presiona los <b>3 puntos</b> (o el botón compartir en iPhone).</li>
+                            <li>Selecciona <b>"Añadir a la pantalla de inicio"</b> o <b>"Instalar aplicación"</b>.</li>
                         </ol>
                     </div>
-
-                    <!-- Botones de Descarga con la misma Experiencia de la Web -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                        <!-- Estándar: Estilo Sobrio de tu Tarjeta de la Web -->
-                        <a href="https://darwin13og.github.io/feriapartner/Feria_Partner.html" target="_blank" class="block w-full text-center bg-white text-black font-bold py-4 px-6 rounded-xl hover:bg-gray-200 transition-all text-xs uppercase tracking-wider">
-                            📲 Abrir Versión Estándar
-                        </a>
-                        <!-- Premium: Recupera el Degradado Neón Oficial de la Web -->
-                        <a href="https://darwin13og.github.io/feriapartner/Feria_Partner_VIP.html" target="_blank" class="block w-full text-center bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg shadow-blue-600/10 text-xs uppercase tracking-wider">
-                            👑 Abrir Versión Premium
-                        </a>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <a href="Feria_Partner.html" target="_blank" class="block text-center bg-white text-black font-bold py-3 rounded-xl uppercase text-xs">📲 Abrir Versión Estándar</a>
+                        <a href="Feria_Partner_VIP.html" target="_blank" class="block text-center bg-gradient-to-r from-blue-600 to-teal-500 text-white font-bold py-3 rounded-xl uppercase text-xs">👑 Abrir Versión Premium</a>
                     </div>
-
-                    <!-- Instrucción Final de WhatsApp -->
                     <div class="border-t border-white/5 pt-4 text-center">
-                        <p class="text-xs text-gray-500 mb-2">
-                            ⚠️ Al abrir la aplicación te solicitará obligatoriamente una Clave de Acceso.
-                        </p>
-                        <p class="text-sm text-gray-300 font-medium">
-                            Escríbeme de inmediato al WhatsApp comentándome el nombre de tu stand y te genero tu código de activación manual tras recibir el pago.
-                        </p>
+                        <p class="text-xs text-gray-500 mb-2">⚠️ Al abrir la aplicación te solicitará una Clave de Acceso.</p>
+                        <p class="text-sm text-gray-300 font-medium">Escríbeme al WhatsApp con el nombre de tu stand y te genero tu código manual tras recibir el pago.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Script aislado para controlar la animación de apertura suave -->
-    <script>
-        function toggleEfectivo() {
-            const contenido = document.getElementById('contenido-efectivo');
-            const flecha = document.getElementById('flecha-efectivo');
-            
-            if (contenido.style.maxHeight && contenido.style.maxHeight !== '0px') {
-                // Si está abierto, lo cerramos
-                contenido.style.maxHeight = '0px';
-                flecha.style.transform = 'rotate(0deg)';
-            } else {
-                // Si está cerrado, calculamos la altura real del texto interno y la aplicamos para que baje suave
-                contenido.style.maxHeight = contenido.scrollHeight + "px";
-                flecha.style.transform = 'rotate(180deg)';
-            }
-        }
-    </script>
-    
-    <!-- 6. GUÍA DE FUNCIONAMIENTO -->
+    <!-- 6. GUÍA COMPLETA -->
     <section id="guia-app" class="py-16 px-6 max-w-5xl mx-auto border-t border-zinc-900">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-extrabold text-white mb-3 tracking-tight">¿Cómo funciona Feria Partner?</h2>
-        <p class="text-gray-400 text-sm max-w-xl mx-auto">Explora cada panel de la aplicación y conoce las ventajas del sistema según tu versión.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Configuración Inicial -->
-        <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-base font-bold text-white flex items-center gap-2">⚙️ 1. Configuración Inicial</h3>
-              <span class="text-[10px] font-bold bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-md uppercase">Ambas Versiones</span>
+        <h2 class="text-center text-3xl font-extrabold text-white mb-12">¿Cómo funciona Feria Partner?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900">
+                <h3 class="text-white font-bold mb-2">⚙️ 1. Configuración Inicial</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">El motor de tu proyecto. Registras la inversión total y el stock inicial.</p>
             </div>
-            <p class="text-gray-400 text-xs leading-relaxed">El motor de tu proyecto. Aquí registras la inversión total en dinero y el stock inicial de productos que salieron de esa inversión para arrancar la feria con cuentas claras.</p>
-          </div>
-        </div>
-
-        <!-- Gestión de Productos -->
-        <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-base font-bold text-white flex items-center gap-2">📦 2. Gestión Multiproducto</h3>
-              <span class="text-[10px] font-bold bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-md uppercase">Ambas Versiones</span>
+            <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900">
+                <h3 class="text-white font-bold mb-2">📦 2. Gestión Multiproducto</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">Configura hasta 5 productos con sus respectivos nombres y precios.</p>
             </div>
-            <p class="text-gray-400 text-xs leading-relaxed">Te permite configurar la cantidad de productos a vender. Diseñado estratégicamente por si manejas más de un estilo o productos totalmente diferentes en tu stand.</p>
-          </div>
-        </div>
-
-        <!-- Panel de Ventas -->
-        <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-base font-bold text-white flex items-center gap-2">⚡ 3. Panel de Ventas en Vivo</h3>
-              <span class="text-[10px] font-bold bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-md uppercase">Ambas Versiones</span>
+            <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900">
+                <h3 class="text-white font-bold mb-2">⚡ 3. Panel de Ventas</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">Teclado de facturación rápida. Eliges cantidad y sumas al instante.</p>
             </div>
-            <p class="text-gray-400 text-xs leading-relaxed">Tu teclado de facturación rápida durante la feria. Digitas el número de unidades que te pide el cliente, seleccionas el producto y el sistema lo procesa al instante sumándolo a la caja total.</p>
-          </div>
-        </div>
-
-        <!-- Balance del Proyecto -->
-        <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-base font-bold text-white flex items-center gap-2">📊 4. Balance y Ganancia Real</h3>
-              <span class="text-[10px] font-bold bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-md uppercase">Ambas Versiones</span>
+            <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900">
+                <h3 class="text-white font-bold mb-2">📊 4. Balance en Vivo</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">Muestra caja total y utilidad neta descontando la inversión.</p>
             </div>
-            <p class="text-gray-400 text-xs leading-relaxed">Control automatizado en tiempo real. Muestra la caja total acumulada y calcula la ganancia real neta, la cual comenzará a sumar de forma inteligente únicamente después de haber recuperado el 100% de lo invertido.</p>
-          </div>
-        </div>
-
-        <!-- Historial de Ventas -->
-        <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-base font-bold text-white flex items-center gap-2">⏳ 5. Historial con Sistema "Deshacer"</h3>
-              <span class="text-[10px] font-bold bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-md uppercase">Ambas Versiones</span>
+            <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900">
+                <h3 class="text-white font-bold mb-2">⏳ 5. Historial "Deshacer"</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">Permite anular la última venta por si hubo un error al digitar.</p>
             </div>
-            <p class="text-gray-400 text-xs leading-relaxed">Registro detallado de cada transacción realizada. Incluye un sistema de seguridad para deshacer la última venta por si te equivocas en el número o presionas un botón por accidente.</p>
-          </div>
-        </div>
-
-        <!-- Reporte de Cierre -->
-        <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-base font-bold text-white flex items-center gap-2">🏁 6. Reporte de Cierre y ROI</h3>
-              <span class="text-[10px] font-bold bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-md uppercase">Ambas Versiones</span>
+            <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900">
+                <h3 class="text-white font-bold mb-2">🏁 6. Reporte y ROI</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">Muestra el producto estrella, el ROI y el veredicto de rentabilidad.</p>
             </div>
-            <p class="text-gray-400 text-xs leading-relaxed">Muestra el resumen final con unidades totales vendidas, el stock restante, la métrica del Retorno de Inversión (ROI), el producto estrella del stand y una alerta visual que avisa si la inversión ya fue recuperada.</p>
-          </div>
-        </div>
-
-        <!-- Gastos Extra y Reportes Avanzados -->
-        <div class="p-6 rounded-2xl bg-blue-950/10 border border-blue-900/30 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-base font-bold text-blue-400 flex items-center gap-2">💵 7. Gastos Extra y Reporte PDF</h3>
-              <span class="text-[10px] font-bold bg-blue-500 text-black px-2 py-0.5 rounded-md uppercase">Exclusivo VIP</span>
+            <div class="p-6 rounded-2xl bg-blue-950/10 border border-blue-900/30">
+                <h3 class="text-blue-400 font-bold mb-2">💵 7. Gastos Extra y PDF (Premium)</h3>
+                <p class="text-zinc-400 text-xs leading-relaxed">Registra egresos imprevistos y genera el Acta Oficial en PDF.</p>
             </div>
-            <p class="text-zinc-400 text-xs leading-relaxed">Permite añadir gastos imprevistos durante la feria para no alterar el balance. Además, exporta un reporte final en PDF profesional listo para enviarle al profesor, a diferencia del formato estándar en bloque de notas (.txt).</p>
-          </div>
-        </div>
-
-        <!-- Pasarelas de Pagos Digitales -->
-        <div class="p-6 rounded-2xl bg-blue-950/10 border border-blue-900/30 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-base font-bold text-blue-400 flex items-center gap-2">📱 8. Caja de Pagos Digitales QR</h3>
-              <span class="text-[10px] font-bold bg-blue-500 text-black px-2 py-0.5 rounded-md uppercase">Exclusivo VIP</span>
+            <div class="p-6 rounded-2xl bg-blue-950/10 border border-blue-900/30">
+                <h3 class="text-blue-400 font-bold mb-2">🧮 8. Calculadora de Vuelto (Premium)</h3>
+                <p class="text-zinc-400 text-xs leading-relaxed">Herramienta integrada para evitar errores al devolver dinero.</p>
             </div>
-            <p class="text-zinc-400 text-xs leading-relaxed">Módulo offline para subir la imagen de los códigos QR de tus billeteras digitales. Permite mostrárselo en pantalla al cliente de inmediato si necesita pagar por transferencia. Incluye un recordatorio de seguridad para verificar el pago en tu cuenta.</p>
-          </div>
-        </div>
-
-        <!-- Reinicio Avanzado y Sesión -->
-        <div class="p-6 rounded-2xl bg-blue-950/10 border border-blue-900/30 flex flex-col justify-between md:col-span-2">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <h3 class="text-base font-bold text-blue-400 flex items-center gap-2">🔒 9. Seguridad, Acta de Cierre y Reinicio</h3>
-              <span class="text-[10px] font-bold bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded-md uppercase">Ambas Versiones</span>
+            <div class="p-6 rounded-2xl bg-[#0d0d0d] border border-zinc-900 md:col-span-2">
+                <h3 class="text-white font-bold mb-2">🔒 9. Seguridad y Cierre</h3>
+                <p class="text-gray-400 text-xs leading-relaxed">Gestiona integrantes y cierra sesión de forma segura sin perder datos.</p>
             </div>
-            <p class="text-zinc-400 text-xs leading-relaxed">Acceso a las funciones de cierre de sesión seguro y el botón de borrado total de datos para reiniciar la app desde cero de forma limpia. Incluye la opción VIP para generar y compartir el acta oficial de cierre con tus socios.</p>
-          </div>
         </div>
-      </div>
     </section>
 
-    <!-- 7. PREGUNTAS RÁPIDAS -->
+    <!-- 7. FAQ (RECUPERADA) -->
     <section class="py-24 px-6 max-w-2xl mx-auto">
         <h2 class="text-center text-xs font-bold tracking-[0.4em] uppercase text-gray-600 mb-10 italic">FAQ • Preguntas Rápidas</h2>
         <div class="space-y-4">
             <details class="glass-card rounded-2xl group border-white/5 transition-all">
-                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">
-                    ¿Cómo funciona?
-                    <span class="text-blue-rey transition-transform group-open:rotate-180">↓</span>
-                </summary>
-                <p class="px-6 pb-6 text-sm text-gray-500">
-                    Se abre directo en el navegador de cualquier celular. No consume datos y no requiere instalación pesada.
-                </p>
+                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">¿Cómo funciona? <span class="text-blue-rey group-open:rotate-180">↓</span></summary>
+                <p class="px-6 pb-6 text-sm text-gray-500">Se abre directo en el navegador de cualquier celular. No consume datos y no requiere instalación pesada.</p>
             </details>
             <details class="glass-card rounded-2xl group border-white/5">
-                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">
-                    ¿Qué pasa si el celular se apaga?
-                    <span class="text-blue-rey transition-transform group-open:rotate-180">↓</span>
-                </summary>
-                <p class="px-6 pb-6 text-sm text-gray-500">
-                    Los datos están protegidos en la memoria local de tu navegador. Al prenderlo y abrir el archivo, todo sigue igual.
-                </p>
+                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">¿Qué pasa si el celular se apaga? <span class="text-blue-rey group-open:rotate-180">↓</span></summary>
+                <p class="px-6 pb-6 text-sm text-gray-500">Los datos están protegidos en la memoria local. Al prenderlo y abrir la app, todo sigue ahí.</p>
             </details>
             <details class="glass-card rounded-2xl group border-white/5">
-                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">
-                    ¿Cómo se realiza el pago?
-                    <span class="text-blue-rey transition-transform group-open:rotate-180">↓</span>
-                </summary>
-                <p class="px-6 pb-6 text-sm text-gray-500">
-                    El pago se realiza de forma 100% segura en la web a través de Nequi, Daviplata o PSE. Una vez aprobado, el sistema procesa tus datos de inmediato y te muestra tu clave de acceso en la pantalla sin esperas manuales.
-                </p>
+                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">¿Cómo se realiza el pago? <span class="text-blue-rey group-open:rotate-180">↓</span></summary>
+                <p class="px-6 pb-6 text-sm text-gray-500">Pago seguro con Nequi, Daviplata o PSE. Una vez aprobado, el sistema te muestra tu clave de inmediato.</p>
             </details>
-            <details class="glass-card rounded-2xl group border-white/5 mt-4">
-                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">
-                    ¿Qué pasa si pierdo o cierro la pantalla con mi código de acceso?
-                    <span class="text-blue-rey transition-transform group-open:rotate-180">↓</span>
-                </summary>
-                <p class="px-6 pb-6 text-sm text-gray-500">
-                    Es sumamente importante que le tomes captura o la guardes en un lugar seguro. Si por accidente cierras la página sin guardarla, deberás usar el botón flotante de soporte para contactar a Darwin vía WhatsApp adjuntando tu comprobante.
-                </p>
+            <details class="glass-card rounded-2xl group border-white/5">
+                <summary class="p-6 cursor-pointer font-semibold flex justify-between items-center list-none text-gray-300">¿Si pierdo mi clave? <span class="text-blue-rey group-open:rotate-180">↓</span></summary>
+                <p class="px-6 pb-6 text-sm text-gray-500">Toma captura al recibirla. Si la pierdes, usa el botón de soporte para contactar a Darwin con tu comprobante.</p>
             </details>
         </div>
     </section>
 
     <!-- 8. FOOTER -->
-    <footer class="py-16 border-t border-white/5 text-center text-gray-600 text-[10px] tracking-[0.3em] uppercase">
-        Feria Partner • Gestión de Emprendimiento 
-    </footer>
+    <footer class="py-16 border-t border-white/5 text-center text-gray-600 text-[10px] tracking-[0.3em] uppercase">Feria Partner • Gestión de Emprendimiento</footer>
 
-    <!-- MODAL DE GENERACIÓN DE LICENCIA -->
-    <div id="modal-licencia" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-[#0b0b0b] border border-white/10 rounded-2xl p-6 max-w-md w-full shadow-2xl text-center">
-            
-            <div class="text-center mb-6">
-                <div class="text-4xl mb-2">🎉</div>
-                <h3 class="text-xl font-bold text-white">¡Pago Confirmado!</h3>
-                <p class="text-gray-400 text-xs mt-1">Sigue los pasos en orden estricto para activar tu aplicación.</p>
+    <!-- MODAL DE LICENCIA (CORREGIDO) -->
+    <div id="modal-licencia" class="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-[#0b0b0b] border border-white/10 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
+            <div class="text-5xl mb-4">🎉</div>
+            <h3 class="text-2xl font-bold text-white mb-6">¡Pago Confirmado!</h3>
+            <div id="paso-formulario" class="space-y-4">
+                <input type="text" id="nombre-proyecto-modal" placeholder="NOMBRE DEL TITULAR" class="w-full bg-[#111] border border-white/10 rounded-xl px-4 py-4 text-white uppercase text-center font-bold">
+                <button onclick="generarLicenciaAutomatica()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl">Generar Mi Licencia</button>
             </div>
-
-            <!-- Paso 1: Poner el nombre -->
-            <div class="space-y-4" id="paso-formulario">
-                <div class="text-left">
-                    <label class="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Nombre para la/ Licencia</label>
-                    <input type="text" id="nombre-proyecto-modal" placeholder="Ej. Darwin Alzate" 
-                           class="w-full bg-[#111] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-blue-500 transition-colors uppercase">
+            <div id="paso-resultado" class="space-y-6 hidden">
+                <div class="bg-zinc-900 p-6 rounded-2xl border border-blue-500/20">
+                    <label class="block text-blue-400 text-[10px] font-bold uppercase mb-3">Tu Clave de Acceso</label>
+                    <input type="text" id="clave-generada" readonly class="w-full bg-transparent text-blue-400 text-center text-3xl font-black focus:outline-none">
+                    <button onclick="copiarClaveModal()" class="mt-4 text-white text-[10px] uppercase font-bold">📋 Copiar Clave</button>
                 </div>
-                <button onclick="generarLicenciaAutomatica()" 
-                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition-all">
-                    Generar Mi Licencia y App
-                </button>
+                <div class="bg-zinc-900 p-4 rounded-2xl border border-white/5">
+                    <label class="block text-amber-500 text-[10px] font-bold uppercase mb-2">Abrir Aplicación</label>
+                    <a href="#" id="btn-descargar-app" target="_blank" onclick="activarBotonCierre()" class="block w-full text-center bg-white text-black font-extrabold py-3 rounded-xl">🚀 Abrir App</a>
+                </div>
+                <button id="btn-cerrar-modal" onclick="cerrarModalLicencia()" disabled class="w-full bg-zinc-900 text-zinc-600 py-3 rounded-xl text-[10px] font-bold uppercase opacity-50">Completar pasos arriba</button>
             </div>
-
-            <!-- Paso 2: Mostrar Resultados de Clave e Instalador -->
-            <div class="space-y-5 hidden" id="paso-resultado">
-                
-                <!-- COPIAR CLAVE -->
-                <div class="text-left bg-zinc-900/50 p-4 rounded-xl border border-white/5">
-                    <label class="block text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">PASO 1: Copia tu Clave de Acceso</label>
-                    <p class="text-[11px] text-gray-400 mb-2">La necesitarás obligatoriamente para iniciar sesión en la app.</p>
-                    <div class="flex gap-2">
-                        <input type="text" id="clave-generada" readonly 
-                               class="w-full bg-[#161616] border border-blue-500/30 rounded-xl px-4 py-3 text-blue-400 font-mono text-center text-lg font-bold focus:outline-none">
-                        <button onclick="copiarClaveModal()" class="bg-[#161616] border border-white/10 hover:border-white/20 px-4 rounded-xl text-white transition-all flex items-center justify-center">
-                            <span id="icono-copiar">📋 Copiar</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- DESCARGAR/ABRIR APP -->
-                <div class="text-left bg-zinc-900/50 p-4 rounded-xl border border-white/5">
-                    <label class="block text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">PASO 2: Abre e Instala la Aplicación</label>
-                    <p class="text-[11px] text-gray-400 mb-3">Dale clic abajo. Cuando abra, dale a los 3 puntos de tu navegador y selecciona <b>"Instalar"</b> o <b>"Agregar a pantalla de inicio"</b>.</p>
-                    <a href="#" id="btn-descargar-app" target="_blank" onclick="activarBotonCierre()" class="block w-full text-center bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition-all shadow-lg shadow-orange-600/10">
-                        🚀 Abrir Aplicación Oficial
-                    </a>
-                </div>
-
-                <!-- ADVERTENCIA DE SEGURIDAD -->
-                <div class="bg-red-950/20 border border-red-500/20 rounded-xl p-3 text-center">
-                    <p class="text-red-400 text-[10px] font-medium leading-relaxed">
-                        ⚠️ ATENCIÓN: Asegúrate de haber completado el Paso 1 y el Paso 2 antes de salir. Al cerrar esta ventana no podrás recuperar la clave.
-                    </p>
-                </div>
-
-                <!-- BOTÓN DE CIERRE -->
-                <button id="btn-cerrar-modal" onclick="cerrarModalLicencia()" disabled
-                        class="w-full bg-zinc-900 text-zinc-600 font-medium py-3 rounded-xl text-xs transition-all border border-white/5 cursor-not-allowed opacity-50">
-                    Primero completa los pasos de arriba
-                </button>
-            </div>
-
         </div>
     </div>
 
-    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
-    
-<!-- ESTILOS PARA LA ILUMINACIÓN Y FUNCIÓN MÓVIL -->
-<style>
-    /* 1. Animación de Iluminación (Respiración) */
-    @keyframes glow-pulse {
-        0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
-        70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-    }
-    .lighting-effect {
-        animation: glow-pulse 2s infinite;
-    }
+    <!-- BOTÓN WHATSAPP (RECUPERADO) -->
+    <div class="fixed bottom-8 right-8 z-50 flex items-end justify-end group">
+        <a href="https://wa.me/573218322388" target="_blank" class="lighting-effect flex items-center bg-[#25D366] text-white rounded-full p-3.5 shadow-lg group">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span class="auto-reveal max-w-0 overflow-hidden whitespace-nowrap font-bold text-sm transition-all duration-300 group-hover:max-w-xs group-hover:ml-3">Soporte en vivo</span>
+        </a>
+    </div>
 
-    /* 2. Función para Celular: El botón se expande solo al inicio y luego se encoge */
-    @media (max-width: 768px) {
-        .auto-reveal {
-            animation: reveal-logic 6s ease-in-out forwards;
-        }
-    }
-
-    @keyframes reveal-logic {
-        0%, 15% { max-width: 0; margin-left: 0; opacity: 0; }
-        25%, 75% { max-width: 150px; margin-left: 10px; opacity: 1; }
-        85%, 100% { max-width: 0; margin-left: 0; opacity: 0; }
-    }
-</style>
-
-<!-- BOTÓN DE SOPORTE INTELIGENTE -->
-<div class="fixed bottom-8 right-8 z-50 flex items-end justify-end group">
-    <a href="https://wa.me/573218322388?text=Hola%20Darwin,%20tengo%20una%20duda%20con%20Feria%20Partner..." 
-       target="_blank" 
-       class="lighting-effect flex items-center bg-[#25D366] text-white rounded-full p-3.5 shadow-lg transition-all duration-300 ease-in-out hover:pr-6 group active:scale-95">
-        
-        <!-- Icono de Chat Simétrico y Centrado -->
-        <svg class="w-7 h-7 transition-transform duration-300 group-hover:rotate-[10deg]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-        </svg>
-
-        <!-- Texto con Auto-Revelado en Celular y Hover en PC -->
-        <span class="auto-reveal max-w-0 overflow-hidden whitespace-nowrap font-bold text-sm tracking-tight transition-all duration-300 ease-in-out group-hover:max-w-xs group-hover:ml-3">
-            Soporte en vivo
-        </span>
-    </a>
-</div>
-    
-    <!-- LÓGICA DE PROGRAMACIÓN INTEGRADA Y LIMPIA -->
     <script>
-        let versionComprada = 'premium'; // Por defecto
-
-        // Inicializamos Mercado Pago con tu SDK oficial
-        const mp = new MercadoPago('APP_USR-94cdc122-e2fc-44c1-a30b-4a8ad283753f', {
-            locale: 'es-CO'
-        });
-
-  // Función de Scroll para el botón "Obtener ahora"
-        function irAPrecios() {
-            const seccion = document.getElementById('seccion-precios');
-            if(seccion) {
-                seccion.scrollIntoView(); // Le quitamos el 'smooth' interno para que no choque con Tailwind
-            }
+        let versionComprada = 'premium';
+        function toggleEfectivo() {
+            const c = document.getElementById('contenido-efectivo');
+            const f = document.getElementById('flecha-efectivo');
+            if (c.style.maxHeight && c.style.maxHeight !== '0px') { c.style.maxHeight = '0px'; f.style.transform = 'rotate(0deg)'; }
+            else { c.style.maxHeight = c.scrollHeight + "px"; f.style.transform = 'rotate(180deg)'; }
         }
-
-        // CAPTURA AUTOMÁTICA POST-PAGO
+        function irAPrecios() { document.getElementById('seccion-precios').scrollIntoView(); }
         window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            
-            // Mercado Pago devuelve estos parámetros al procesar Checkout Pro de forma real
-            const paymentStatus = urlParams.get('status') || urlParams.get('collection_status');
-            const paymentId = urlParams.get('payment_id') || urlParams.get('collection_id');
-            
-            // Compatibilidad por si pruebas local con ?pago=exitoso&plan=estandar o ?pago=exitoso&plan=premium
-            const estadoPagoLocal = urlParams.get('pago');
-            const planLocal = urlParams.get('plan');
-
-            if ((paymentStatus === 'approved' && paymentId) || estadoPagoLocal === 'exitoso') {
-                
-                // Leemos cuál fue el último botón presionado en localStorage o por URL local
-                let planComprado = localStorage.getItem('feria_plan_pendiente') || planLocal;
-
-                if (planComprado === 'estandar') {
-                    abrirModalLicencia('estandar');
-                } else {
-                    abrirModalLicencia('premium');
-                }
-
-                // Limpieza de rastros en la URL por estética y seguridad
-                localStorage.removeItem('feria_plan_pendiente');
-                window.history.replaceState({}, document.title, window.location.pathname);
+            const up = new URLSearchParams(window.location.search);
+            if (up.get('status') === 'approved' || up.get('pago') === 'exitoso') {
+                abrirModalLicencia(localStorage.getItem('feria_plan') || 'premium');
             }
         });
-
-        // Oyentes de clicks para registrar intención de compra (Guarda el plan antes de ir a Mercado Pago)
-        document.addEventListener('DOMContentLoaded', () => {
-            const btnEstandar = document.getElementById('link-pago-estandar');
-            const btnPremium = document.getElementById('link-pago-premium');
-
-            if(btnEstandar) {
-                btnEstandar.addEventListener('click', () => {
-                    localStorage.setItem('feria_plan_pendiente', 'estandar');
-                });
-            }
-            if(btnPremium) {
-                btnPremium.addEventListener('click', () => {
-                    localStorage.setItem('feria_plan_pendiente', 'premium');
-                });
-            }
-        });
-
-        function abrirModalLicencia(version) {
-            versionComprada = version;
-            const modal = document.getElementById('modal-licencia');
-            if (modal) {
-                modal.classList.remove('hidden');
-                document.getElementById('paso-formulario').classList.remove('hidden');
-                document.getElementById('paso-resultado').classList.add('hidden');
-                document.getElementById('nombre-proyecto-modal').value = '';
-            }
-        }
-
-        function cerrarModalLicencia() {
-            const modal = document.getElementById('modal-licencia');
-            if(modal) {
-                modal.classList.add('hidden');
-            }
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-
+        document.getElementById('link-pago-estandar').onclick = () => localStorage.setItem('feria_plan', 'estandar');
+        document.getElementById('link-pago-premium').onclick = () => localStorage.setItem('feria_plan', 'premium');
+        function abrirModalLicencia(v) { versionComprada = v; document.getElementById('modal-licencia').classList.remove('hidden'); }
         function generarLicenciaAutomatica() {
-            const nombreInput = document.getElementById('nombre-proyecto-modal').value.trim();
-            if (!nombreInput) {
-                alert("Por favor, escribe el nombre de tu proyecto.");
-                return;
-            }
-
-            const nombreTemp = nombreInput.toUpperCase();
-
-            // CÁLCULO EXACTO (ASCII)
-            let idNumerico = 0;
-            for (let i = 0; i < nombreTemp.length; i++) {
-                idNumerico += nombreTemp.charCodeAt(i);
-            }
-            let codigoID = (idNumerico % 900) + 100;
-
-            // FÓRMULAS MATEMÁTICAS
-            let claveFinal = 0;
-            if (versionComprada === 'estandar') {
-                claveFinal = (codigoID * 3) + 7;
-            } else {
-                claveFinal = (codigoID * 5) + 7;
-            }
-
-            // Enlace de descarga dinámico
-            const btnDescargar = document.getElementById('btn-descargar-app');
-            if (versionComprada === 'estandar') {
-                btnDescargar.href = 'Feria_Partner.html'; 
-                btnDescargar.innerText = '🚀 Abrir Versión Estándar';
-            } else {
-                btnDescargar.href = 'Feria_Partner_VIP.html'; 
-                btnDescargar.innerText = '🚀 Abrir Versión Premium';
-            }
-
-            document.getElementById('clave-generada').value = claveFinal;
+            const n = document.getElementById('nombre-proyecto-modal').value.trim().toUpperCase();
+            if (!n) return;
+            let id = (n.split('').reduce((a, b) => a + b.charCodeAt(0), 0) % 900) + 100;
+            document.getElementById('clave-generada').value = (versionComprada === 'estandar') ? (id * 3) + 7 : (id * 5) + 7;
+            document.getElementById('btn-descargar-app').href = (versionComprada === 'estandar') ? 'Feria_Partner.html' : 'Feria_Partner_VIP.html';
             document.getElementById('paso-formulario').classList.add('hidden');
             document.getElementById('paso-resultado').classList.remove('hidden');
         }
-
-        function copiarClaveModal() {
-            const inputClave = document.getElementById('clave-generada');
-            inputClave.select();
-            inputClave.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(inputClave.value);
-
-            const icono = document.getElementById('icono-copiar');
-            if (icono) {
-                icono.innerText = '✅ Copiado';
-                setTimeout(() => {
-                    icono.innerText = '📋 Copiar';
-                }, 2000);
-            }
-        }
-
-        function activarBotonCierre() {
-            const btnCerrar = document.getElementById('btn-cerrar-modal');
-            if (btnCerrar) {
-                btnCerrar.disabled = false;
-                btnCerrar.classList.remove('cursor-not-allowed', 'opacity-50', 'text-zinc-600', 'bg-zinc-900');
-                btnCerrar.classList.add('bg-red-600', 'hover:bg-red-700', 'text-white', 'font-bold');
-                btnCerrar.innerText = 'Entendido, cerrar ventana';
-            }
-        }
+        function copiarClaveModal() { const el = document.getElementById('clave-generada'); el.select(); document.execCommand('copy'); alert("Copiado"); }
+        function activarBotonCierre() { const b = document.getElementById('btn-cerrar-modal'); b.disabled = false; b.classList.remove('opacity-50'); b.classList.add('bg-red-600', 'text-white'); b.innerText = "Cerrar Ventana"; }
+        function cerrarModalLicencia() { document.getElementById('modal-licencia').classList.add('hidden'); }
     </script>
 </body>
 </html>
