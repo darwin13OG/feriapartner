@@ -3,377 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>FP STANDARD</title>
     
-    <!-- CONFIGURACIÓN DE NOMBRE E ICONO PARA LA APP -->
-    <title>FP Standar</title>
-    <meta name="apple-mobile-web-app-title" content="FP Standar">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <!-- LLAMADO A LOS ICONOS QUE YA TIENES -->
-    <link rel="icon" type="image/png" href="icon-192.png">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="icon" sizes="512x512" href="icon-512.png">
-    <link rel="manifest" href="manifest_standard.json">
     <style>
         :root {
-            --bg-primary: #0f172a;
-            --bg-card: #111827;
-            --bg-input: #0f172a;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --input: #0f172a;
             --border: #334155;
             --accent: #06b6d4;
             --text: #f8fafc;
             --text-muted: #94a3b8;
             --success: #10b981;
             --danger: #ef4444;
-            --warning: #f59e0b;
-            --shadow: 0 10px 15px -3px rgba(0,0,0,0.35);
         }
 
-        .theme-light {
-            --bg-primary: #f8fafc;
-            --bg-card: #ffffff;
-            --bg-input: #f1f5f9;
-            --border: #cbd5e1;
-            --accent: #0f5f83;
-            --text: #0f172a;
-            --text-muted: #475569;
-            --success: #047857;
-            --danger: #991b1b;
-            --warning: #b45309;
-            --shadow: 0 10px 15px -3px rgba(15,23,42,0.08);
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: 16px; max-width: 480px; margin: 0 auto; padding-bottom: 60px; }
+        .hidden { display: none !important; }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: var(--bg-primary); color: var(--text); padding: 16px; max-width: 500px; margin: 0 auto; line-height: 1.4; padding-bottom: 80px; }
-        .hidden { display: none; }
-        
-        h2 { margin: 20px 0 10px 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
-        .card { background-color: var(--bg-card); border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow); border: 1px solid var(--border); }
-        .config-row { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; margin-bottom: 8px; }
-        input, select { width: 100%; background-color: var(--bg-input); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; font-size: 1rem; }
-        .grid-ventas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .btn-prod { background: var(--border); border: 2px solid var(--accent); color: var(--text); padding: 15px 10px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .btn-prod span { font-size: 0.8rem; opacity: 0.85; margin-top: 4px; }
-        .btn-prod:active { transform: scale(0.95); background: var(--accent); color: var(--bg-primary); }
-        .btn-undo { background: rgba(245, 158, 11, 0.1); border: 1px dashed var(--warning); color: var(--warning); padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; font-weight: bold; cursor: pointer; }
-        .btn-download { background-color: var(--success); color: var(--bg-primary); border: none; padding: 16px; border-radius: 12px; width: 100%; font-weight: 800; cursor: pointer; margin-top: 10px; font-size: 1rem; }
-        .btn-danger { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 8px; border-radius: 8px; width: 100%; margin-top: 20px; font-size: 0.75rem; cursor: pointer; opacity: 0.8; }
-        .stat-val { font-size: 1.4rem; font-weight: bold; color: var(--accent); }
-        .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .badge { background: rgba(6, 182, 212, 0.1); color: var(--accent); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-top: 5px; }
-        .history-item { border-bottom: 1px solid #334155; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
-        .report-box { background: rgba(15, 23, 42, 0.5); border: 1px dashed var(--accent); border-radius: 12px; padding: 14px; margin-top: 10px; }
-        .report-line { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.9rem; }
-        .veredicto { text-align: center; font-weight: bold; font-size: 1rem; margin-top: 12px; padding: 10px; border-radius: 8px; text-transform: uppercase; }
-        
-        /* ESTILO MARCA DE AGUA */
-        .license-footer {
-            text-align: center; font-size: 0.65rem; color: var(--text-muted);
-            margin-top: 30px; padding: 15px; border-top: 1px solid var(--border);
-            line-height: 1.6;
-        }
-        .license-name { color: var(--accent); font-weight: bold; text-transform: uppercase; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card { background: var(--card); border-radius: 16px; padding: 16px; margin-bottom: 16px; border: 1px solid var(--border); }
+        h2 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 12px; }
+
+        label { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; display: block; }
+        input, select { width: 100%; background: var(--input); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 10px; font-size: 1rem; margin-bottom: 10px; outline: none; }
+
+        .grid-ventas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-prod { background: var(--input); border: 1px solid var(--accent); color: var(--text); padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: 0.2s; }
+        .btn-prod span { font-size: 0.8rem; color: var(--accent); font-weight: 800; }
+        .btn-prod:active { transform: scale(0.95); background: var(--accent); }
+
+        .progress-container { width: 100%; background: var(--bg); height: 10px; border-radius: 5px; margin: 10px 0; overflow: hidden; }
+        #v-progress { height: 100%; width: 0%; transition: 0.5s; background: var(--danger); }
+
+        .btn-main { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer; }
+        .btn-text { background: none; border: none; color: var(--text-muted); font-size: 0.7rem; cursor: pointer; text-decoration: underline; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px; }
+        .modal { background: var(--card); padding: 25px; border-radius: 20px; width: 100%; max-width: 350px; text-align: center; }
+
+        .hist-item { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 8px 0; border-bottom: 1px solid var(--border); }
     </style>
 </head>
 <body>
 
+    <!-- ACTIVACIÓN -->
+    <div id="activation-screen" class="modal-overlay hidden">
+        <div class="modal">
+            <h1 style="font-size: 1.1rem; margin-bottom: 20px;">ACTIVAR FP STANDARD</h1>
+            <input type="text" id="lic-name" placeholder="NOMBRE DEL TITULAR" style="text-transform: uppercase; text-align: center;">
+            <div id="lic-id-box" class="hidden">
+                <label>ID DE REGISTRO</label>
+                <div id="display-id" style="font-size: 1.5rem; font-weight: bold; color: var(--accent); margin-bottom: 15px;">000</div>
+                <input type="number" id="lic-key" placeholder="CLAVE DE ACCESO" style="text-align: center;">
+            </div>
+            <button class="btn-main" id="btn-lic-action">GENERAR ID</button>
+        </div>
+    </div>
+
+    <!-- APP PRINCIPAL -->
     <div id="main-app" class="hidden">
-        <div style="display:flex; justify-content:flex-end; gap:10px; margin-bottom:10px;">
-            <button id="theme-toggle" type="button" class="btn-undo">☀️ Modo claro</button>
-            <button id="btn-logout" type="button" class="btn-undo" data-action="logout">🔒 Cerrar sesión</button>
+        <div class="header">
+            <div style="font-weight: 800; font-size: 1rem;">FP <span style="color:var(--accent)">STANDARD</span></div>
+            <button onclick="askLogout()" class="btn-text">CERRAR SESIÓN</button>
         </div>
 
-        <h2>⚙️ Configuración del Proyecto</h2>
         <div class="card">
-            <label class="stat-label">Nombre del Stand / Feria</label>
-            <input type="text" id="cfg-nombre-stand" placeholder="Ej: Hamburguesas Pro" style="margin-bottom:10px;">
-            
-            <label class="stat-label">Integrantes del Equipo (Separados por coma)</label>
-            <input type="text" id="cfg-integrantes" placeholder="Juan, Maria, Pedro" style="margin-bottom:15px; font-size:0.9rem;">
-
-            <div class="config-row">
-                <div>
-                    <label class="stat-label">Inversión ($)</label>
-                    <input type="number" id="cfg-inv" value="100000">
-                </div>
-                <div>
-                    <label class="stat-label">Stock (Uds)</label>
-                    <input type="number" id="cfg-stock" value="50" min="1">
-                </div>
+            <h2>⚙️ CONFIGURACIÓN</h2>
+            <label>Nombre del Stand</label>
+            <input type="text" id="cfg-stand" placeholder="MI STAND" oninput="actualizar()">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div><label>Inversión</label><input type="text" id="cfg-inv" class="mask-money" oninput="actualizar()"></div>
+                <div><label>Stock</label><input type="number" id="cfg-stock" oninput="actualizar()"></div>
             </div>
-            <label class="stat-label">Cantidad de productos</label>
-            <select id="cfg-num-prod">
+            <label>Cantidad de Productos</label>
+            <select id="cfg-num" onchange="dibujarInputs()">
                 <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option>
             </select>
-            <div id="container-inputs" style="margin-top:10px"></div>
-            <div id="costo-tag" class="badge"></div>
+            <div id="inputs-container"></div>
         </div>
 
-        <h2>🛒 Panel de Ventas</h2>
         <div class="card">
-            <label class="stat-label">Unidades a vender</label>
-            <input type="number" id="v-cant" value="1" min="1" style="margin-bottom:15px; font-size:1.5rem; text-align:center; font-weight:bold; color:var(--accent);">
-            <div id="v-btns" class="grid-ventas"></div>
+            <h2>🛒 VENTAS</h2>
+            <label>Unidades a vender</label>
+            <input type="number" id="v-cant" value="1" style="text-align: center; font-weight: bold; font-size: 1.5rem;">
+            <div id="v-btns" class="grid-ventas" style="margin-top: 15px;"></div>
         </div>
 
-        <h2>📊 Balance General</h2>
-        <div class="card" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
-            <div><div class="stat-label">Caja Total</div><div id="res-caja" class="stat-val">$0</div></div>
-            <div><div class="stat-label">Ganancia Real</div><div id="res-ganancia" class="stat-val" style="color:var(--success)">$0</div></div>
-            <div style="grid-column: 1/-1; border-top:1px solid #334155; padding-top:10px;">
-                <div id="res-status" style="font-weight:bold; font-size:0.85rem;"></div>
-                <div style="width:100%; background:#0f172a; height:10px; border-radius:5px; margin-top:8px">
-                    <div id="v-progress" style="width:0%; background:var(--success); height:100%; border-radius:5px; transition:0.5s"></div>
-                </div>
+        <div class="card">
+            <h2>📊 BALANCE</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; text-align: center;">
+                <div><label>En Caja</label><div id="res-caja" style="font-size: 1.5rem; font-weight: bold;">$0</div></div>
+                <div><label>ROI</label><div id="res-roi" style="font-size: 1.5rem; font-weight: bold;">0%</div></div>
             </div>
+            <div class="progress-container"><div id="v-progress"></div></div>
+            <p id="res-status" style="font-size: 0.7rem; text-align: center; font-weight: bold; text-transform: uppercase;"></p>
         </div>
 
-        <h2>📝 Historial</h2>
         <div class="card">
-            <button type="button" class="btn-undo" data-action="deshacer">↩️ Deshacer Última Venta</button>
-            <div id="v-historial" style="max-height: 120px; overflow-y: auto;"></div>
+            <h2>📝 ÚLTIMAS VENTAS</h2>
+            <button onclick="deshacer()" class="btn-text" style="color:var(--danger); width: 100%; margin-bottom: 10px; text-decoration: none; font-weight: bold;">↩️ ANULAR ÚLTIMA VENTA</button>
+            <div id="v-hist"></div>
         </div>
 
-        <h2>📋 Reporte de Cierre</h2>
-        <div class="card">
-            <div class="report-box">
-                <div class="report-line"><span>📦 Vendidas:</span> <strong id="rep-v">0</strong></div>
-                <div class="report-line"><span>🎒 Stock:</span> <strong id="rep-s">0</strong></div>
-                <div class="report-line"><span>⭐ Estrella:</span> <strong id="rep-e">-</strong></div>
-                <div class="report-line" style="border-top:1px dashed #475569; padding-top:6px; margin-top:6px;"><span>📈 ROI:</span> <strong id="rep-roi">0%</strong></div>
-                <div id="rep-vdc" class="veredicto"></div>
-            </div>
-            <button type="button" class="btn-download" data-action="download">📄 GENERAR ACTA DE CIERRE (.TXT)</button>
-            <button type="button" class="btn-danger" data-action="reiniciar">ELIMINAR DATOS Y REINICIAR</button>
+        <button class="btn-main" onclick="generarReporte()">📄 DESCARGAR REPORTE (.TXT)</button>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="askReiniciar()" class="btn-text" style="color:var(--danger)">Borrar todos los datos y reiniciar</button>
         </div>
 
-        <!-- MARCA DE AGUA PERMANENTE -->
-        <div class="license-footer">
-            LICENCIA ORIGINAL: <span class="license-name" id="display-lic"></span><br>
-            ID DE AUTENTICIDAD: <span id="display-serial"></span><br>
-            <span style="font-size:0.5rem; opacity:0.5;">Feria Partner v1.5 Standard Edition © 2026</span>
+        <div style="text-align: center; font-size: 0.6rem; color: var(--text-muted); margin-top: 40px; border-top: 1px dotted var(--border); padding-top: 20px;">
+            FP STANDARD | Titular: <span id="disp-user"></span><br>FERIA PARTNER
         </div>
     </div>
 
     <script>
-        let db = {
-            inv: 100000, stock: 50, nProd: 3,
-            nombreStand: "MI STAND",
-            integrantes: "",
-            prods: [{n:"Producto 1", p:2000}, {n:"Producto 2", p:5000}, {n:"Producto 3", p:8000}],
-            ventas: []
+        let db = { inv: 100000, stock: 50, n: 3, stand: "", prods: [], ventas: [] };
+        const STORAGE_KEY = 'fp_std_v2_final';
+
+        function formatMoney(v) { return v.toString().replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+        function parseMoney(v) { return parseFloat(v.toString().replace(/\./g, "")) || 0; }
+        
+        window.onload = () => {
+            if (localStorage.getItem('fp_std_active')) {
+                document.getElementById('main-app').classList.remove('hidden');
+                document.getElementById('disp-user').innerText = localStorage.getItem('fp_std_user');
+                arrancar();
+            } else { document.getElementById('activation-screen').classList.remove('hidden'); }
         };
 
-        let nombreLicenciaOriginal = "USUARIO";
-        const STORAGE_KEY = 'feria_pro_std_v1.5';
-        const LICENSE_KEY = 'feria_licencia_activa';
-        const PROJECT_NAME_KEY = 'feria_nombre_proyecto';
-
-        function getStoredValue(k) { return localStorage.getItem(k); }
-        function setStoredValue(k, v) { localStorage.setItem(k, v); }
-
-        (function() {
-            if (getStoredValue(LICENSE_KEY) === 'true') {
-                nombreLicenciaOriginal = getStoredValue(PROJECT_NAME_KEY) || "USUARIO";
-                document.getElementById('main-app').classList.remove('hidden');
-                arrancarApp();
-                inicializarEventos();
-                return;
+        document.getElementById('btn-lic-action').onclick = function() {
+            const user = document.getElementById('lic-name').value.trim().toUpperCase();
+            if(!user || user.length < 3) return;
+            if(this.innerText === "GENERAR ID") {
+                const id = (user.split('').reduce((a, b) => a + b.charCodeAt(0), 0) % 900) + 100;
+                document.getElementById('display-id').innerText = id;
+                document.getElementById('lic-id-box').classList.remove('hidden');
+                this.innerText = "ACTIVAR STANDARD";
+            } else {
+                const id = parseInt(document.getElementById('display-id').innerText);
+                if(parseInt(document.getElementById('lic-key').value) === (id * 3) + 7) {
+                    localStorage.setItem('fp_std_active', 'true');
+                    localStorage.setItem('fp_std_user', user);
+                    location.reload();
+                }
             }
+        };
 
-            window.addEventListener('DOMContentLoaded', () => {
-                const capa = document.createElement('div');
-                capa.style = 'position:fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; color:#f8fafc; z-index:999999; display:flex; align-items:center; justify-content:center; padding:20px; font-family:sans-serif;';
-                capa.innerHTML = `
-                    <div style="max-width:400px; width:100%; background:#111827; padding:24px; border-radius:16px; border:1px solid #334155; text-align:center;">
-                        <h2 style="color:#06b6d4; margin-bottom:15px;">🔑 ACTIVAR FERIA PARTNER</h2>
-                        <input type="text" id="lic-nombre" placeholder="Nombre Comprador" style="width:100%; padding:12px; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:8px; margin-bottom:15px; text-align:center; text-transform:uppercase;">
-                        <button id="btn-gen" style="width:100%; padding:12px; background:#06b6d4; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Generar ID</button>
-                        <div id="zona-clave" style="display:none; margin-top:20px; border-top:1px solid #334155; padding-top:20px;">
-                            <p style="font-size:0.8rem; color:#94a3b8;">ID Registro:</p>
-                            <div id="txt-id" style="font-size:1.5rem; font-weight:bold; color:#f59e0b; margin-bottom:15px;">000</div>
-                            <input type="number" id="lic-clave" placeholder="Introduce la Clave" style="width:100%; padding:12px; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:8px; margin-bottom:15px; text-align:center;">
-                            <button id="btn-act" style="width:100%; padding:12px; background:#10b981; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Activar Sistema</button>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(capa);
-
-                document.getElementById('btn-gen').onclick = () => {
-                    let n = document.getElementById('lic-nombre').value.trim().toUpperCase();
-                    if(n.length < 3) return alert("Nombre muy corto");
-                    let suma = 0; for(let i=0; i<n.length; i++) suma += n.charCodeAt(i);
-                    let id = (suma % 900) + 100;
-                    document.getElementById('txt-id').innerText = id;
-                    document.getElementById('lic-nombre').disabled = true;
-                    document.getElementById('btn-gen').style.display = 'none';
-                    document.getElementById('zona-clave').style.display = 'block';
-                    
-                    document.getElementById('btn-act').onclick = () => {
-                        let clave = parseInt(document.getElementById('lic-clave').value);
-                        if(clave === (id * 3) + 7) {
-                            setStoredValue(LICENSE_KEY, 'true');
-                            setStoredValue(PROJECT_NAME_KEY, n);
-                            location.reload();
-                        } else alert("Clave inválida");
-                    };
-                };
-            });
-        })();
-
-        function arrancarApp() {
-            const saved = getStoredValue(STORAGE_KEY);
-            if (saved) db = JSON.parse(saved);
-            
-            document.getElementById('cfg-nombre-stand').value = db.nombreStand || "MI STAND";
-            document.getElementById('cfg-integrantes').value = db.integrantes || "";
-            document.getElementById('cfg-inv').value = db.inv;
+        function arrancar() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if(saved) db = JSON.parse(saved);
+            document.getElementById('cfg-stand').value = db.stand || "";
+            document.getElementById('cfg-inv').value = formatMoney(db.inv);
             document.getElementById('cfg-stock').value = db.stock;
-            document.getElementById('cfg-num-prod').value = db.nProd;
+            document.getElementById('cfg-num').value = db.n;
             dibujarInputs();
         }
 
         function dibujarInputs() {
-            db.nProd = parseInt(document.getElementById('cfg-num-prod').value);
-            const cont = document.getElementById('container-inputs');
+            db.n = parseInt(document.getElementById('cfg-num').value);
+            const cont = document.getElementById('inputs-container');
             cont.innerHTML = '';
-            for (let i = 0; i < db.nProd; i++) {
-                db.prods[i] = db.prods[i] || { n: `Producto ${i + 1}`, p: 1000 };
+            for(let i=0; i<db.n; i++) {
+                if(!db.prods[i]) db.prods[i] = {n:`PRODUCTO ${i+1}`, p:1000};
+                
                 const div = document.createElement('div');
-                div.className = 'config-row';
-                div.innerHTML = `<input type="text" value="${db.prods[i].n}" oninput="editP(${i},'n',this.value)">
-                                 <input type="number" value="${db.prods[i].p}" oninput="editP(${i},'p',this.value)">`;
+                div.style = "display:grid; grid-template-columns: 2fr 1fr; gap:5px; margin-bottom:5px;";
+                
+                const inName = document.createElement('input');
+                inName.value = db.prods[i].n;
+                inName.oninput = (e) => { db.prods[i].n = e.target.value.toUpperCase(); actualizar(); };
+                
+                const inPrice = document.createElement('input');
+                inPrice.value = formatMoney(db.prods[i].p);
+                inPrice.oninput = (e) => { 
+                    e.target.value = formatMoney(e.target.value); 
+                    db.prods[i].p = parseMoney(e.target.value); 
+                    actualizar(); 
+                };
+                
+                div.appendChild(inName);
+                div.appendChild(inPrice);
                 cont.appendChild(div);
             }
             actualizar();
         }
 
-        function editP(i, k, v) {
-            db.prods[i][k] = k === 'p' ? parseFloat(v) || 0 : v;
-            actualizar();
+        function actualizar() { 
+            db.stand = document.getElementById('cfg-stand').value.toUpperCase();
+            db.inv = parseMoney(document.getElementById('cfg-inv').value);
+            db.stock = parseInt(document.getElementById('cfg-stock').value) || 0;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+            render(); 
         }
 
-        function actualizar() {
-            db.nombreStand = document.getElementById('cfg-nombre-stand').value.toUpperCase() || "MI STAND";
-            db.integrantes = document.getElementById('cfg-integrantes').value || "";
-            db.inv = parseFloat(document.getElementById('cfg-inv').value) || 0;
-            db.stock = parseInt(document.getElementById('cfg-stock').value) || 1;
-            setStoredValue(STORAGE_KEY, JSON.stringify(db));
-            dibujarUI();
-        }
+        function render() {
+            let caja = 0, uds = 0;
+            db.ventas.forEach(v => { 
+                const prod = db.prods.find(p => p.n === v.n) || {p:0};
+                caja += (prod.p * v.c); uds += v.c; 
+            });
 
-        function vender(i) {
-            const cant = parseInt(document.getElementById('v-cant').value) || 1;
-            db.ventas.unshift({ n: db.prods[i].n, p: db.prods[i].p, c: cant, t: db.prods[i].p * cant, h: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) });
-            document.getElementById('v-cant').value = 1;
-            actualizar();
-        }
+            document.getElementById('res-caja').innerText = `$${formatMoney(caja)}`;
+            const roi = ((caja / (db.inv || 1)) * 100).toFixed(0);
+            document.getElementById('res-roi').innerText = roi + "%";
+            
+            const porc = Math.min(roi, 100);
+            const pb = document.getElementById('v-progress');
+            pb.style.width = porc + '%';
+            pb.style.background = porc < 100 ? 'var(--warning)' : 'var(--success)';
+            document.getElementById('res-status').innerText = caja >= db.inv ? "META LOGRADA ✅" : `FALTA: $${formatMoney(db.inv-caja)}`;
 
-        function deshacer() { if(db.ventas.length > 0 && confirm("¿Anular última venta?")){ db.ventas.shift(); actualizar(); } }
-
-        function dibujarUI() {
-            let caja = 0, uds = 0, cont = {};
-            db.ventas.forEach(v => { caja += v.t; uds += v.c; cont[v.n] = (cont[v.n] || 0) + v.c; });
-            const ganancia = caja - db.inv;
-
-            document.getElementById('res-caja').innerText = `$${caja.toLocaleString()}`;
-            document.getElementById('res-ganancia').innerText = `$${(ganancia > 0 ? ganancia : 0).toLocaleString()}`;
-            document.getElementById('v-progress').style.width = `${Math.min((caja/(db.inv||1))*100, 100)}%`;
-            document.getElementById('res-status').innerText = (db.inv - caja) > 0 ? `Faltan $${Math.round(db.inv - caja).toLocaleString()}` : `✅ Meta Lograda`;
-
+            // BOTONES DE VENTA DINÁMICOS
             const btnArea = document.getElementById('v-btns');
             btnArea.innerHTML = '';
-            db.prods.slice(0, db.nProd).forEach((p, i) => {
+            db.prods.slice(0, db.n).forEach((p) => {
                 const b = document.createElement('button');
                 b.className = 'btn-prod';
-                b.innerHTML = `${p.n} <span>$${p.p.toLocaleString()}</span>`;
-                b.onclick = () => vender(i);
+                b.innerHTML = `${p.n} <span>$${formatMoney(p.p)}</span>`;
+                b.onclick = () => {
+                    const cant = parseInt(document.getElementById('v-cant').value) || 1;
+                    db.ventas.unshift({n:p.n, c:cant});
+                    document.getElementById('v-cant').value = 1;
+                    actualizar();
+                };
                 btnArea.appendChild(b);
             });
 
-            const hist = document.getElementById('v-historial');
-            hist.innerHTML = db.ventas.length ? '' : '<p style="text-align:center; opacity:0.5; padding:10px;">Sin ventas</p>';
-            db.ventas.slice(0,10).forEach(v => {
-                hist.innerHTML += `<div class="history-item"><div><b>${v.c}x ${v.n}</b><br><small>${v.h}</small></div><b>$${v.t.toLocaleString()}</b></div>`;
+            document.getElementById('v-hist').innerHTML = db.ventas.slice(0,5).map(v => {
+                const price = (db.prods.find(p => p.n === v.n) || {p:0}).p;
+                return `<div class="hist-item"><b>${v.c}x ${v.n}</b> <span>$${formatMoney(v.c * price)}</span></div>`;
+            }).join('') || '<p style="text-align:center; opacity:0.2; font-size:0.7rem;">Esperando ventas...</p>';
+        }
+
+        function askLogout() { if(confirm("¿Cerrar sesión? Se guardarán los datos.")) { localStorage.removeItem('fp_std_active'); location.reload(); } }
+        function askReiniciar() { if(confirm("¿BORRAR TODO? Esta acción es irreversible.")) { localStorage.removeItem(STORAGE_KEY); location.reload(); } }
+        function deshacer() { if(db.ventas.length && confirm("¿Anular última venta?")) { db.ventas.shift(); actualizar(); } }
+
+        function generarReporte() {
+            let caja = 0, uds = 0;
+            db.ventas.forEach(v => { 
+                const price = (db.prods.find(p => p.n === v.n) || {p:0}).p;
+                caja += (price * v.c); uds += v.c; 
             });
+            let txt = `REPORTE DE CIERRE - FP STANDARD\n`;
+            txt += `Stand: ${db.stand}\nTitular: ${localStorage.getItem('fp_std_user')}\n`;
+            txt += `Fecha: ${new Date().toLocaleString()}\n`;
+            txt += `------------------------------\n`;
+            txt += `Inversion: $${formatMoney(db.inv)}\n`;
+            txt += `Ventas Totales: $${formatMoney(caja)}\n`;
+            txt += `Balance Neto: $${formatMoney(caja-db.inv)}\n`;
+            txt += `ROI: ${((caja/(db.inv||1))*100).toFixed(0)}%\n`;
+            txt += `Unidades vendidas: ${uds}\n`;
+            txt += `------------------------------\n`;
+            txt += `Generado por Feria Partner Standard`;
 
-            let est = '-', max = 0;
-            Object.keys(cont).forEach(k => { if(cont[k] > max){ max = cont[k]; est = k; } });
-            document.getElementById('rep-v').innerText = uds;
-            document.getElementById('rep-s').innerText = Math.max(0, db.stock - uds);
-            document.getElementById('rep-e').innerText = max > 0 ? est : '-';
-            document.getElementById('rep-roi').innerText = `${((caja / (db.inv || 1)) * 100).toFixed(1)}%`;
-            document.getElementById('rep-vdc').innerText = caja >= db.inv ? 'PROYECTO RENTABLE' : 'POR RECUPERAR';
-
-            // ACTUALIZAR MARCA DE AGUA
-            document.getElementById('display-lic').innerText = nombreLicenciaOriginal;
-            let serial = 0; for(let i=0; i<nombreLicenciaOriginal.length; i++) serial += nombreLicenciaOriginal.charCodeAt(i);
-            document.getElementById('display-serial').innerText = `FP-2026-${serial}`;
-        }
-
-        function generarPDFPro() {
-            let caja = 0; db.ventas.forEach(v => caja += v.t);
-            let serial = 0; for(let i=0; i<nombreLicenciaOriginal.length; i++) serial += nombreLicenciaOriginal.charCodeAt(i);
-            
-            let t = `=========================================\n`;
-            t += `      ACTA DE CIERRE - FERIA PARTNER     \n`;
-            t += `=========================================\n\n`;
-            t += `STAND: ${db.nombreStand}\n`;
-            t += `EQUIPO: ${db.integrantes || 'Sin integrantes'}\n`;
-            t += `FECHA: ${new Date().toLocaleString()}\n`;
-            t += `-----------------------------------------\n`;
-            t += `TITULAR LICENCIA: ${nombreLicenciaOriginal}\n`;
-            t += `ID AUTENTICIDAD: FP-2026-${serial}\n`;
-            t += `-----------------------------------------\n\n`;
-            t += `I. RESUMEN FINANCIERO\n`;
-            t += `Inversion Inicial: $${db.inv.toLocaleString()}\n`;
-            t += `Ventas Totales   : $${caja.toLocaleString()}\n`;
-            t += `Balance Neto     : $${(caja - db.inv).toLocaleString()}\n`;
-            t += `ROI (Rendimiento): ${((caja / (db.inv || 1)) * 100).toFixed(1)}%\n\n`;
-            t += `-----------------------------------------\n`;
-            t += `ESTADO: ${caja >= db.inv ? "APROBADO - RENTABLE" : "PENDIENTE - RECUPERANDO"}\n`;
-            t += `-----------------------------------------\n\n`;
-            t += `Validado por Feria Partner v1.5.\n`;
-            t += `Este reporte es propiedad de ${nombreLicenciaOriginal}.`;
-
-            const blob = new Blob([t], { type: 'text/plain' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `Reporte_${db.nombreStand.replace(/\s+/g, '_')}.txt`;
-            link.click();
-        }
-
-        function inicializarEventos() {
-            document.getElementById('cfg-nombre-stand').oninput = actualizar;
-            document.getElementById('cfg-integrantes').oninput = actualizar;
-            document.getElementById('cfg-inv').oninput = actualizar;
-            document.getElementById('cfg-stock').oninput = actualizar;
-            document.getElementById('cfg-num-prod').onchange = dibujarInputs;
-            
-            const themeToggle = document.getElementById('theme-toggle');
-            themeToggle.onclick = () => {
-                const t = document.documentElement.className === 'theme-dark' ? 'light' : 'dark';
-                document.documentElement.className = 'theme-' + t;
-                setStoredValue('feria_tema', t);
-                themeToggle.innerText = t === 'light' ? '🌙 Modo oscuro' : '☀️ Modo claro';
-            };
-
-            document.querySelectorAll('[data-action="deshacer"]').forEach(b => b.onclick = deshacer);
-            document.querySelectorAll('[data-action="download"]').forEach(b => b.onclick = generarPDFPro);
-            document.querySelectorAll('[data-action="reiniciar"]').forEach(b => b.onclick = () => { if(confirm("¿Borrar todos los datos?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); } });
-            document.querySelectorAll('[data-action="logout"]').forEach(b => b.onclick = () => { if(confirm("¿Cerrar sesión?")) { localStorage.removeItem(LICENSE_KEY); location.reload(); } });
+            const blob = new Blob([txt], {type:'text/plain;charset=UTF-8'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `Reporte_${db.stand}.txt`;
+            a.click();
         }
     </script>
-    <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('App lista para usar offline'))
-        .catch(err => console.log('Error al registrar sw', err));
-    });
-  }
-</script>
 </body>
 </html>
